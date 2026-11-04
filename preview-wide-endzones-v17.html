@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>V17 Wide Stadium End Zones</title></head><body style="margin:0;background:#07111c;color:white"><script>
+(async()=>{
+const r=await fetch('./preview-white-sidelines-v15.html',{cache:'no-store'});if(!r.ok)throw Error('Approved V15 field unavailable');
+let wrapper=await r.text();
+const injected=`
+s=s.replaceAll('V13 REAL TURF','V17 WIDE END ZONES').replaceAll('V13 Real Turf + Home End Zones','V17 Wide End Zones');
+s=s.replace('</style>', '.fieldbox #endzone-left,.fieldbox #endzone-right{font-family:Impact,"Arial Black",Arial,sans-serif;font-weight:900;paint-order:stroke fill;stroke:#08233e;stroke-width:.65px;stroke-linejoin:round;fill:#fff;filter:drop-shadow(0 0 .25px #000)}</style>');
+for(const id of ['endzone-left','endzone-right']){
+ const t=s.match(new RegExp('<text id="'+id+'"[^>]*>'));
+ if(t){let updated=t[0].replace(/font-size="[^"]*"/,'font-size="4.7"').replace(/letter-spacing="[^"]*"/,'letter-spacing=".4"').replace('>',' textLength="43" lengthAdjust="spacingAndGlyphs">');s=s.replace(t[0],updated);}
+}
+`;
+const pos=wrapper.indexOf('document.open();document.write(s);document.close();');if(pos<0)throw Error('V15 source changed');
+wrapper=wrapper.slice(0,pos)+injected+wrapper.slice(pos);
+wrapper=wrapper.replace('V15 Sideline Crop','V17 Wide Stadium End Zones');
+document.open();document.write(wrapper);document.close();
+})().catch(e=>{document.body.textContent='Preview failed: '+e.message});
+</script></body></html>
