@@ -1,0 +1,18 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>V19 Midfield & Formation Refinement</title></head><body style="margin:0;background:#07111c;color:white"><script>
+(async()=>{
+const r=await fetch('./preview-slim-endzones-v18.html',{cache:'no-store'});if(!r.ok)throw Error('V18 unavailable');
+let wrapper=await r.text();
+const insertion=`
+s=s.replaceAll('V13 REAL TURF','V19 MIDFIELD + FORMATIONS').replaceAll('V13 Real Turf + Home End Zones','V19 Midfield and Formations');
+s=s.replace('x="53.5" y="20" width="13" height="13" opacity=".78"','x="56.5" y="23" width="7" height="7" opacity=".94"');
+s=s.replace('x="56" y="22.5" width="8" height="8" opacity=".92"','x="56.5" y="23" width="7" height="7" opacity=".94"');
+s=s.replace('const offense=[[43,26],[47,12],[47,18],[47,24],[47,30],[47,36],[42,7],[42,45],[39,16],[39,36],[35,26]],defense=[[51,12],[51,18],[51,24],[51,30],[51,36],[55,8],[55,44],[58,15],[58,37],[62,22],[62,31]];',
+'const offense=[[43,26],[47,17],[47,21],[47,26],[47,31],[47,35],[44,10],[44,43],[39,18],[39,34],[36,26]],defense=[[50,17],[50,21],[50,26],[50,31],[50,35],[54,11],[54,42],[57,19],[57,33],[61,25],[61,38]];');
+s=s.replace('</style>', '.fieldbox #midfield-brand{filter:drop-shadow(0 0 .2px #fff)}</style>');
+`;
+const pos=wrapper.indexOf('document.open();document.write(wrapper);document.close();');if(pos<0)throw Error('V18 wrapper changed');
+wrapper=wrapper.slice(0,pos)+insertion+wrapper.slice(pos);
+wrapper=wrapper.replace('V18 Slim Stadium End Zones','V19 Midfield and Formations');
+document.open();document.write(wrapper);document.close();
+})().catch(e=>{document.body.textContent='Preview failed: '+e.message});
+</script></body></html>
