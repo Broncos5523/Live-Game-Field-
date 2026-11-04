@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>V16 Outlined End Zone Lettering</title></head><body style="margin:0;background:#07111c;color:white"><script>
+(async()=>{
+const r=await fetch('./preview-white-sidelines-v15.html',{cache:'no-store'});if(!r.ok)throw Error('V15 unavailable');let wrapper=await r.text();
+const injected=`
+s=s.replaceAll('V13 REAL TURF','V16 OUTLINED END ZONES').replaceAll('V13 Real Turf + Home End Zones','V16 Outlined End Zones');
+s=s.replace('</style>', '.fieldbox #endzone-left,.fieldbox #endzone-right{font-family:Impact,"Arial Black",Arial,sans-serif;font-weight:900;font-stretch:condensed;paint-order:stroke fill;stroke:#09233d;stroke-width:1.05px;stroke-linejoin:round;letter-spacing:.12px;font-size:4.1px;fill:#fff}.fieldbox #endzone-left,.fieldbox #endzone-right{filter:drop-shadow(0 0 .3px #000)}</style>');
+s=s.replace('const ns="http://www.w3.org/2000/svg"', 'const ns="http://www.w3.org/2000/svg"');
+`;
+const pos=wrapper.indexOf('document.open();document.write(s);document.close();');if(pos<0)throw Error('V15 template changed');
+wrapper=wrapper.slice(0,pos)+injected+wrapper.slice(pos);
+wrapper=wrapper.replace('V15 Sideline Crop','V16 Outlined End Zone Lettering');
+document.open();document.write(wrapper);document.close();
+})().catch(e=>{document.body.textContent='Preview failed: '+e.message});
+</script></body></html>
