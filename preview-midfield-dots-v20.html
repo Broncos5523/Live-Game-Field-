@@ -1,0 +1,28 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>V20 Midfield and Dots</title></head><body style="margin:0;background:#07111c;color:white"><script>
+(async()=>{
+const r=await fetch('./preview-real-turf-v13.html',{cache:'no-store'});if(!r.ok)throw Error('Source unavailable');let s=await r.text();
+s=s.replaceAll('V13 REAL TURF','V15 WHITE SIDELINES').replaceAll('V13 Real Turf + Home End Zones','V15 White Sidelines');
+s=s.replace('preserveAspectRatio="xMidYMid meet" aria-label="Football field','preserveAspectRatio="none" aria-label="Football field');
+s=s.replace('<g stroke="#fff" opacity=".9"><rect x="10" y="1" width="100" height="51.3" fill="none" stroke-width=".45"/></g><g id="marks"></g>','<g id="marks"></g>');
+s=s.replace(/for\(let i=10;i<=110;i\+=5\)[\s\S]*?(?=const players=document\.getElementById\("players"\))/, '');
+s=s.replace('opacity=".88" pointer-events="none"','opacity="1" pointer-events="none"');
+s=s.replace('x="53.5" y="20" width="13" height="13" opacity=".78"','x="56" y="22.5" width="8" height="8" opacity=".92"');
+s=s.replace(/(<image href="data:image\/jpeg;base64,[^"]+" )x="0" y="0" width="120" height="53.3"/,'$1x="0" y="-6.5" width="120" height="66.3"');
+s=s.replace('</style>','.fieldbox svg{left:14.1%;width:71.8%;right:auto;inset-block:0}.fieldbox{background:#123e28}.sidestats{z-index:3}</style>');
+
+s=s.replaceAll('V13 REAL TURF','V19 MIDFIELD + FORMATIONS').replaceAll('V13 Real Turf + Home End Zones','V19 Midfield and Formations');
+s=s.replace('</style>', '.fieldbox #endzone-left,.fieldbox #endzone-right{font-family:"Arial Narrow","Roboto Condensed",Arial,sans-serif;font-weight:700;paint-order:stroke fill;stroke:#08233e;stroke-width:.48px;stroke-linejoin:round;fill:#fff;filter:drop-shadow(0 0 .25px #000)}</style>');
+for(const id of ['endzone-left','endzone-right']){const t=s.match(new RegExp('<text id="'+id+'"[^>]*>'));if(t){let updated=t[0].replace(/font-size="[^"]*"/,'font-size="4.3"').replace(/letter-spacing="[^"]*"/,'letter-spacing=".4"').replace('>',' textLength="43" lengthAdjust="spacingAndGlyphs">');s=s.replace(t[0],updated)}}
+s=s.replace('x="53.5" y="20" width="13" height="13" opacity=".78"','x="56.5" y="23" width="7" height="7" opacity=".94"');
+s=s.replace('x="56" y="22.5" width="8" height="8" opacity=".92"','x="56.5" y="23" width="7" height="7" opacity=".94"');
+s=s.replace('const offense=[[43,26],[47,12],[47,18],[47,24],[47,30],[47,36],[42,7],[42,45],[39,16],[39,36],[35,26]],defense=[[51,12],[51,18],[51,24],[51,30],[51,36],[55,8],[55,44],[58,15],[58,37],[62,22],[62,31]];', 'const offense=[[43,26],[47,17],[47,21],[47,26],[47,31],[47,35],[44,10],[44,43],[39,18],[39,34],[36,26]],defense=[[50,17],[50,21],[50,26],[50,31],[50,35],[54,11],[54,42],[57,19],[57,33],[61,25],[61,38]];');
+
+
+s=s.replaceAll('V19 MIDFIELD + FORMATIONS','V20 MIDFIELD + DOTS').replaceAll('V19 Midfield and Formations','V20 Midfield and Dots');
+s=s.replace('x="56.5" y="23" width="7" height="7" opacity=".94"','x="54" y="20.5" width="12" height="12" opacity=".94"');
+s=s.replace('x="53.5" y="20" width="13" height="13" opacity=".78"','x="54" y="20.5" width="12" height="12" opacity=".94"');
+s=s.replace('.dot circle{stroke:#fff;stroke-width:.65}', '.dot circle{stroke:#fff;stroke-width:.25}');
+
+document.open();document.write(s);document.close();
+})().catch(e=>{document.body.textContent='Preview failed: '+e.message});
+</script></body></html>
