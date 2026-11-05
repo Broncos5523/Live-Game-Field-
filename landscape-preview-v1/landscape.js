@@ -1,11 +1,76 @@
-/* Synchronize existing V5 venue selection with a full-screen landscape background. */
-(function(){
- function sync(){
-  var dashboard=document.querySelector('.dashboard');if(!dashboard)return;
-  var bg=dashboard.querySelector('.landscape-venue');
-  if(!bg){bg=document.createElement('div');bg.className='landscape-venue';dashboard.insertBefore(bg,dashboard.firstChild);}
-  var original=dashboard.querySelector('.venue-backdrop');
-  if(original){var src=original.currentSrc||original.src;if(src && bg.dataset.src!==src){bg.dataset.src=src;bg.innerHTML='';var img=document.createElement('img');img.alt='';img.src=src;bg.appendChild(img);}}
- }
- var timer=setInterval(sync,900);document.addEventListener('visibilitychange',sync);sync();
+/* Venue codes supplied by the original landscape preview ZIP. */
+const landscapeVenueCodes = {
+  CBB: new Set((
+    "AFA AKR ALA ARIZ ARK ASU AUB BAY BC BOIS BTLR BYU CAL CIN CLEM COLO " +
+    "CONN CREI CSU DAY DEP DRKE DUKE FAU FLA FRES FSU GCU GONZ GT GTWN HALL " +
+    "HAW HOU ILL IND IOWA ISU KSU KU LIB LOU LSU M-OH MARQ MCN MD MEM " +
+    "MIA MICH MINN MISS MIZ MSST MSU NCSU ND NEB NEV NU OKST ORE ORST OSU " +
+    "OU PITT PRIN PROV PSU PUR RUTG SC SDSU SJSU SJU SLU SMC SMU STAN SYR " +
+    "TA&M TCU TEM TENN TEX TTU TXST UAB UCD UCF UCLA UGA UK UNC UNLV UNM " +
+    "USC USF USU UTAH UTEP UVA VAN VCU VILL VT WAKE WASH WICH WIS WKU WSU " +
+    "WVU WYO XAV"
+  ).split(" ")),
+  CFB: new Set((
+    "AFA APP CCU DEL FIU HAW ILST JMU JVST KENN LIB MOST MRSH MTST MTSU ND " +
+    "NDSU NEV NIU NMSU SDST SHSU SJSU TARL TOL UL UND UNLV UNM UTAH UTEP UTSA " +
+    "WKU WMU WYO"
+  ).split(" ")),
+  MLB: new Set((
+    "ARI ATH ATL BAL BOS CHC CHW CIN CLE COL DET HOU KC LAA LAD MIA " +
+    "MIL MIN NYM NYY PHI PIT SD SEA SF STL TB TEX TOR WSH"
+  ).split(" ")),
+  NBA: new Set((
+    "ATL BKN BOS CHA CHI CLE DAL DEN DET GS HOU IND LAC LAL MEM MIA " +
+    "MIL MIN NO NY OKC ORL PHI PHX POR SA SAC TOR UTAH WSH"
+  ).split(" ")),
+  NFL: new Set((
+    "ARI ATL BAL BUF CAR CHI CIN CLE DAL DEN DET GB HOU IND JAX KC " +
+    "LAC LAR LV MIA MIN NE NO NYG NYJ PHI PIT SEA SF TB TEN WSH"
+  ).split(" ")),
+  NHL: new Set((
+    "ANA BOS BUF CAR CBJ CGY CHI COL DAL DET EDM FLA LA MIN MTL NJ " +
+    "NSH NYI NYR OTT PHI PIT SEA SJ STL TB TOR UTAH VAN VGK WPG WSH"
+  ).split(" ")),
+  WNBA: new Set((
+    "ATL CHI CON DAL GS IND LA LV MIN NY PHX POR SEA TOR WSH"
+  ).split(" ")),
+};
+
+function hasLandscapeVenue(sport, code) {
+  return landscapeVenueCodes[sport]?.has(code) ?? false;
+}
+
+/* Synchronize the dashboard's loaded venue art with the landscape background. */
+(function () {
+  function syncVenue() {
+    const dashboard = document.querySelector(".dashboard");
+    if (!dashboard) return;
+
+    let background = dashboard.querySelector(".landscape-venue");
+    if (!background) {
+      background = document.createElement("div");
+      background.className = "landscape-venue";
+      background.setAttribute("aria-hidden", "true");
+      dashboard.prepend(background);
+    }
+
+    const original = dashboard.querySelector(".venue-backdrop");
+    const src = original?.complete && original.naturalWidth > 0
+      ? original.currentSrc || original.src
+      : "";
+    if (background.dataset.src === src) return;
+
+    background.dataset.src = src;
+    background.replaceChildren();
+    if (src) {
+      const image = document.createElement("img");
+      image.alt = "";
+      image.src = src;
+      background.appendChild(image);
+    }
+  }
+
+  window.setInterval(syncVenue, 900);
+  document.addEventListener("visibilitychange", syncVenue);
+  syncVenue();
 })();
