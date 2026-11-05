@@ -1,0 +1,27 @@
+/* Landscape preview V1: overrides only. Original V5 app.js and animations untouched. */
+html,body,#app,.viewport-shell {width:100%;height:100%;}
+.rotation-stage {left:0;top:0;width:100vw;height:100vh;transform:none;container-type:inline-size;}
+.dashboard,.dashboard.sport-nba,.dashboard.sport-wnba,.dashboard.sport-cbb,.dashboard.sport-mlb {
+ width:100%;height:100%;padding:.8% 1.2% .6%;gap:.7%;
+ grid-template-columns:1fr;grid-template-rows:8% 29% 32% 24% 5%;
+ background:#020811;isolation:isolate;
+}
+.landscape-venue {position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:#071522;}
+.landscape-venue img {width:100%;height:100%;object-fit:cover;object-position:center 50%;filter:brightness(.55) saturate(1.16);}
+.landscape-venue:after {content:'';position:absolute;inset:0;background:linear-gradient(180deg,#0206108c 0%,#02061022 23%,#02061077 64%,#020610e8 100%);}
+.matchup-backdrop {display:none;}
+.topbar {grid-column:1;grid-row:1;}
+.hero {grid-column:1;grid-row:2;overflow:visible;}
+.hero .venue-backdrop {opacity:0;}
+.hero::before {background:linear-gradient(180deg,transparent,#02071135);}
+.hero::after {opacity:.28;}
+.game-story {grid-column:1;grid-row:3; background:linear-gradient(145deg,#071727b8,#020811a8)!important;border-color:#9cc8e14d;}
+.ribbons {grid-column:1;grid-row:3;}
+.comparison {display:none!important;}
+.leaders {grid-column:1;grid-row:4;}
+.leader-grid {grid-template-columns:repeat(4,minmax(0,1fr));padding:.4% 1%;gap:1%;}
+.leader-card {grid-template-columns:43% 57%;grid-template-rows:1fr;border-radius:9px;background:linear-gradient(120deg,color-mix(in srgb,var(--leader-color) 18%,#061323b8),#020810b8);}
+.leader-avatar {height:100%;background:transparent;}
+.ticker {grid-column:1;grid-row:5;}
+.dashboard h2 {text-shadow:0 2px 8px #000;}
+@media (max-aspect-ratio: 4/3) { .leader-card {grid-template-columns:1fr;grid-template-rows:55% 45%;} }
