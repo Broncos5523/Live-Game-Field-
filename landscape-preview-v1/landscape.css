@@ -25,3 +25,44 @@ html,body,#app,.viewport-shell {width:100%;height:100%;}
 .ticker {grid-column:1;grid-row:5;}
 .dashboard h2 {text-shadow:0 2px 8px #000;}
 @media (max-aspect-ratio: 4/3) { .leader-card {grid-template-columns:1fr;grid-template-rows:55% 45%;} }
+
+/* Keep artwork from setting the height of the landscape grid rows. */
+.topbar,
+.brand-logo,
+.league-logo,
+.hero,
+.final-story-body,
+.final-result,
+.final-winner-logo,
+.final-factors > div,
+.ticker-matchup {
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.hero .team {
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  row-gap: .25rem;
+}
+
+.hero .team img,
+.final-winner-logo img {
+  min-height: 0;
+}
+
+.hero .team > .logo-fallback,
+.final-winner-logo .logo-fallback {
+  width: auto;
+  height: 100%;
+  min-height: 0;
+  max-width: 80%;
+}
+
+.ticker-matchup {
+  height: 100%;
+}
+
+.ticker-logo {
+  width: min(3.15rem, 4.6vh);
+  height: min(3.15rem, 4.6vh);
+}
