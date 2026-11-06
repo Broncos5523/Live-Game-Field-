@@ -238,3 +238,25 @@
   top: auto;
   bottom: 4.6%;
 }
+
+.dashboard:has(.basketball-court,.hockey-rink) .topbar .brand-logo {
+  height: 1.05rem;
+  align-self: start;
+}
+.dashboard:has(.basketball-court,.hockey-rink) .score-clock strong {
+  font-size: clamp(1.4rem,3.35cqw,3.7rem);
+}
+.dashboard:has(.basketball-court,.hockey-rink) .score-clock {
+  row-gap: 0;
+}
+.play-call:empty { display: none; }
+.play-call {
+  color: var(--cue-color,#f7fbff);
+  font: 900 clamp(.95rem,2.5cqw,2.6rem)/1 var(--font-display);
+  text-wrap: balance;
+  margin-bottom: .5rem;
+}
+.play-portrait {
+  grid-template-rows: auto minmax(0,62%) auto;
+}
+.play-portrait-image.has-photo img { width: 112%; max-width: none; }

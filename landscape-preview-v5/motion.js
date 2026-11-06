@@ -27,7 +27,8 @@
       ? events.filter((event) => event[1] !== 'GOAL') : events;
     const event = filtered.find(([pattern, cue]) =>
       pattern.test(play) && (cue !== 'SHOT ON GOAL' || !/missed|blocked|wide/i.test(play)));
-    story.dataset.playCue = event?.[1] || '';
+    const call = story.querySelector('.play-call');
+    if (call && call.textContent !== (event?.[1] || '')) call.textContent = event?.[1] || '';
     const color = event?.[2];
     if (color) story.style.setProperty('--cue-color', color);
     animation?.cancel();
