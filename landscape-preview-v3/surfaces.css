@@ -1,0 +1,53 @@
+/* Fit both diagrams by height and keep their markings in one coordinate system. */
+.basketball-status .surface-body,
+.hockey-status .surface-body {
+  container-type: size;
+  min-height: 0;
+  padding: 0;
+}
+.basketball-status .surface-body {
+  display: grid;
+  place-items: center;
+}
+.basketball-court, .hockey-rink {
+  align-self: center;
+  justify-self: center;
+  height: auto;
+  border: 0;
+}
+.basketball-court {
+  width: min(100%, 188cqh);
+  aspect-ratio: 94 / 50;
+}
+.hockey-rink {
+  width: min(100%, 235.294cqh);
+  aspect-ratio: 200 / 85;
+  border-radius: 14% / 33%;
+}
+.surface-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.basketball-court:has(.surface-lines)::before,
+.basketball-court:has(.surface-lines) .court-half,
+.basketball-court:has(.surface-lines) .court-center::before,
+.hockey-rink:has(.surface-lines) :is(.blue-line,.center-line,.faceoff,.puck-path) {
+  display: none;
+}
+.basketball-court:has(.surface-lines) .court-center {
+  position: absolute;
+  inset: 34% 39%;
+}
+.basketball-court .court-team { width: 23%; }
+.hockey-rink .rink-logo.away { left: 11%; }
+.hockey-rink .rink-logo.home { right: 11%; }
+.play-motion {
+  position: absolute;
+  inset: 6%;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 1;
+}
