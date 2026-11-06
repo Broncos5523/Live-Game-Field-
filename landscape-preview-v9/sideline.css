@@ -1,0 +1,40 @@
+/* Basketball-only perspective inside the existing center tile. */
+.game-story .basketball-status .surface-body {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg,#0b1c2c9c,#07121f35 50%,#02080fc9);
+}
+.basketball-status .surface-body::before {
+  content: "";
+  position: absolute;
+  inset: 3% 2% auto;
+  height: 26%;
+  border: 1px solid #b8d9ee39;
+  border-radius: 38% 38% 8% 8% / 18% 18% 5% 5%;
+  background:
+    radial-gradient(circle,#a6bdd264 0 1.6px,transparent 2.3px) 0 0 / 13px 10px,
+    radial-gradient(circle,#dde9f04c 0 1.5px,transparent 2.4px) 6px 5px / 13px 10px,
+    linear-gradient(#1b2f44,#091421);
+  box-shadow: inset 0 -15px 18px #07111ccc;
+  opacity: .68;
+}
+.basketball-status .basketball-court {
+  width: min(89%,188cqh);
+  transform: perspective(1450px) rotateX(34deg) translateY(7%);
+  background:
+    repeating-linear-gradient(0deg,#f7edcf0a 0 3px,#6d512122 4px,#ffefcd0b 5px 8px),
+    repeating-linear-gradient(90deg,#dfb87f 0 38px,#e4c18d 39px 77px,#d9af77 78px 115px);
+  border: 2px solid #fff2ce;
+  box-shadow: 0 5px 0 #a97e4b, 0 9px 0 #62452e,0 18px 18px #0009;
+}
+.basketball-status .surface-body::after {
+  content: "";
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 90'%3E%3Cpath d='M8 85V42L35 28' fill='none' stroke='%23d9e3ed' stroke-width='5'/%3E%3Cpath d='M4 84V57H14V84Z' fill='%23ce4c29'/%3E%3Cpath d='M35 15V47L44 43V12Z' fill='%23dbedfa' stroke='%239ab4c9' stroke-width='2'/%3E%3Cpath d='M39 43l3 11h10l3-11' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Cellipse cx='47' cy='42' rx='9' ry='4' fill='none' stroke='%23ed6038' stroke-width='3'/%3E%3C/svg%3E") left 2% top 47% / auto 24% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 90'%3E%3Cg transform='translate(60 0) scale(-1 1)'%3E%3Cpath d='M8 85V42L35 28' fill='none' stroke='%23d9e3ed' stroke-width='5'/%3E%3Cpath d='M4 84V57H14V84Z' fill='%23ce4c29'/%3E%3Cpath d='M35 15V47L44 43V12Z' fill='%23dbedfa' stroke='%239ab4c9' stroke-width='2'/%3E%3Cpath d='M39 43l3 11h10l3-11' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Cellipse cx='47' cy='42' rx='9' ry='4' fill='none' stroke='%23ed6038' stroke-width='3'/%3E%3C/g%3E%3C/svg%3E") right 2% top 47% / auto 24% no-repeat;
+}
