@@ -122,3 +122,12 @@
   font: 900 clamp(.62rem, 1.45cqw, 1.35rem)/1 var(--font-display);
   letter-spacing: .065em;
 }
+
+.game-story.is-live:has(.basketball-court,.hockey-rink) .story-header > strong {
+  color: #e8f4fc;
+}
+.rotation-stage:has(.live-count.demo) .sport-switcher {
+  top: 8.5%;
+  bottom: auto;
+  opacity: 1;
+}
