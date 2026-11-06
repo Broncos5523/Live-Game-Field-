@@ -24,30 +24,33 @@
   aspect-ratio: 200 / 85;
   border-radius: 14% / 33%;
 }
-.surface-lines {
+.basketball-court::after, .hockey-rink::after {
+  content: "";
+  background-size: 100% 100%;
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
 }
-.basketball-court:has(.surface-lines)::before,
-.basketball-court:has(.surface-lines) .court-half,
-.basketball-court:has(.surface-lines) .court-center::before,
-.hockey-rink:has(.surface-lines) :is(.blue-line,.center-line,.faceoff,.puck-path) {
+.basketball-court::before,
+.basketball-court .court-half,
+.basketball-court .court-center::before,
+.hockey-rink :is(.blue-line,.center-line,.faceoff,.puck-path) {
   display: none;
 }
-.basketball-court:has(.surface-lines) .court-center {
+.basketball-court .court-center {
   position: absolute;
   inset: 34% 39%;
 }
 .basketball-court .court-team { width: 23%; }
 .hockey-rink .rink-logo.away { left: 11%; }
 .hockey-rink .rink-logo.home { right: 11%; }
-.play-motion {
-  position: absolute;
-  inset: 6%;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 1;
-}
+
+
+.basketball-court::after { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2094%2050%22%20aria-hidden%3D%22true%22%20class%3D%22surface-lines%22%3E%0A%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22%23fff4d5%22%20stroke-width%3D%22.65%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M.5%20.5H93.5V49.5H.5ZM47%200V50M0%2017H19V33H0M94%2017H75V33H94%0A%20%20%20%20%20%20%20%20%20%20M0%203H14Q39%2025%2014%2047H0M94%203H80Q55%2025%2080%2047H94M4%2022V28M90%2022V28%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ccircle%20cx%3D%2247%22%20cy%3D%2225%22%20r%3D%226%22%2F%3E%3Ccircle%20cx%3D%2219%22%20cy%3D%2225%22%20r%3D%226%22%2F%3E%3Ccircle%20cx%3D%2275%22%20cy%3D%2225%22%20r%3D%226%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ccircle%20cx%3D%225.25%22%20cy%3D%2225%22%20r%3D%22.75%22%2F%3E%3Ccircle%20cx%3D%2288.75%22%20cy%3D%2225%22%20r%3D%22.75%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fg%3E%3C%2Fsvg%3E"); }
+
+.hockey-rink::after { background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20200%2085%22%20aria-hidden%3D%22true%22%20class%3D%22surface-lines%22%3E%0A%20%20%20%20%20%20%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%22198%22%20height%3D%2283%22%20rx%3D%2227%22%20fill%3D%22none%22%20stroke%3D%22%23338ab5%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M75%200V85M125%200V85%22%20stroke%3D%22%231976d2%22%20stroke-width%3D%223%22%2F%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M100%200V85M11%209V76M189%209V76%22%20stroke%3D%22%23e4243b%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22%23df3348%22%20stroke-width%3D%221%22%3E%0A%20%20%20%20%20%20%20%20%3Ccircle%20cx%3D%2231%22%20cy%3D%2220.5%22%20r%3D%2215%22%2F%3E%3Ccircle%20cx%3D%2231%22%20cy%3D%2264.5%22%20r%3D%2215%22%2F%3E%0A%20%20%20%20%20%20%20%20%3Ccircle%20cx%3D%22169%22%20cy%3D%2220.5%22%20r%3D%2215%22%2F%3E%3Ccircle%20cx%3D%22169%22%20cy%3D%2264.5%22%20r%3D%2215%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fg%3E%3Ccircle%20cx%3D%22100%22%20cy%3D%2242.5%22%20r%3D%2215%22%20fill%3D%22none%22%20stroke%3D%22%231976d2%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fsvg%3E"); }
+
+.game-story.is-live:has(.basketball-court,.hockey-rink) { grid-template-rows: 14% 70% 16%; }
+.game-story.is-live:has(.basketball-court,.hockey-rink) .story-live-body { padding-block: .35%; }
