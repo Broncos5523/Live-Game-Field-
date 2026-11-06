@@ -1,0 +1,42 @@
+.football-field .football-ball {
+  left: var(--ball-x);
+  transition: left 450ms ease-out;
+}
+.football-field .drive-path {
+  left: var(--drive-start);
+  right: auto;
+  width: var(--drive-width);
+  background: var(--drive-color);
+  box-shadow: 0 0 7px var(--drive-color);
+  transition: left 450ms ease-out, width 450ms ease-out;
+}
+.football-field .drive-path > span {
+  transform: translate(-50%, -50%) rotate(var(--drive-direction));
+}
+
+.basketball-status .surface-body > .court-motion {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.basketball-status .surface-body > .court-motion text {
+  font: 900 30px system-ui, sans-serif;
+  paint-order: stroke;
+  stroke: #071522;
+  stroke-width: 4px;
+  text-anchor: middle;
+}
+.basketball-status .surface-body.court-timeout::after { opacity: .28; }
+
+@media (prefers-reduced-motion: reduce) {
+  .football-field .football-ball, .football-field .drive-path { transition: none; }
+}
+
+.football-field .drive-path > span:nth-child(1) { left: calc(55% - 10% * var(--drive-reverse)); }
+.football-field .drive-path > span:nth-child(2) { left: calc(70% - 40% * var(--drive-reverse)); }
+.football-field .drive-path > span:nth-child(3) { left: calc(85% - 70% * var(--drive-reverse)); }
+.football-field .drive-path > span:nth-child(4) { left: calc(100% - 100% * var(--drive-reverse)); }
