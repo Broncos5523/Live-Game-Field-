@@ -1,0 +1,13 @@
+/* Transfer roughly 24px at 720p from the live surface and leaders to the header. */
+.dashboard:has(.basketball-court,.hockey-rink) {
+  grid-template-rows: 0 minmax(0,19.45fr) minmax(0,58.7fr) minmax(0,15.85fr) minmax(0,5fr);
+}
+.dashboard:has(.basketball-court,.hockey-rink) .topbar {
+  height: max(2rem,6vh);
+}
+.dashboard:has(.basketball-court,.hockey-rink) .topbar .brand-logo {
+  height: max(1.5rem,5.67vh);
+}
+.dashboard:has(.basketball-court,.hockey-rink) .score-clock {
+  margin-top: calc(1.25rem + 3.33vh);
+}
