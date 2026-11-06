@@ -21,7 +21,7 @@
 }
 .basketball-status .basketball-court {
   width: min(89%,188cqh);
-  transform: perspective(1450px) rotateX(34deg) translateY(7%);
+  transform: perspective(1450px) rotateX(34deg) translateY(1%);
   background:
     repeating-linear-gradient(0deg,#f7edcf0a 0 3px,#6d512122 4px,#ffefcd0b 5px 8px),
     repeating-linear-gradient(90deg,#dfb87f 0 38px,#e4c18d 39px 77px,#d9af77 78px 115px);
