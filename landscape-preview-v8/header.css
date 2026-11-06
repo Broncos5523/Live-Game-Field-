@@ -20,3 +20,8 @@
 }
 .dashboard .topbar .live-count { grid-column: 1; }
 .dashboard .topbar .league-logo { grid-column: 3; }
+/* Use the full dashboard as the absolute header's centering reference. */
+.dashboard:has(.basketball-court,.hockey-rink) .topbar {
+  grid-area: auto;
+  inset-inline: 0;
+}
