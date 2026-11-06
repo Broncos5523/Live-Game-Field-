@@ -1,0 +1,46 @@
+/* Glass panel finishes for the V6 review. */
+.dashboard .game-story {
+  background: #050d1838 !important;
+  border-color: #c4e6ff55;
+}
+.dashboard .game-story .story-header,
+.dashboard .game-story .story-event,
+.dashboard .game-story .play-portrait,
+.dashboard .game-story .final-story-body {
+  background: linear-gradient(145deg, #122d4560, #030a136b);
+  backdrop-filter: blur(2px);
+  text-shadow: 0 1px 4px #000, 0 0 9px #000;
+}
+.dashboard .game-story .story-live-body {
+  background: #07162624;
+}
+.dashboard .game-story .surface-body {
+  background: #07162627;
+}
+.dashboard .leaders {
+  background: #050d1833;
+  border-color: #b5dfff40;
+  box-shadow: none;
+}
+.dashboard .leaders h2 {
+  background: linear-gradient(90deg,#08182c25,#152f465e,#08182c25);
+  text-shadow: 0 1px 4px #000, 0 0 9px #000;
+}
+.dashboard .leader-card {
+  background: linear-gradient(135deg,
+    color-mix(in srgb,var(--leader-color) 28%,#0916258c),
+    #030b155e);
+  border-color: color-mix(in srgb,var(--leader-color) 60%,#b4d7ee94);
+  box-shadow: inset 0 1px 0 #eef9ff35, 0 3px 10px #0003;
+  backdrop-filter: blur(2px);
+}
+.dashboard .leader-copy {
+  text-shadow: 0 1px 4px #000, 0 0 9px #000;
+}
+.dashboard .leader-copy b {
+  color: color-mix(in srgb,var(--leader-color) 15%,white);
+}
+.dashboard .ticker {
+  background: linear-gradient(180deg,#0a19277a,#02070db0);
+  backdrop-filter: blur(2px);
+}
