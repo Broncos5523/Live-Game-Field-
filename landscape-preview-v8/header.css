@@ -1,0 +1,22 @@
+/* Keep the live count compact while its accessible label stays on the parent. */
+.dashboard .live-count > span {
+  display: none;
+}
+.dashboard .live-count > i {
+  grid-row: 1;
+}
+.dashboard .topbar .brand-logo {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: min(34%, 23rem);
+}
+.dashboard .topbar {
+  position: relative;
+}
+.dashboard:has(.basketball-court,.hockey-rink) .topbar {
+  position: absolute;
+}
+.dashboard .topbar .live-count { grid-column: 1; }
+.dashboard .topbar .league-logo { grid-column: 3; }
