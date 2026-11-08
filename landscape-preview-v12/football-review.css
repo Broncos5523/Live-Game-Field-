@@ -70,3 +70,31 @@
 }
 .game-story.is-live:has(.football-field) .surface-body::before {left:.25%;}
 .game-story.is-live:has(.football-field) .surface-body::after {right:.25%;}
+
+/* V12.1: team-branded field and physically aligned goalposts. */
+.game-story.is-live:has(.football-field) .surface-body::before,
+.game-story.is-live:has(.football-field) .surface-body::after {content:none !important;display:none !important;}
+.game-story.is-live:has(.football-field) .football-field .field-endzone {
+  z-index:7;
+  top:50%;
+  width:12%;
+  text-align:center;
+  white-space:nowrap;
+  font:900 clamp(.7rem,1.6cqw,1.4rem)/1 var(--font-display);
+  letter-spacing:.04em;
+  text-shadow:0 2px 3px #000,0 0 4px #000;
+}
+.game-story.is-live:has(.football-field) .football-field .away-zone {left:-2.3%;}
+.game-story.is-live:has(.football-field) .football-field .home-zone {right:-2.3%;}
+.game-story.is-live:has(.football-field) .football-midfield {
+  position:absolute;z-index:2;left:50%;top:50%;width:14%;height:60%;
+  transform:translate(-50%,-50%);object-fit:contain;
+  filter:drop-shadow(0 1px 2px #001b14b8);pointer-events:none;
+}
+.game-story.is-live:has(.football-field) .football-goalpost {
+  position:absolute;z-index:9;top:18%;height:66%;width:4.5%;
+  overflow:visible;pointer-events:none;
+  filter:drop-shadow(1px 2px 1px #00150c);
+}
+.game-story.is-live:has(.football-field) .football-goalpost.left {left:-4.6%;}
+.game-story.is-live:has(.football-field) .football-goalpost.right {right:-4.6%;}
