@@ -40,3 +40,9 @@
 .football-field .drive-path > span:nth-child(2) { left: calc(70% - 40% * var(--drive-reverse)); }
 .football-field .drive-path > span:nth-child(3) { left: calc(85% - 70% * var(--drive-reverse)); }
 .football-field .drive-path > span:nth-child(4) { left: calc(100% - 100% * var(--drive-reverse)); }
+
+/* V11: play cues are structured animation data, never on-court text. */
+.basketball-status .basketball-court[data-play-cue]::before {
+  content: none;
+  display: none;
+}
