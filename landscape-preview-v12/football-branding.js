@@ -2,7 +2,12 @@
 (() => {
   const names={ARI:'CARDINALS',ATL:'FALCONS',BAL:'RAVENS',BUF:'BILLS',CAR:'PANTHERS',CHI:'BEARS',CIN:'BENGALS',CLE:'BROWNS',DAL:'COWBOYS',DEN:'BRONCOS',DET:'LIONS',GB:'PACKERS',HOU:'TEXANS',IND:'COLTS',JAX:'JAGUARS',KC:'CHIEFS',LV:'RAIDERS',LAC:'CHARGERS',LAR:'RAMS',MIA:'DOLPHINS',MIN:'VIKINGS',NE:'PATRIOTS',NO:'SAINTS',NYG:'GIANTS',NYJ:'JETS',PHI:'EAGLES',PIT:'STEELERS',SEA:'SEAHAWKS',SF:'49ERS',TB:'BUCCANEERS',TEN:'TITANS',WAS:'COMMANDERS'};
   const aliases={WSH:'WAS',LA:'LAR',JAC:'JAX'};
-  const postSVG='<svg viewBox="0 0 100 120" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" aria-hidden="true"><path d="M12 6 L12 64 L88 64 L88 6 M50 64 L50 114" fill="none" stroke="#ffdb28" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8 L14 62 L86 62 L86 8" fill="none" stroke="#fff2a0" stroke-opacity=".7" stroke-width="1.6"/></svg>';
+  // End-zone goalposts seen almost edge-on, as in the ESPN Gamecast reference.
+  // Mirror the geometry at opposite ends; avoid a front-facing U silhouette.
+  const postSVG={
+    left:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M80 114 L68 67 L30 61 L24 12 M68 67 L63 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M78 112 L66 66 L31 60" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>',
+    right:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M20 114 L32 67 L70 61 L76 12 M32 67 L37 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 112 L34 66 L69 60" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>'
+  };
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
       if(!story.querySelector('.football-field') || story.querySelector('.play-portrait'))return;
@@ -59,7 +64,7 @@
       ['left','right'].forEach(side=>{
         const post=document.createElement('div');
         post.className='football-goalpost-external '+side;
-        post.innerHTML=postSVG;
+        post.innerHTML=postSVG[side];
         surface.appendChild(post);
       });
     });
