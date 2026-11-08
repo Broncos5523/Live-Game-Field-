@@ -4,6 +4,16 @@
   const aliases={WSH:'WAS',LA:'LAR',JAC:'JAX'};
   const postSVG='<svg viewBox="0 0 44 100" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M4 5 V54 H40 V5 M22 54 V98" fill="none" stroke="#f8ce21" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 5 V54 H40" fill="none" stroke="#fff3a4" stroke-opacity=".55" stroke-width="1"/></svg>';
   function enhance(){
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      if(!story.querySelector('.football-field') || story.querySelector('.play-portrait'))return;
+      const leader=document.querySelector('.leader-card img');
+      const portrait=document.createElement('aside');portrait.className='play-portrait';
+      const title=document.createElement('span');title.textContent='LAST PLAY';
+      const frame=document.createElement('div');frame.className='play-portrait-image has-photo';
+      if(leader){const img=document.createElement('img');img.src=leader.src;img.alt='';frame.appendChild(img);}
+      const name=document.createElement('strong');name.textContent='PLAYER SPOTLIGHT';
+      portrait.append(title,frame,name);story.prepend(portrait);
+    });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
       if(!away||!home)return;
