@@ -58,7 +58,7 @@
       if(display.textContent!==next)display.textContent=next;
       const surface=story.querySelector('.story-live-body');
       if(surface){
-        surface.querySelectorAll(':scope > .football-goalpost').forEach(n=>n.remove());
+        if(surface.querySelectorAll(':scope > .football-goalpost-external').length===2)return;
         const field=surface.querySelector('.football-field');
         if(field){
           field.querySelectorAll('.football-goalpost').forEach(n=>n.remove());
