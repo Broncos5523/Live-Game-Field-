@@ -4,9 +4,10 @@
   const aliases={WSH:'WAS',LA:'LAR',JAC:'JAX'};
   // End-zone goalposts seen almost edge-on, as in the ESPN Gamecast reference.
   // Mirror the geometry at opposite ends; avoid a front-facing U silhouette.
+  // Edge-on goalposts: uprights overlap in perspective, not a wide U shape.
   const postSVG={
-    left:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M80 114 L68 67 L30 61 L24 12 M68 67 L63 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M78 112 L66 66 L31 60" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>',
-    right:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M20 114 L32 67 L70 61 L76 12 M32 67 L37 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 112 L34 66 L69 60" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>'
+    left:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M80 114 L65 68 L47 65 L43 12 M65 68 L57 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M79 112 L64 67 L47 64" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>',
+    right:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M20 114 L35 68 L53 65 L57 12 M35 68 L43 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 112 L36 67 L53 64" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>'
   };
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
