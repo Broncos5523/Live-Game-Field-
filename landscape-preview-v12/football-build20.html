@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="../landscape-preview-v1/" />
+    <title>V12 FOOTBALL REVIEW 18 — goalpost asset verification</title>
+    <link rel="stylesheet" href="styles.css?v=20261004-v5" />
+    <script>
+      window.addEventListener('error', function (event) {
+        window.setTimeout(function () {
+          var mount = document.getElementById('app');
+          if (mount && !document.querySelector('.dashboard')) {
+            mount.innerHTML = '<div class="boot-screen boot-error"><strong>DASHBOARD STARTUP ERROR</strong><span>' +
+              String(event.message || 'The display script could not start.') +
+              '</span><small>Close this page, restart the BAT file, and reopen the displayed address.</small></div>';
+          }
+        }, 100);
+      });
+    </script>
+  <link rel="stylesheet" href="landscape.css?v=2" />
+  <link rel="stylesheet" href="../landscape-preview-v2/review.css" />
+    <link rel="stylesheet" href="../landscape-preview-v5/surfaces.css?v=2" />
+    <link rel="stylesheet" href="../landscape-preview-v6/glass.css" />
+    <link rel="stylesheet" href="../landscape-preview-v7/brand.css" />
+    <link rel="stylesheet" href="../landscape-preview-v8/header.css?v=2" />
+    <link rel="stylesheet" href="../landscape-preview-v9/sideline.css?v=2" />
+    <link rel="stylesheet" href="../landscape-preview-v11/play-motion.css?v=20261108-jsonfix2" />
+    <link rel="stylesheet" href="../landscape-preview-v12/football-review.css?v=20261108-goalpost20" />
+    <style>
+      /* V11 review: never render structured play-cue JSON as visible court text. */
+      .game-story .basketball-status .basketball-court[data-play-cue]::before { content: none !important; display: none !important; }
+    </style>
+  </head>
+  <body>
+    <div style="position:fixed;top:0;left:0;z-index:99999;background:#ffd62a;color:#111;font:700 12px Arial;padding:2px 7px;pointer-events:none">FOOTBALL BUILD 20</div>
+    <div id="app">
+      <div class="boot-screen"><strong>MAN CAVE LIVE GAME CENTER</strong><span>STARTING DISPLAY…</span></div>
+    </div>
+    <script src="landscape.js?v=2"></script>
+    <script src="../landscape-preview-v10/play-feed.js"></script>
+    <script src="../landscape-preview-v12/app-football-review.js?v=football17"></script>
+    <script src="../landscape-preview-v11/motion.js"></script>
+    <script src="../landscape-preview-v12/football-branding.js?v=20261108-goalpost20"></script>
+  </body>
+</html>
