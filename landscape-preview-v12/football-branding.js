@@ -5,9 +5,11 @@
   // End-zone goalposts seen almost edge-on, as in the ESPN Gamecast reference.
   // Mirror the geometry at opposite ends; avoid a front-facing U silhouette.
   // Edge-on goalposts: uprights overlap in perspective, not a wide U shape.
+  // True football goal assembly: two uprights, crossbar and rear-offset gooseneck.
+  // Perspective is authored in the SVG geometry, never by CSS rotating a U.
   const postSVG={
-    left:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M80 114 L65 68 L47 65 L43 12 M65 68 L57 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M79 112 L64 67 L47 64" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>',
-    right:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M20 114 L35 68 L53 65 L57 12 M35 68 L43 13" fill="none" stroke="#ffdc22" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 112 L36 67 L53 64" fill="none" stroke="#fff5a8" stroke-width="1.5"/></svg>'
+    left:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M86 115 L70 92 L66 75 L38 67" stroke="#b88a00" stroke-width="8"/><path d="M38 67 L31 19 M66 75 L64 22" stroke="#b88a00" stroke-width="8"/><path d="M86 115 L70 92 L66 75 L38 67 M38 67 L31 19 M66 75 L64 22" stroke="#ffcf18" stroke-width="5"/><path d="M37 66 L30 19 M65 73 L63 22 M68 90 L84 113" stroke="#fff5a6" stroke-width="1.5"/></g></svg>',
+    right:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 115 L30 92 L34 75 L62 67" stroke="#b88a00" stroke-width="8"/><path d="M62 67 L69 19 M34 75 L36 22" stroke="#b88a00" stroke-width="8"/><path d="M14 115 L30 92 L34 75 L62 67 M62 67 L69 19 M34 75 L36 22" stroke="#ffcf18" stroke-width="5"/><path d="M63 66 L70 19 M35 73 L37 22 M32 90 L16 113" stroke="#fff5a6" stroke-width="1.5"/></g></svg>'
   };
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
