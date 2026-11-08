@@ -364,3 +364,29 @@
   right:-.5% !important;
   transform:perspective(650px) rotateY(22deg) rotate(8deg) !important;
 }
+
+/* V12.12: give the goalposts dedicated side clearance without shrinking the turf. */
+.dashboard .game-story.is-live:has(.football-field) {
+  grid-template-columns:minmax(0,13%) minmax(0,72%) minmax(0,15%) !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-field {
+  width:91% !important;
+  height:88% !important;
+}
+/* Small complete uprights sit in the clear gutters, behind the end zones. */
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external {
+  top:25% !important;
+  width:5.2% !important;
+  height:28% !important;
+  aspect-ratio:auto !important;
+  z-index:16 !important;
+  overflow:visible !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.left {
+  left:0.1% !important;
+  transform:perspective(650px) rotateY(-22deg) rotate(-5deg) !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.right {
+  right:0.1% !important;
+  transform:perspective(650px) rotateY(22deg) rotate(5deg) !important;
+}
