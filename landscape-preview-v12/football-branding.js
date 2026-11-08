@@ -6,7 +6,8 @@
   // Mirror the geometry at opposite ends; avoid a front-facing U silhouette.
   // Edge-on goalposts: uprights overlap in perspective, not a wide U shape.
   // One full-surface SVG: short ESPN-style goal silhouettes, no narrow post boxes.
-  const goalOverlay='<svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#ffdf24" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"><path d="M45 285 L37 257 L17 251 L14 225 M37 257 L33 222"/><path d="M955 285 L963 257 L983 251 L986 225 M963 257 L967 222"/></g><g fill="none" stroke="#fff4a4" stroke-width="1"><path d="M45 283 L37 256 L17 250 M955 283 L963 256 L983 250"/></g></svg>';
+  // Crossbars follow the back end-zone lines: vertical in this horizontal field view.
+  const goalOverlay='<svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#ffdf24" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M44 265 L23 250 M23 218 L23 282 M23 218 L15 193 M23 282 L15 307"/><path d="M956 265 L977 250 M977 218 L977 282 M977 218 L985 193 M977 282 L985 307"/></g><g fill="none" stroke="#fff4a4" stroke-width="1.2"><path d="M22 219 L22 281 M978 219 L978 281"/></g></svg>';
 
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
