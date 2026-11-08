@@ -98,3 +98,31 @@
 }
 .game-story.is-live:has(.football-field) .football-goalpost.left {left:-4.6%;}
 .game-story.is-live:has(.football-field) .football-goalpost.right {right:-4.6%;}
+
+/* V12.2: full-height end-zone wordmarks, readable from sideline to sideline. */
+.game-story.is-live:has(.football-field) .football-field .field-endzone {
+  position:absolute !important;
+  z-index:8;
+  top:50% !important;
+  width:var(--endzone-wordmark-width, 155px) !important;
+  max-width:none !important;
+  height:auto;
+  padding:0;
+  overflow:visible;
+  white-space:nowrap;
+  font:900 clamp(13px,2cqw,23px)/1 var(--font-display) !important;
+  letter-spacing:.045em !important;
+  text-align:center;
+  color:white;
+  text-shadow:1px 2px 3px #00130b,0 0 3px #00130b;
+}
+.game-story.is-live:has(.football-field) .football-field .away-zone {
+  left:3.7% !important;
+  right:auto !important;
+  transform:translate(-50%,-50%) rotate(-90deg) !important;
+}
+.game-story.is-live:has(.football-field) .football-field .home-zone {
+  right:3.7% !important;
+  left:auto !important;
+  transform:translate(50%,-50%) rotate(90deg) !important;
+}
