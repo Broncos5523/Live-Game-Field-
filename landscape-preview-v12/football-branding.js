@@ -5,12 +5,9 @@
   // End-zone goalposts seen almost edge-on, as in the ESPN Gamecast reference.
   // Mirror the geometry at opposite ends; avoid a front-facing U silhouette.
   // Edge-on goalposts: uprights overlap in perspective, not a wide U shape.
-  // True football goal assembly: two uprights, crossbar and rear-offset gooseneck.
-  // Perspective is authored in the SVG geometry, never by CSS rotating a U.
-  const postSVG={
-    left:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M86 115 L70 92 L66 75 L38 67" stroke="#b88a00" stroke-width="8"/><path d="M38 67 L31 19 M66 75 L64 22" stroke="#b88a00" stroke-width="8"/><path d="M86 115 L70 92 L66 75 L38 67 M38 67 L31 19 M66 75 L64 22" stroke="#ffcf18" stroke-width="5"/><path d="M37 66 L30 19 M65 73 L63 22 M68 90 L84 113" stroke="#fff5a6" stroke-width="1.5"/></g></svg>',
-    right:'<svg viewBox="0 0 100 120" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 115 L30 92 L34 75 L62 67" stroke="#b88a00" stroke-width="8"/><path d="M62 67 L69 19 M34 75 L36 22" stroke="#b88a00" stroke-width="8"/><path d="M14 115 L30 92 L34 75 L62 67 M62 67 L69 19 M34 75 L36 22" stroke="#ffcf18" stroke-width="5"/><path d="M63 66 L70 19 M35 73 L37 22 M32 90 L16 113" stroke="#fff5a6" stroke-width="1.5"/></g></svg>'
-  };
+  // One full-surface SVG: short ESPN-style goal silhouettes, no narrow post boxes.
+  const goalOverlay='<svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#ffdf24" stroke-width="3.8" stroke-linejoin="round" stroke-linecap="round"><path d="M45 285 L37 257 L17 251 L14 225 M37 257 L33 222"/><path d="M955 285 L963 257 L983 251 L986 225 M963 257 L967 222"/></g><g fill="none" stroke="#fff4a4" stroke-width="1"><path d="M45 283 L37 256 L17 250 M955 283 L963 256 L983 250"/></g></svg>';
+
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
       if(!story.querySelector('.football-field') || story.querySelector('.play-portrait'))return;
@@ -63,13 +60,11 @@
       const field=surface.querySelector('.football-field');
       if(!field)return;
       field.querySelectorAll('.football-goalpost').forEach(n=>n.remove());
-      if(surface.querySelectorAll(':scope > .football-goalpost-external').length===2)return;
-      ['left','right'].forEach(side=>{
-        const post=document.createElement('div');
-        post.className='football-goalpost-external '+side;
-        post.innerHTML=postSVG[side];
-        surface.appendChild(post);
-      });
+      surface.querySelectorAll(':scope > .football-goalpost-external, :scope > .football-goalpost-overlay').forEach(n=>n.remove());
+      const overlay=document.createElement('div');
+      overlay.className='football-goalpost-overlay';
+      overlay.innerHTML=goalOverlay;
+      surface.appendChild(overlay);
     });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
