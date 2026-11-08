@@ -14,6 +14,27 @@
       const name=document.createElement('strong');name.textContent='PLAYER SPOTLIGHT';
       portrait.append(title,frame,name);story.prepend(portrait);
     });
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      const field=story.querySelector('.football-field');
+      if(!field)return;
+      const surface=field.closest('.surface-body');
+      if(!surface)return;
+      let bar=surface.querySelector('.football-drive-banner');
+      if(!bar){
+        bar=document.createElement('div');
+        bar.className='football-drive-banner';
+        bar.setAttribute('aria-label','Current drive');
+        surface.appendChild(bar);
+      }
+      const situation=story.querySelector('.story-header strong')?.textContent?.trim()||'';
+      const match=situation.match(/^([A-Z]{2,4})\\s+BALL\\s*[•·-]?\\s*(.*)$/i);
+      const possession=match?.[1]||'';
+      const detail=match?.[2]||situation;
+      const driveText=possession
+        ? 'CURRENT DRIVE  ·  '+(names[aliases[possession]||possession]||possession)+'  ·  '+(detail||'IN PROGRESS')
+        : 'CURRENT DRIVE  ·  '+(situation||'IN PROGRESS');
+      if(bar.textContent!==driveText)bar.textContent=driveText;
+    });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
       if(!away||!home)return;
