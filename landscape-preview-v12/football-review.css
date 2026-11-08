@@ -158,3 +158,62 @@
 .game-story.is-live:has(.football-field) .football-field .field-endzone {
   font-size:clamp(15px,2.3cqw,28px) !important;
 }
+
+/* V12.4: football follows the approved NBA three-column broadcast composition. */
+.dashboard:has(.football-field) {
+  grid-template-rows:0 minmax(0,19.45fr) minmax(0,58.7fr) minmax(0,15.85fr) minmax(0,5fr);
+}
+.dashboard:has(.football-field) .topbar {
+  position:absolute;grid-area:auto;inset:.35rem 0 auto;height:max(2rem,6vh);
+}
+.dashboard:has(.football-field) .hero .team {
+  grid-template-columns:minmax(0,44%) minmax(0,56%);
+  grid-template-rows:minmax(0,.7fr) minmax(0,1fr);
+  max-width:20rem;width:95%;justify-self:center;row-gap:0;
+}
+.dashboard:has(.football-field) .hero .team > :is(img,.logo-fallback) {
+  grid-row:1 / 3;grid-column:1;max-height:90%;
+}
+.dashboard:has(.football-field) .hero .team-home {
+  grid-template-columns:minmax(0,56%) minmax(0,44%);
+}
+.dashboard:has(.football-field) .hero .team-home > :is(img,.logo-fallback) {grid-column:2;}
+.dashboard:has(.football-field) .hero .team p {align-self:end;font-size:clamp(.55rem,1.2cqw,1.15rem);}
+.dashboard:has(.football-field) .hero .team strong {font-size:clamp(1.35rem,3.35cqw,3.7rem);}
+.dashboard:has(.football-field) .score-clock {margin-top:calc(1.25rem + 3.33vh);}
+.dashboard:has(.football-field) .score-clock strong {font-size:clamp(1.4rem,3.35cqw,3.7rem);}
+.dashboard .game-story.is-live:has(.football-field) {
+  grid-template-columns:minmax(0,15%) minmax(0,1fr) minmax(0,17%);
+  grid-template-rows:minmax(0,1fr) auto;
+}
+.dashboard .game-story.is-live:has(.football-field) .play-portrait {
+  grid-area:1 / 1 / 3 / 2;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body {
+  grid-area:1 / 2 / 3 / 3;
+  display:grid;grid-template-columns:minmax(0,1fr) !important;
+  padding:.25rem;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-header {
+  grid-area:2 / 3;padding:.5rem;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event {
+  grid-area:1 / 3;border-top:0;
+  display:grid;align-content:start;gap:.5rem;padding:.6rem;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event strong {
+  font-size:clamp(.7rem,1.4cqw,1.2rem);
+  white-space:normal;overflow-wrap:anywhere;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-probability,
+.dashboard .game-story.is-live:has(.football-field) .story-state {display:none !important;}
+.dashboard .game-story.is-live:has(.football-field) .football-field {
+  width:96% !important;height:88% !important;
+  transform:perspective(1400px) rotateX(22deg) !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-goalpost.left {
+  transform:skewY(-13deg) rotate(-7deg);transform-origin:bottom right;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-goalpost.right {
+  transform:skewY(13deg) rotate(7deg);transform-origin:bottom left;
+}
