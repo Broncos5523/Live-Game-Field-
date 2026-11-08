@@ -419,3 +419,7 @@
   justify-content:center !important;
   align-items:center !important;
 }
+
+/* V12.14: perspective is drawn into mirrored SVGs, not CSS-rotated U shapes. */
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.left,
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.right {transform:none !important;}
