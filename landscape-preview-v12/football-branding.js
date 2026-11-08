@@ -27,7 +27,7 @@
         surface.appendChild(bar);
       }
       const situation=story.querySelector('.story-header strong')?.textContent?.trim()||'';
-      const match=situation.match(/^([A-Z]{2,4})\\s+BALL\\s*[•·-]?\\s*(.*)$/i);
+      const match=situation.match(/^([A-Z]{2,4})\s+BALL\s*[•·-]?\s*(.*)$/i);
       const possession=match?.[1]||'';
       const detail=match?.[2]||situation;
       const driveText=possession
@@ -40,11 +40,35 @@
       const header=story.querySelector('.story-header');
       if(!header)return;
       const original=header.querySelector('strong')?.textContent?.trim()||'';
-      const down=original.match(/(1ST|2ND|3RD|4TH)\\s*(?:&|AND)\\s*(GOAL|\\d+)/i);
+      const down=original.match(/(1ST|2ND|3RD|4TH)\s*(?:&|AND)\s*(GOAL|\d+)/i);
       const label=down ? down[1].toUpperCase()+' & '+down[2].toUpperCase() : 'DOWN & DISTANCE';
       let badge=header.querySelector('.football-down-distance');
       if(!badge){badge=document.createElement('strong');badge.className='football-down-distance';header.appendChild(badge);}
       if(badge.textContent!==label)badge.textContent=label;
+    });
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      if(!story.querySelector('.football-field'))return;
+      const event=story.querySelector('.story-event');
+      const header=story.querySelector('.story-header');
+      if(!event||!header)return;
+      const down=header.querySelector('.football-down-distance');
+      let display=event.querySelector('.football-down-only');
+      if(!display){display=document.createElement('div');display.className='football-down-only';event.appendChild(display);}
+      const next=down?.textContent||'DOWN & DISTANCE';
+      if(display.textContent!==next)display.textContent=next;
+      const surface=story.querySelector('.story-live-body');
+      if(surface){
+        surface.querySelectorAll(':scope > .football-goalpost').forEach(n=>n.remove());
+        const field=surface.querySelector('.football-field');
+        if(field){
+          field.querySelectorAll('.football-goalpost').forEach(n=>n.remove());
+          ['left','right'].forEach(side=>{
+            const post=document.createElement('div');
+            post.className='football-goalpost football-goalpost-external '+side;
+            post.innerHTML=postSVG;surface.appendChild(post);
+          });
+        }
+      }
     });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
@@ -63,10 +87,7 @@
         logo.alt='';logo.decoding='async';logo.src='https://a.espncdn.com/i/teamlogos/nfl/500/'+hh.toLowerCase()+'.png';
         field.appendChild(logo);
       }
-      ['left','right'].forEach(side=>{
-        const post=document.createElement('div');post.className='football-goalpost '+side;
-        post.innerHTML=postSVG;field.appendChild(post);
-      });
+
     });
   }
   let pending=false;
