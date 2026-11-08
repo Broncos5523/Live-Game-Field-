@@ -217,3 +217,30 @@
 .dashboard .game-story.is-live:has(.football-field) .football-goalpost.right {
   transform:skewY(13deg) rotate(7deg);transform-origin:bottom left;
 }
+
+/* V12.5: compact current-drive ribbon in the unused space above the football field. */
+.dashboard .game-story.is-live:has(.football-field) .surface-body {
+  position:relative;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-drive-banner {
+  position:absolute;
+  z-index:12;
+  top:1.1%;
+  left:10%;
+  width:80%;
+  min-height:9%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:.12rem .7rem;
+  border:1px solid #c1d7e8b8;
+  border-radius:.2rem;
+  background:linear-gradient(105deg,#142a3ae8,#233a50ed 35%,#14202fe8 80%,#091b2eea);
+  box-shadow:inset 0 1px #f2fbff73,0 3px 8px #000a;
+  color:#f7fbff;
+  font:900 clamp(.55rem,1.16cqw,1.1rem)/1.12 var(--font-display);
+  letter-spacing:.035em;
+  text-align:center;
+  text-shadow:0 1px 3px #000;
+  pointer-events:none;
+}
