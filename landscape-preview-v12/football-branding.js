@@ -35,6 +35,17 @@
         : 'CURRENT DRIVE  ·  '+(situation||'IN PROGRESS');
       if(bar.textContent!==driveText)bar.textContent=driveText;
     });
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      if(!story.querySelector('.football-field'))return;
+      const header=story.querySelector('.story-header');
+      if(!header)return;
+      const original=header.querySelector('strong')?.textContent?.trim()||'';
+      const down=original.match(/(1ST|2ND|3RD|4TH)\\s*(?:&|AND)\\s*(GOAL|\\d+)/i);
+      const label=down ? down[1].toUpperCase()+' & '+down[2].toUpperCase() : 'DOWN & DISTANCE';
+      let badge=header.querySelector('.football-down-distance');
+      if(!badge){badge=document.createElement('strong');badge.className='football-down-distance';header.appendChild(badge);}
+      if(badge.textContent!==label)badge.textContent=label;
+    });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
       if(!away||!home)return;
