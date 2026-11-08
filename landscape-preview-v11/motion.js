@@ -89,7 +89,8 @@
         {delay, duration, iterations, fill:'both'});
     }
     const left = cue.side === 'away';
-    const rim = courtX(left ? .032 : .968);
+    // Match the actual hoop centers in the 94-unit court SVG (x=5.25 and x=88.75).
+    const rim = courtX(left ? 5.25 / 94 : 88.75 / 94);
     const inward = left ? 1 : -1;
     let duration = 1450;
     if (cue.kind === 'timeout') {
