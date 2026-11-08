@@ -390,3 +390,32 @@
   right:0.1% !important;
   transform:perspective(650px) rotateY(22deg) rotate(5deg) !important;
 }
+
+/* V12.13: keep approved post size/location; correct their perspective only. */
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.left {
+  transform:perspective(650px) rotateY(22deg) skewY(-11deg) !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.right {
+  transform:perspective(650px) rotateY(-22deg) skewY(11deg) !important;
+}
+/* Center the last-play heading and description inside the right column. */
+.dashboard .game-story.is-live:has(.football-field) .story-event {
+  display:flex !important;
+  flex-direction:column;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  gap:.75rem !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > span {
+  width:100%;
+  text-align:center !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > strong {
+  flex:0 1 auto;
+  width:100%;
+  min-height:0;
+  text-align:center !important;
+  justify-content:center !important;
+  align-items:center !important;
+}
