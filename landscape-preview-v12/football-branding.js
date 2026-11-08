@@ -46,30 +46,6 @@
       if(!badge){badge=document.createElement('strong');badge.className='football-down-distance';header.appendChild(badge);}
       if(badge.textContent!==label)badge.textContent=label;
     });
-    document.querySelectorAll('.game-story.is-live').forEach(story=>{
-      if(!story.querySelector('.football-field'))return;
-      const event=story.querySelector('.story-event');
-      const header=story.querySelector('.story-header');
-      if(!event||!header)return;
-      const down=header.querySelector('.football-down-distance');
-      let display=event.querySelector('.football-down-only');
-      if(!display){display=document.createElement('div');display.className='football-down-only';event.appendChild(display);}
-      const next=down?.textContent||'DOWN & DISTANCE';
-      if(display.textContent!==next)display.textContent=next;
-      const surface=story.querySelector('.story-live-body');
-      if(surface){
-        if(surface.querySelectorAll(':scope > .football-goalpost-external').length===2)return;
-        const field=surface.querySelector('.football-field');
-        if(field){
-          field.querySelectorAll('.football-goalpost').forEach(n=>n.remove());
-          ['left','right'].forEach(side=>{
-            const post=document.createElement('div');
-            post.className='football-goalpost football-goalpost-external '+side;
-            post.innerHTML=postSVG;surface.appendChild(post);
-          });
-        }
-      }
-    });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
       if(!away||!home)return;
@@ -82,6 +58,7 @@
       away.textContent=names[aa]||a;home.textContent=names[hh]||h;
       field.dataset.v12Teams=a+'-'+h;
       field.querySelectorAll('.football-midfield,.football-goalpost').forEach(n=>n.remove());
+      ['left','right'].forEach(side=>{const post=document.createElement('div');post.className='football-goalpost '+side;post.innerHTML=postSVG;field.appendChild(post);});
       if(names[hh]){
         const logo=document.createElement('img');logo.className='football-midfield';
         logo.alt='';logo.decoding='async';logo.src='https://a.espncdn.com/i/teamlogos/nfl/500/'+hh.toLowerCase()+'.png';
