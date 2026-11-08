@@ -127,7 +127,7 @@
         duration = 2000;
       } else {
         const cross = add('path', {
-          d:`M${endX-6} ${endY-6}l12 12m0-12l-12 12`,
+          d:`M${endX + inward * 7 - 6} ${endY - (courtBounds.height * height / surfaceBounds.height) * .08 - 6}l12 12m0-12l-12 12`,
           stroke:'#f02c40', 'stroke-width':5, 'stroke-linecap':'round'
         });
         pulse(cross, 380, 1000);
