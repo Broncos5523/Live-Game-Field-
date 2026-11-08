@@ -11,9 +11,9 @@
       const h=(home.dataset.teamCode||home.textContent||'').trim().toUpperCase();
       if(!a||!h)return;
       const aa=aliases[a]||a,hh=aliases[h]||h;
+      if(field.dataset.v12Teams===a+'-'+h)return;
       away.dataset.teamCode=a;home.dataset.teamCode=h;
       away.textContent=names[aa]||a;home.textContent=names[hh]||h;
-      if(field.dataset.v12Teams===a+'-'+h)return;
       field.dataset.v12Teams=a+'-'+h;
       field.querySelectorAll('.football-midfield,.football-goalpost').forEach(n=>n.remove());
       if(names[hh]){
