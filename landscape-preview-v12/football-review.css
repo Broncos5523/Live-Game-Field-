@@ -263,3 +263,45 @@
   opacity:1 !important;
   font-size:clamp(.7rem,1.5cqw,1.35rem) !important;
 }
+
+/* V12.7 football-only readability and goalpost clearance. */
+.dashboard .game-story.is-live:has(.football-field) .story-event {
+  grid-template-rows:auto minmax(0,1fr);
+  align-content:stretch;
+  padding:.8rem .7rem;
+  gap:.7rem;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > span {
+  font-size:clamp(.65rem,1.15cqw,1.05rem);
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > strong {
+  display:flex;
+  align-items:center;
+  font-size:clamp(1.1rem,2.05cqw,2.2rem) !important;
+  line-height:1.16;
+  overflow-wrap:break-word;
+  -webkit-line-clamp:unset;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-header .story-kicker,
+.dashboard .game-story.is-live:has(.football-field) .story-header > strong:not(.football-down-distance) {
+  display:none !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-header {
+  display:flex;align-items:center;justify-content:center;text-align:center;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-down-distance {
+  display:block !important;
+  color:#fff;
+  font:900 clamp(.85rem,1.65cqw,1.65rem)/1.1 var(--font-display);
+  text-shadow:0 2px 4px #000;
+}
+.dashboard .game-story.is-live:has(.football-field) .surface-body {overflow:visible !important;}
+.dashboard .game-story.is-live:has(.football-field) .football-field {overflow:visible !important;}
+.dashboard .game-story.is-live:has(.football-field) .football-goalpost {
+  top:8% !important;
+  height:84% !important;
+  width:5.2% !important;
+  overflow:visible !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-goalpost.left {left:-5.8% !important;}
+.dashboard .game-story.is-live:has(.football-field) .football-goalpost.right {right:-5.8% !important;}
