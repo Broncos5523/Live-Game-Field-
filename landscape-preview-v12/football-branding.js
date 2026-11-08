@@ -17,7 +17,7 @@
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
       const field=story.querySelector('.football-field');
       if(!field)return;
-      const surface=field.closest('.surface-body');
+      const surface=story.querySelector('.story-live-body');
       if(!surface)return;
       let bar=surface.querySelector('.football-drive-banner');
       if(!bar){
