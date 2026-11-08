@@ -306,3 +306,55 @@
 .dashboard .game-story.is-live:has(.football-field) .football-goalpost.left {left:-5.8% !important;}
 .dashboard .game-story.is-live:has(.football-field) .football-goalpost.right {right:-5.8% !important;}
 
+
+/* V12.9 targeted: mirrored panel headings and complete, external goalposts. */
+.dashboard .game-story.is-live:has(.football-field) .story-event {
+  position:relative;
+  display:flex !important;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  gap:.65rem;
+  padding:.6rem .7rem !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > span {
+  display:block;
+  flex:none;
+  text-align:center;
+  font:900 clamp(.65rem,1.15cqw,1.05rem)/1.1 var(--font-display) !important;
+  letter-spacing:.06em;
+  color:#f8fbff;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > strong {
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:clamp(1.1rem,1.85cqw,1.85rem) !important;
+  line-height:1.17 !important;
+  overflow-wrap:break-word;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body {
+  overflow:visible !important;
+  isolation:isolate;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external {
+  display:block;
+  position:absolute;
+  z-index:20;
+  top:18%;
+  height:73%;
+  width:5.5%;
+  pointer-events:none;
+  overflow:visible;
+  filter:drop-shadow(0 2px 2px #000b);
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.left {
+  left:0.5%;
+  transform:skewY(-12deg) rotate(-6deg);
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.right {
+  right:0.5%;
+  transform:skewY(12deg) rotate(6deg);
+}
