@@ -244,3 +244,22 @@
   text-shadow:0 1px 3px #000;
   pointer-events:none;
 }
+
+/* V12.6: position drive banner in the center panel itself, above the field. */
+.dashboard .game-story.is-live:has(.football-field) .story-live-body {
+  position:relative !important;
+  overflow:visible;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-drive-banner {
+  position:absolute !important;
+  top:0 !important;
+  left:8% !important;
+  width:84% !important;
+  height:12% !important;
+  min-height:0;
+  z-index:100 !important;
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  font-size:clamp(.7rem,1.5cqw,1.35rem) !important;
+}
