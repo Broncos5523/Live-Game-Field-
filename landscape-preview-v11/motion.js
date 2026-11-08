@@ -121,7 +121,7 @@
         const wave = add('ellipse', {cx:rim, cy:courtY, rx:10, ry:Math.min(34, height * .24), stroke:'#20ea78',
           'stroke-width':4, fill:'none'});
         wave.animate([{opacity:0}, {opacity:1, offset:.12}, {opacity:0, transform:`translateX(${center - rim}px)`}],
-          {delay:380, duration:550, fill:'both', easing:'ease-out'});
+          {delay:380, duration:1150, fill:'both', easing:'ease-out'});
         pulse(add('text', {x:courtX(left ? .25 : .75), y:courtY - 16, fill:'#73ff9e'}, '+' + cue.points), 930, 1000);
         duration = 2000;
       } else {
