@@ -8,10 +8,10 @@
       if(!story.querySelector('.football-field') || story.querySelector('.play-portrait'))return;
       const leader=document.querySelector('.leader-card img');
       const portrait=document.createElement('aside');portrait.className='play-portrait';
-      const title=document.createElement('span');title.textContent='LAST PLAY';
+      const title=document.createElement('span');title.textContent='PLAYER SPOTLIGHT';
       const frame=document.createElement('div');frame.className='play-portrait-image has-photo';
       if(leader){const img=document.createElement('img');img.src=leader.src;img.alt='';frame.appendChild(img);}
-      const name=document.createElement('strong');name.textContent='PLAYER SPOTLIGHT';
+      const name=document.createElement('strong');name.textContent='';
       portrait.append(title,frame,name);story.prepend(portrait);
     });
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
@@ -46,6 +46,23 @@
       if(!badge){badge=document.createElement('strong');badge.className='football-down-distance';header.appendChild(badge);}
       if(badge.textContent!==label)badge.textContent=label;
     });
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      if(!story.querySelector('.football-field'))return;
+      const label=story.querySelector('.story-event > span');
+      if(label && label.textContent!=='LAST PLAY')label.textContent='LAST PLAY';
+      const surface=story.querySelector('.story-live-body');
+      if(!surface)return;
+      const field=surface.querySelector('.football-field');
+      if(!field)return;
+      field.querySelectorAll('.football-goalpost').forEach(n=>n.remove());
+      if(surface.querySelectorAll(':scope > .football-goalpost-external').length===2)return;
+      ['left','right'].forEach(side=>{
+        const post=document.createElement('div');
+        post.className='football-goalpost-external '+side;
+        post.innerHTML=postSVG;
+        surface.appendChild(post);
+      });
+    });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
       if(!away||!home)return;
@@ -58,7 +75,7 @@
       away.textContent=names[aa]||a;home.textContent=names[hh]||h;
       field.dataset.v12Teams=a+'-'+h;
       field.querySelectorAll('.football-midfield,.football-goalpost').forEach(n=>n.remove());
-      ['left','right'].forEach(side=>{const post=document.createElement('div');post.className='football-goalpost '+side;post.innerHTML=postSVG;field.appendChild(post);});
+
       if(names[hh]){
         const logo=document.createElement('img');logo.className='football-midfield';
         logo.alt='';logo.decoding='async';logo.src='https://a.espncdn.com/i/teamlogos/nfl/500/'+hh.toLowerCase()+'.png';
