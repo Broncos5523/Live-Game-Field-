@@ -126,3 +126,35 @@
   left:auto !important;
   transform:translate(50%,-50%) rotate(90deg) !important;
 }
+
+/* V12.3 distance-view layout: let the field own the center tile.
+   The narrow win-probability column was consuming 21% of the playable width. */
+.game-story.is-live:has(.football-field) {
+  grid-template-columns:minmax(0,9%) minmax(0,1fr) minmax(0,15%);
+}
+.game-story.is-live:has(.football-field) .story-live-body {
+  grid-template-columns:minmax(0,1fr) !important;
+  padding:0 .2rem;
+}
+.game-story.is-live:has(.football-field) .story-probability {
+  display:none !important;
+}
+.game-story.is-live:has(.football-field) .context,
+.game-story.is-live:has(.football-field) .football-status {
+  min-width:0;min-height:0;width:100%;height:100%;
+}
+.game-story.is-live:has(.football-field) .surface-body {
+  padding:0 1.2% 1%;
+  overflow:visible;
+}
+.game-story.is-live:has(.football-field) .football-field {
+  width:96% !important;
+  height:91% !important;
+  transform:perspective(1400px) rotateX(18deg) !important;
+}
+.game-story.is-live:has(.football-field) .football-field .yard-numbers {
+  font-size:clamp(.55rem,1.2cqw,1rem);
+}
+.game-story.is-live:has(.football-field) .football-field .field-endzone {
+  font-size:clamp(15px,2.3cqw,28px) !important;
+}
