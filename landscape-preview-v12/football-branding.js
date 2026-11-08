@@ -11,7 +11,7 @@
       const h=(home.dataset.teamCode||home.textContent||'').trim().toUpperCase();
       if(!a||!h)return;
       const aa=aliases[a]||a,hh=aliases[h]||h;
-      if(field.dataset.v12Teams===a+'-'+h)return;
+      if(field.dataset.v12Teams===a+'-'+h && field.querySelector('.football-midfield'))return;
       away.dataset.teamCode=a;home.dataset.teamCode=h;
       away.textContent=names[aa]||a;home.textContent=names[hh]||h;
       field.dataset.v12Teams=a+'-'+h;
