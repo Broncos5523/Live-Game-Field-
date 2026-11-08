@@ -423,3 +423,13 @@
 /* V12.14: perspective is drawn into mirrored SVGs, not CSS-rotated U shapes. */
 .dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.left,
 .dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external.right {transform:none !important;}
+
+/* V12.21: field-wide overlay; no independent goalpost boxes or transforms. */
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-external {display:none !important;}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-overlay {
+ position:absolute !important; inset:0 !important; width:100% !important; height:100% !important;
+ pointer-events:none !important; z-index:24 !important; overflow:visible !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-live-body > .football-goalpost-overlay svg {
+ display:block !important; width:100% !important; height:100% !important; overflow:visible !important;
+}
