@@ -2,7 +2,7 @@
 (() => {
   const names={ARI:'CARDINALS',ATL:'FALCONS',BAL:'RAVENS',BUF:'BILLS',CAR:'PANTHERS',CHI:'BEARS',CIN:'BENGALS',CLE:'BROWNS',DAL:'COWBOYS',DEN:'BRONCOS',DET:'LIONS',GB:'PACKERS',HOU:'TEXANS',IND:'COLTS',JAX:'JAGUARS',KC:'CHIEFS',LV:'RAIDERS',LAC:'CHARGERS',LAR:'RAMS',MIA:'DOLPHINS',MIN:'VIKINGS',NE:'PATRIOTS',NO:'SAINTS',NYG:'GIANTS',NYJ:'JETS',PHI:'EAGLES',PIT:'STEELERS',SEA:'SEAHAWKS',SF:'49ERS',TB:'BUCCANEERS',TEN:'TITANS',WAS:'COMMANDERS'};
   const aliases={WSH:'WAS',LA:'LAR',JAC:'JAX'};
-  const postSVG='<svg viewBox="0 0 100 200" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true"><path d="M14 12 V105 H86 V12 M50 105 V193" fill="none" stroke="#ffd92e" stroke-width="7" stroke-linecap="square" stroke-linejoin="round"/><path d="M17 14 V102 H83" fill="none" stroke="#fff3a1" stroke-opacity=".7" stroke-width="2.2"/></svg>';
+  const postSVG='<svg viewBox="0 0 100 120" preserveAspectRatio="xMidYMid meet" width="100%" height="100%" aria-hidden="true"><path d="M12 6 L12 64 L88 64 L88 6 M50 64 L50 114" fill="none" stroke="#ffdb28" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8 L14 62 L86 62 L86 8" fill="none" stroke="#fff2a0" stroke-opacity=".7" stroke-width="1.6"/></svg>';
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
       if(!story.querySelector('.football-field') || story.querySelector('.play-portrait'))return;
