@@ -33,3 +33,16 @@ The main page is `/rotation-preview/`. Development and preview publishing must n
 ## College rank indicators
 
 Live and final scoreboards display a compact #1–#25 label before ranked CFB/CBB team names. The display receives the same frozen home/away ranks used by selection. Explicit unranked values suppress the badge; recorded renderer QA can use event-provided ranks when no engine rank snapshot exists. Professional leagues never display these labels. Four additional rank tests cover identity, frozen ranks, unranked/invalid values and professional-sport exclusion.
+
+## Approved per-game spotlight statistics
+
+The large Final Game Board spotlights use the selected event's boxscore player rows, matched by athlete ID and team ID. A summary from another event ID is rejected. Season average / year-to-date columns are ignored; missing values remain dashes. Existing layout and player image assets are preserved.
+
+- NBA/WNBA/CBB: points, rebounds, assists.
+- NFL/CFB QB: passing yards, completions/attempts, passing touchdowns.
+- NFL/CFB RB: rushing attempts, rushing yards, rushing touchdowns.
+- NFL/CFB WR (and receiving tight ends): receptions, receiving yards, receiving touchdowns. Confirmed player position takes precedence over a trick-play passing entry.
+- MLB batters: hits/plate appearances, home runs, RBIs. PA uses an explicit game field when available. Otherwise completed mapped plate-appearance results are counted only when their at-bats, walks, and hits reconcile with the player's game boxscore. Partial or irreconcilable logs show an unknown PA denominator, never an AB substitute.
+- NHL skaters: goals, assists, plus/minus with its actual sign. Goalies are excluded from this skater stat template.
+
+The existing provider-selected performer is retained when its athlete has a usable game row. If no leader block exists, a verified boxscore batter is chosen by hits, then RBIs, then home runs; hockey fallback uses goals then assists. No season leaderboard is used for selection or values.
