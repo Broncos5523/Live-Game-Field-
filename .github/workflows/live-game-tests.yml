@@ -1,0 +1,20 @@
+name: Live Game Center regression tests
+on:
+  push:
+    paths:
+      - 'rotation/**'
+      - 'rotation-preview/**'
+      - 'tests/**'
+      - '.github/workflows/live-game-tests.yml'
+  workflow_dispatch:
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run rotation, rank, spotlight and recovery tests
+        run: node --test tests/rotation.test.cjs tests/ranks.test.cjs tests/spotlight.test.cjs tests/reliability.test.cjs tests/runtime-recovery.test.cjs
