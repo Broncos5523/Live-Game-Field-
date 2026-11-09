@@ -46,3 +46,24 @@ The large Final Game Board spotlights use the selected event's boxscore player r
 - NHL skaters: goals, assists, plus/minus with its actual sign. Goalies are excluded from this skater stat template.
 
 The existing provider-selected performer is retained when its athlete has a usable game row. If no leader block exists, a verified boxscore batter is chosen by hits, then RBIs, then home runs; hockey fallback uses goals then assists. No season leaderboard is used for selection or values.
+
+## Reliability hardening — November 9, 2026
+
+No approved board CSS, artwork, player-panel positioning or production entry points change in this pass.
+
+- Full sport cycles restart at the correct first sport, and final-to-live changes honor the current spotlight before starting the live sport order.
+- Corrections compare stable team IDs, scores and game state across confirmations; clock progression does not invalidate a repeated correction. Changed game participants are rejected.
+- Cached live games start unverified from their original confirmation time. Corrupt records are ignored. A valid cached board opens before network checks finish, and an expired game is hidden only after the current spotlight completes. Missing summaries keep the prior verified board.
+- Empty CFP polls fall back to usable AP data. Frozen rank snapshots are copied so later poll updates cannot mutate kickoff ranks. Invalid/fractional ranks are ignored.
+- The 10s game / 30s discovery and player-stat / 60s final-data schedules have runtime-level virtual-clock coverage. Overlapping refresh batches are suppressed. Final boards do not issue extra 30s refreshes merely because their spotlight changes.
+- Normal halftime/intermissions remain eligible. Official 15-minute suspension and five-minute missing-game rules retain their boundary tests. A newly restored connection forces immediate discovery; failed historical-final lookups are retried.
+- Game-only stat extraction and event/team/player identity checks remain in place. Cached alternate player rows and MLB plate-appearance evidence are preserved when storage permits.
+- The service worker awaits cache writes, caches opaque public image responses, and activates a fully cached update without waiting for every old preview tab to close. Prior cached assets remain available as a fallback. ESPN API responses are excluded from this cache.
+
+Validation commands: `node --test tests/rotation.test.cjs tests/ranks.test.cjs tests/spotlight.test.cjs tests/reliability.test.cjs tests/runtime-recovery.test.cjs` (56 tests). The runtime tests execute the real orchestration code with a virtual clock, test DOM and controlled network responses. Synthetic test states never enter the displayed preview feed. Browser QA uses actual ESPN games with a separately labeled feed-outage wrapper; that wrapper is not published.
+
+Feed-warning thresholds are implementation defaults: 30s without confirmation for active games, 180s for finals (three refresh periods), and 120s without progression during active play. A healthy final is not flagged halfway through its normal 60s refresh interval.
+
+Remaining limits: no independent fallback provider; unavailable historical finish timestamps/kickoff rank archives cannot be reconstructed; controlled feed loss and cache inspection are not a physical TV power-cycle or a prolonged full-network outage.
+
+Browser evidence is recorded in `tests/reliability-browser-evidence.json`. The controlled outage exceeded three minutes, displayed the delayed-feed warning, retained per-game player stats after a cached-data reload, and cleared the warning after restoration. The cache inspection found 67 image entries and no ESPN API entries in the active v2 asset cache. Application error/warning logs were empty. Live-to-final timing uses virtual-clock runtime tests because the actual games available during browser QA were finals.

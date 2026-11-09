@@ -16,7 +16,7 @@
   const LIVE=new Set(['live','halftime','intermission','overtime','suspended']);
   const MIN=60000, HOUR=60*MIN;
   const number=x=>x!==null&&x!==''&&x!==undefined&&Number.isFinite(Number(x))?Number(x):null;
-  const rank=x=>{const n=number(x);return n!==null&&n>=1&&n<=25?n:Infinity;};
+  const rank=x=>{const n=number(x);return n!==null&&Number.isInteger(n)&&n>=1&&n<=25?n:Infinity;};
   const margin=g=>{const a=number(g.homeScore),b=number(g.awayScore);return a===null||b===null?Infinity:Math.abs(a-b);};
   const started=g=>Number(new Date(g.startedAt||0))||0;
   const finished=g=>Number(new Date(g.finishedAt||0))||0;
