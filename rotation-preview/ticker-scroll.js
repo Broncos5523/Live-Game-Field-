@@ -15,6 +15,7 @@ function tick(now){
   if(final){
    const count=strip.children.length;
    if(count>=2&&count%2===0&&strip.scrollWidth<viewport.clientWidth*2.2){
+    strip.dataset.tickerOriginalHalf=String(count/2);
     const originals=Array.from(strip.children).slice(0,count/2);
     if(originals.length){
      const frag=document.createDocumentFragment();
@@ -25,7 +26,7 @@ function tick(now){
    }
   }
   const first=strip.firstElementChild;
-  const midpoint=final?Math.floor(strip.children.length/2):Math.floor(strip.children.length/2);
+  const midpoint=final?Number(strip.dataset.tickerOriginalHalf||Math.floor(strip.children.length/2)):Math.floor(strip.children.length/2);
   const marker=strip.children[midpoint];
   let cycle=marker&&first?marker.offsetLeft-first.offsetLeft:strip.scrollWidth/2;
   if(!Number.isFinite(cycle)||cycle<40)cycle=strip.scrollWidth/2;
