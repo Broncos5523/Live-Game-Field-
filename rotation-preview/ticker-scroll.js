@@ -3,14 +3,24 @@
    Handles Final CSS transform overrides, short score lists, and rerenders. */
 (function(){
 'use strict';
-let stripRef=null, origin=performance.now(), last=0;
+// All spotlight iframes share one parent-owned ticker clock. Replacing a game
+// board or rerendering its scores must never restart the crawl at zero.
+let stripRef=null;
+let sharedStart=Date.now();
+try {
+ const host=window.parent;
+ if(host && host!==window){
+  if(!Number.isFinite(host.__manCaveTickerStart))host.__manCaveTickerStart=Date.now();
+  sharedStart=host.__manCaveTickerStart;
+ }
+} catch {}
 function tick(now){
  const final=document.getElementById('ticker-track');
  const live=document.querySelector('.ticker .ticker-fade-content');
  const viewport=final||live;
  const strip=final?document.getElementById('ticker-content'):live?.firstElementChild;
  if(viewport&&strip&&strip.children.length){
-  if(strip!==stripRef){stripRef=strip;origin=now;last=0;}
+  if(strip!==stripRef)stripRef=strip;
   // Final renderer supplies two identical passes. Extend short lists to
   // ensure the strip can actually travel beyond the viewport.
   if(final){
@@ -33,12 +43,11 @@ function tick(now){
   if(!Number.isFinite(cycle)||cycle<40)cycle=strip.scrollWidth/2;
   if(cycle>40){
    const speed=42; // pixels per second, independent of number of games
-   const x=((now-origin)/1000*speed)%cycle;
+   const x=(((Date.now()-sharedStart)/1000)*speed)%cycle;
    // Inline !important overrides legacy 'transform:none!important'.
    strip.style.setProperty('transform','translate3d('+(-x).toFixed(2)+'px,0,0)','important');
    strip.style.setProperty('animation','none','important');
    if(final&&window.tickerAnimation){window.tickerAnimation.cancel();window.tickerAnimation=null;}
-   last=x;
   }
  }
  requestAnimationFrame(tick);
