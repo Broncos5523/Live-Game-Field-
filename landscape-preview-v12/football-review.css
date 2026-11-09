@@ -508,3 +508,9 @@
  flex:1 1 auto !important;
  margin-top:1.5rem !important;
 }
+
+/* Build 28: subtly strengthen white stroke, preserving approved colors/layout. */
+.dashboard .game-story.is-live:has(.football-field) .story-header .football-down-distance,
+.dashboard .game-story.is-live:has(.football-field) .story-event > strong {
+ -webkit-text-stroke-width:1.4px !important;
+}
