@@ -38,7 +38,11 @@
 /* A recorded final has no current drive or next down to advertise. */
 .dashboard[data-state="post"] .game-story.is-live:has(.football-field) .football-drive-banner,
 .dashboard[data-state="post"] .game-story.is-live:has(.football-field) .football-down-distance{display:none!important}
-</style><link rel="stylesheet" href="../rotation-preview/rank.css"><style>.ticker .ticker-fade-content{justify-content:flex-start!important;scroll-behavior:auto!important}.ticker .ticker-fade-content>div{animation:none!important;transform:none!important;flex-shrink:0!important}</style></head>
+</style><link rel="stylesheet" href="../rotation-preview/rank.css"><style>.ticker .ticker-fade-content{justify-content:flex-start!important;scroll-behavior:auto!important}.ticker .ticker-fade-content>div{animation:none!important;transform:none!important;flex-shrink:0!important}<style>
+/* Fixed ESPN network mark on every live-game ticker, independent of scrolling scores. */
+.ticker .ticker-brand{width:92px!important;min-width:92px!important;flex:0 0 92px!important;height:35px!important;display:flex!important;align-items:center!important;justify-content:center!important;background:url('../landscape-preview-v1/assets/network_logos/ESPN.png') center/contain no-repeat!important}
+.ticker .ticker-brand span{visibility:hidden!important}
+</style></head>
   <body>
     <div id="app">
       <div class="boot-screen"><strong>MAN CAVE LIVE GAME CENTER</strong><span>STARTING DISPLAY…</span></div>
