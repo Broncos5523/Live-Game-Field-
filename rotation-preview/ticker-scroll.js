@@ -1,3 +1,4 @@
+/* Deployment retry after GitHub Pages internal server error (2026-11-09). */
 /* Ticker transport: move the strip itself, not the scroll container.
    Handles Final CSS transform overrides, short score lists, and rerenders. */
 (function(){
