@@ -10,13 +10,13 @@ Isolated integration on `feature/approved-rotation-20261109`. Original productio
 - Last confirmed play survives absent play fields; unknown coordinates remain unplotted. Invalid snapshots are rejected. Score decreases and final reversals require two matching primary observations at least 9 seconds apart. Fallback snapshots must be verified and newer than the last accepted primary observation.
 - Five-minute missing-game verification with temporary removal, never inferred final. Official delay/suspension expires at 15 minutes; halftime/intermissions/period breaks do not start this timer. Reappearance restores eligibility.
 - Same-provider summary recovery when a missing game's summary includes a verifiable newer observation timestamp. No conflicting cross-provider field merging.
-- Persistent last-valid snapshots; isolated service worker caches the preview shell and successfully visited assets. Cached games retain original verification timestamps; expired live records are not represented as fresh. Online events trigger refresh.
+- Bounded persistent last-valid snapshots (3.5 MB budget, selected game retained first; older alternate snapshots may be evicted); isolated service worker caches the preview shell and successfully visited assets. Cached games retain original verification timestamps; expired live records are not represented as fresh. Online events trigger refresh.
 - Feed warning after 30s without a successful game confirmation or 120s without progression during active play; normal breaks excluded from progression warning. The 120s threshold is an implementation default, not a newly claimed user approval.
 - Existing approved logo/headshot/venue handling retained, with CDN logo recovery then authentic league-logo fallback. Missing player identity is never substituted with another player. Missing venue retains the existing neutral backdrop.
 
 ## Verification
 
-`node --test tests/rotation.test.cjs`: 13 tests, including a live/final boundary test for each of seven sports, NCAA ordering/cap/divisions, sport grouping, exact suspension/missing boundaries, correction verification, frozen ranking persistence, invalid data and recovery.
+`node --test tests/rotation.test.cjs`: 14 tests, including a live/final boundary test for each of seven sports, NCAA ordering/cap/divisions, sport grouping, exact suspension/missing boundaries, correction verification, frozen ranking persistence, invalid data and recovery.
 
 Browser QA uses actual recorded ESPN snapshots, separately labeled as recorded renderer tests. Both live-surface and final renderers are checked at 1280×720 for all seven sports. Synthetic policy inputs are unit-test data only and never shown as live gameplay.
 
