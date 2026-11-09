@@ -22,7 +22,7 @@
    const yardsMatch=t.match(/(?:for|gain of|loss of)\s+(-?\d+)\s+yards?/);
    const yards=yardsMatch?Number(yardsMatch[1]):null;
    const loss=(yards!==null&&yards<0)||/sacked|tackled for a loss|loss of \d+ yards/.test(t);
-   const pass=/pass|intercept|sacked/.test(t)&&!/pass interference/.test(t);
+   const pass=/pass|intercept|sacked|complete to|completion/.test(t)&&!/pass interference/.test(t);
    const incomplete=/incomplete|intended for|pass falls/.test(t)&&!/complete to/.test(t);
    const interception=/intercept/.test(t);
    const fumble=/fumbl/.test(t);
@@ -60,17 +60,20 @@
   if(data.x||data.success){
    const mark=document.createElementNS(ns,'text');mark.setAttribute('x',x2);mark.setAttribute('y',y+14);mark.setAttribute('text-anchor','middle');mark.setAttribute('font-size','58');mark.setAttribute('font-weight','900');mark.setAttribute('fill',data.x?'#ff3434':'#39ff6a');mark.textContent=data.x?'×':'✓';mark.classList.add('mcsb-mark');svg.append(mark);
   }
-  field.append(svg);
+  field.append(svg); 
+  field.dataset.motionStatus='active'; 
+  field.dataset.motionPlay=data.play.slice(0,80);
   let label=field.querySelector('.mcsb-announcement');
   if(!label){label=document.createElement('div');label.className='mcsb-announcement';field.append(label);}
   label.textContent=data.announcement?((story.querySelector('.story-header strong')?.textContent.match(/^([A-Z]{2,4}) BALL/)?.[1]||'')+' '+data.announcement).trim():'';
   label.style.color=data.color;
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
    const length=path.getTotalLength();
-   if(data.hasMovement&&length>0){path.setAttribute('stroke-dasharray',String(length));path.animate([{strokeDashoffset:length},{strokeDashoffset:0}],{duration:data.duration,easing:'ease-in-out',fill:'both'});}
+   if(data.hasMovement&&length>0){path.setAttribute('stroke-dasharray',String(length));path.setAttribute('stroke-dashoffset','0');path.animate([{strokeDashoffset:length},{strokeDashoffset:0}],{duration:data.duration,easing:'ease-in-out',fill:'forwards'});}
    if(label.textContent)label.animate([{opacity:0,transform:'translateX(-50%) scale(.94)'},{opacity:1,transform:'translateX(-50%) scale(1)'}],{duration:650,delay:data.duration,fill:'both'});
   }
  }
+ window.__mcsbFootballMotion33={getStatus:()=>({activeKey,plays:[...memory.values()].map(v=>({play:v.play,hasMovement:v.hasMovement,pass:v.pass})),overlay:!!document.querySelector('.mcsb-motion')})};
  const observer=new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;render();});});
  observer.observe(document.getElementById('app'),{childList:true,subtree:true,characterData:true});
  render();
