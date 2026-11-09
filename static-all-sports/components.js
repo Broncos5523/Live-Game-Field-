@@ -5,9 +5,32 @@ function staticLatest(config,competition,summary,status){
   const current=competition.situation?.lastPlay;
   const key=config.key+':'+String(competition.id||summary.header?.id||'');
   const full=current?.text?flat.find(p=>String(p.id)===String(current.id)):null;
-  const latest=current?.text?{...full,...current}:flat.at(-1);
+  const latest=current?.text?{...full,...current,start:{...full?.start,...current.start},end:{...full?.end,...current.end}}:flat.at(-1);
   if(latest?.text){if(staticPlayMemory.size>128)staticPlayMemory.delete(staticPlayMemory.keys().next().value);staticPlayMemory.set(key,latest);return latest;}
   return staticPlayMemory.get(key)||null;
+}
+function staticFootballState(competition,summary,away,home,play){
+  const current=competition.situation||{},end=play?.end||{};
+  const number=value=>value!==null&&value!==undefined&&value!==''&&Number.isFinite(Number(value))?Number(value):null;
+  const drive=summary.drives?.current;
+  const driveMatches=drive?.plays?.some(p=>String(p.id)===String(play?.id));
+  const possessionId=current.possession||end.team?.id||(driveMatches?drive.team?.id:null);
+  const possession=String(possessionId)===String(home.id)?'home':String(possessionId)===String(away.id)?'away':null;
+  const down=number(current.down)??number(end.down);
+  const distance=number(current.distance)??number(end.distance);
+  const label=current.possessionText||end.possessionText;
+  let ball=window.MancavePlayFeed.footballField({...current,possessionText:label},away,home).ball;
+  // ESPN football yardLine is measured from the home goal line. Confirmed
+  // against the provider's own possessionText in recorded NFL/CFB data.
+  const yardLine=number(current.yardLine)??number(end.yardLine);
+  if(ball==null&&yardLine!=null&&yardLine>=0&&yardLine<=100)ball=6+(100-yardLine)*.88;
+  const goalToGo=/goal/i.test(current.shortDownDistanceText||current.downDistanceText||end.shortDownDistanceText||end.downDistanceText||'');
+  const target=ball!=null&&distance!=null&&possession?ball+(possession==='away'?1:-1)*distance*.88:null;
+  const firstDown=down>=1&&down<=4&&!goalToGo&&target!=null&&target>6&&target<94?target:null;
+  return {ball,firstDown,down,distance,possession,start:window.MancavePlayFeed.footballField(current,away,home).start};
+}
+function staticFootballField(config,competition,summary,status,away,home,play){
+  return staticFootballState(competition,summary,away,home,play);
 }
 function staticData(config,competition,summary,status,away,home,play){
   const situation=competition.situation||{};
@@ -32,11 +55,9 @@ function staticData(config,competition,summary,status,away,home,play){
     if(shot&&numeric(coord?.x)&&numeric(coord?.y)&&Math.abs(coord.x)<=100&&Math.abs(coord.y)<=42.5){result.markers=[{x:(Number(coord.x)+100)/2,y:(42.5-Number(coord.y))/85*100,kind:blocked?'block':goal?'make':'miss',label:text}];}
   }
   if(['NFL','CFB'].includes(config.key)){
-    const ball=window.MancavePlayFeed.footballField(situation,away,home).ball;
-    const distance=numeric(situation.distance)?Number(situation.distance):null;
-    const possess=String(situation.possession)===String(home.id)?'home':String(situation.possession)===String(away.id)?'away':null;
-    result.line=ball;
-    result.firstDown=ball!=null&&distance!=null&&possess&&!/goal/i.test(situation.shortDownDistanceText||'')?Math.max(6,Math.min(94,ball+(possess==='away'?1:-1)*distance*.88)):null;
+    const football=staticFootballState(competition,summary,away,home,play);
+    result.line=football.ball;
+    result.firstDown=football.firstDown;
   }
   if(config.key==='MLB'){
     result.bases=[!!situation.onFirst,!!situation.onSecond,!!situation.onThird];

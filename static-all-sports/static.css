@@ -44,3 +44,7 @@
 .story-cfb{--football-primary:var(--possession)!important}
 .basketball-court{border-left-color:var(--away)!important;border-right-color:var(--home)!important}
 .hockey-rink{border-color:var(--home)!important}
+/* Visible at TV distance and when the full board is scaled on a phone. */
+.football-field>.static-scrimmage,.football-field>.static-first-down{width:5px!important;z-index:18!important;opacity:1!important;display:block!important;box-shadow:0 0 0 1px #08111dcc!important;pointer-events:none}
+.football-field>.static-scrimmage{background:#178bff!important}
+.football-field>.static-first-down{background:#ffe52e!important}
