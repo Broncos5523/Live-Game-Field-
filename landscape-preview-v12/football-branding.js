@@ -52,10 +52,11 @@
       const possession=match?.[1]||'';
       const teamCode=aliases[possession]||possession;
       story.style.setProperty('--football-primary',primaryColors[teamCode]||'#E31837');
-      const detail=match?.[2]||situation;
-      const driveText=possession
-        ? 'CURRENT DRIVE  ·  '+(names[aliases[possession]||possession]||possession)+'  ·  '+(detail||'IN PROGRESS')
-        : 'CURRENT DRIVE  ·  '+(situation||'IN PROGRESS');
+      const metrics=surface.querySelectorAll('.drive-metrics > div');
+      const metric=(index)=>metrics[index]?.querySelector('strong')?.textContent?.trim()||'—';
+      const plays=metric(0),yards=metric(1);
+      const teamName=names[teamCode]||possession||'';
+      const driveText='CURRENT DRIVE  ·  '+(teamName?teamName+'  ·  ':'')+plays+' PLAYS  ·  '+yards+' YARDS';
       if(bar.textContent!==driveText)bar.textContent=driveText;
     });
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
