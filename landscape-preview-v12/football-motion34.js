@@ -42,13 +42,18 @@
    const rawLeft=computed?.left||'50%';
    const px=parseFloat(rawLeft);
    const from=rawLeft.endsWith('%')?px:Number.isFinite(px)&&field.clientWidth?px/field.clientWidth*100:50;
-   const end=Math.max(8,Math.min(92,from));
+   const ballRect=ball?.getBoundingClientRect();
+   const fieldRect=field.getBoundingClientRect();
+   const ballCenter=ballRect&&fieldRect.width>0?(ballRect.left+ballRect.width/2-fieldRect.left)/fieldRect.width*100:from;
+   const end=Math.max(2,Math.min(98,ballCenter));
    // Never invent yardage or a trail length when the feed lacks movement data.
    const demo=!!document.querySelector('.live-count.demo')||/demo/i.test(document.querySelector('.hero')?.textContent||'');
    const knownDemoPass=demo&&/mah omes|mahomes/i.test(t)&&/kelce/i.test(t)&&/complet/i.test(t);
    const distance=yards===null?(knownDemoPass?12.32:0):Math.max(0,Math.min(30,Math.abs(yards)*.88));
-   const start=Math.max(8,Math.min(92,end-(loss?-1:1)*distance));
-   const data={key,play,announcement,color,from:start,to:end,pass,loss,x,success:pass&&!incomplete&&!interception, duration:pass?2000:1500,hasMovement:distance>0};
+   const towardLeft=runReview?true:code===home;
+   const direction=towardLeft?-1:1;
+   const start=Math.max(2,Math.min(98,end-direction*(loss?-1:1)*distance));
+   const data={key,play,announcement,color,from:start,to:end,pass,loss,x,success:pass&&!incomplete&&!interception, duration:pass?2000:1500,hasMovement:distance>0,teamColor:colors[code]||'#E31837'};
    memory.set(game,data);if(memory.size>100)memory.delete(memory.keys().next().value);
   }
   const data=memory.get(game);if(!data)return;
@@ -60,7 +65,7 @@
   const path=document.createElementNS(ns,'path');
   const x1=data.from*10,x2=data.to*10,y=200;
   const d=data.pass&&data.hasMovement?`M ${x1} ${y} Q ${(x1+x2)/2} 40 ${x2} ${y}`:`M ${x1} ${y} Q ${x1+(x2-x1)*.30} ${y-48} ${x1+(x2-x1)*.55} ${y+20} T ${x2} ${y}`;
-  path.setAttribute('d',d);path.setAttribute('fill','none');if(!data.hasMovement)path.setAttribute('opacity','0');path.setAttribute('stroke',data.loss?'#ff4141':'#f5f5ee');path.setAttribute('stroke-width','6');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-dasharray',data.pass?'none':'14 14');path.classList.add('mcsb-path');svg.append(path);
+  path.setAttribute('d',d);path.setAttribute('fill','none');if(!data.hasMovement)path.setAttribute('opacity','0');path.setAttribute('stroke',data.loss?'#ff4141':data.pass?'#f5f5ee':data.teamColor);path.setAttribute('stroke-width','6');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-dasharray',data.pass?'none':'14 14');path.classList.add('mcsb-path');svg.append(path);
   if(data.x||data.success){
    const mark=document.createElementNS(ns,'text');mark.setAttribute('x',x2);mark.setAttribute('y',y+14);mark.setAttribute('text-anchor','middle');mark.setAttribute('font-size','58');mark.setAttribute('font-weight','900');mark.setAttribute('fill',data.x?'#ff3434':'#39ff6a');mark.textContent=data.x?'×':'✓';mark.classList.add('mcsb-mark');svg.append(mark);
   }
