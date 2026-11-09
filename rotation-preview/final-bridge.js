@@ -46,6 +46,23 @@ showPerformer=function(side,summary){
  const caption=document.createElement('small');caption.textContent=label;caption.style.cssText='font-size:11px;font-weight:800;letter-spacing:1px;color:#cbdceb';
  stat.append(number,caption);container.append(stat);}
 };
+// Use the verified event snapshot supplied by the rotation runtime, not a second
+// independent summary fetch that may race with the next spotlight.
+loadSummary=async function(id){
+ const snapshot=window.manCaveRankSnapshot;
+ const summary=snapshot?.summary;
+ if(String(snapshot?.event?.id)!==String(id)||String(summary?.header?.id)!==String(id)){
+  el('stats').textContent='Verified statistics unavailable';
+  for(const side of ['away','home']){el(side+'Player').textContent='Player data unavailable';el(side+'PlayerStats').textContent='—';setImg(side+'PlayerImg',null);}
+  return;
+ }
+ const competitors=summary.header?.competitions?.[0]?.competitors||[];
+ const teams=summary.boxscore?.teams||[];
+ const bySide=side=>teams.find(x=>String(x.team?.id)===String(competitors.find(c=>c.homeAway===side)?.team?.id));
+ renderStats(bySide('away'),bySide('home'));
+ showPerformer('away',summary);
+ showPerformer('home',summary);
+};
 const originalShowGame=showGame;
 showGame=function(event){
  const copy={...event,competitions:(event.competitions||[]).map(c=>({...c,competitors:(c.competitors||[]).map(t=>{
