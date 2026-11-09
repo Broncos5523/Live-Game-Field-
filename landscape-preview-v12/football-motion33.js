@@ -65,9 +65,6 @@
   field.append(svg); 
   field.dataset.motionStatus='active'; 
   field.dataset.motionPlay=data.play.slice(0,80);
-  let debug=document.getElementById('mcsb-motion-debug');
-  if(!debug){debug=document.createElement('div');debug.id='mcsb-motion-debug';debug.style.cssText='position:fixed;left:8px;bottom:8px;z-index:999999;background:#081523e8;color:#e9f6ff;border:1px solid #52d5ff;padding:7px 9px;font:12px monospace;max-width:80vw;pointer-events:none';document.body.append(debug);}
-  debug.textContent='MOTION DEBUG | '+(data.pass?'PASS':'OTHER')+' | yards '+(data.hasMovement?'YES':'NO')+' | SVG '+(svg.isConnected?'YES':'NO')+' | '+data.play.slice(0,55);
   let label=field.querySelector('.mcsb-announcement');
   if(!label){label=document.createElement('div');label.className='mcsb-announcement';field.append(label);}
   label.textContent=data.announcement?((story.querySelector('.story-header strong')?.textContent.match(/^([A-Z]{2,4}) BALL/)?.[1]||'')+' '+data.announcement).trim():'';
@@ -79,7 +76,7 @@
   }
  }
  window.__mcsbFootballMotion33={getStatus:()=>({activeKey,plays:[...memory.values()].map(v=>({play:v.play,hasMovement:v.hasMovement,pass:v.pass})),overlay:!!document.querySelector('.mcsb-motion')})};
- const observer=new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;try{render()}catch(e){let d=document.getElementById('mcsb-motion-debug');if(!d){d=document.createElement('div');d.id='mcsb-motion-debug';d.style.cssText='position:fixed;left:8px;bottom:8px;z-index:999999;background:#420;color:white;padding:8px;font:12px monospace';document.body.append(d)}d.textContent='MOTION ERROR: '+e.message;}});});
+ const observer=new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;try{render()}catch(e){console.error('Football motion:',e);}});});
  observer.observe(document.getElementById('app'),{childList:true,subtree:true,characterData:true});
  render();
 })();
