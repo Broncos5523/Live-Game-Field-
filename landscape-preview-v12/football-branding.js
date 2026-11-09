@@ -7,7 +7,7 @@
   // Edge-on goalposts: uprights overlap in perspective, not a wide U shape.
   // One full-surface SVG: short ESPN-style goal silhouettes, no narrow post boxes.
   // Crossbars follow the back end-zone lines: vertical in this horizontal field view.
-  const goalOverlay='<svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#ffdf24" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M44 265 L23 250 M23 218 L23 282 M23 218 L15 193 M23 282 L15 307"/><path d="M956 265 L977 250 M977 218 L977 282 M977 218 L985 193 M977 282 L985 307"/></g><g fill="none" stroke="#fff4a4" stroke-width="1.2"><path d="M22 219 L22 281 M978 219 L978 281"/></g></svg>';
+  const goalOverlay='<svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#ffdf24" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M25 250 L0 250 M0 218 L0 282 M0 218 L-9 194 M0 282 L-9 306"/><path d="M975 250 L1000 250 M1000 218 L1000 282 M1000 218 L1009 194 M1000 282 L1009 306"/></g><g fill="none" stroke="#fff4a4" stroke-width="1.2"><path d="M0 219 L0 281 M1000 219 L1000 281"/></g></svg>';
 
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
@@ -65,7 +65,8 @@
       const overlay=document.createElement('div');
       overlay.className='football-goalpost-overlay';
       overlay.innerHTML=goalOverlay;
-      surface.appendChild(overlay);
+      field.querySelectorAll(':scope > .football-goalpost-overlay').forEach(n=>n.remove());
+      field.appendChild(overlay);
     });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
