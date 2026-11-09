@@ -28,6 +28,9 @@ showGame=function(event){
   const detail=(window.manCaveSummary?.boxscore?.teams||[]).find(x=>String(x.team?.id)===String(t.team?.id))?.team;
   return {...t,team:{...t.team,...detail}};
  })}))};
- return originalShowGame(copy);
+ const result=originalShowGame(copy);
+ const ranks=window.ManCaveRanks.forSnapshot(window.manCaveRankSnapshot||{sport,event:copy});
+ for(const side of ['home','away'])if(ranks[side]){const badge=document.createElement('span');badge.className='mancave-rank';badge.textContent='#'+ranks[side];badge.setAttribute('aria-label','Rank '+ranks[side]);el(side+'Name').prepend(badge);}
+ return result;
 };
-window.receiveApproved=async snapshot=>{window.renderApprovedFinal(snapshot);await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));return true;};
+window.receiveApproved=async snapshot=>{window.manCaveRankSnapshot=snapshot;window.renderApprovedFinal(snapshot);await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));return true;};
