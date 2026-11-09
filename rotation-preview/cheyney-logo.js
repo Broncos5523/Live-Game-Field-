@@ -23,7 +23,7 @@ function apply(){
  if(cheyneyIsCurrent){
   document.querySelectorAll('.ticker .ticker-team').forEach(node=>{
    const abbreviation=node.querySelector('b')?.textContent?.trim().toUpperCase();
-   if(abbreviation!=='CHE')return;
+   if(!/^CHE(?:Y)?$/.test(abbreviation||''))return;
    const holder=node.querySelector('.ticker-logo');
    if(!holder)return;
    // React's image fallback can render a SPAN instead of IMG. Replace it.
