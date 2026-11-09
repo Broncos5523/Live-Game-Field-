@@ -456,3 +456,21 @@
 .dashboard .game-story.is-live:has(.football-field) .football-field > .approved-goalpost.right {
  right:-3.5% !important; left:auto !important;
 }
+
+/* Build 25: smaller goalposts, moved behind the back boundary of each end zone. */
+.dashboard .game-story.is-live:has(.football-field) .football-field > .approved-goalpost {
+ top:25% !important;
+ height:39% !important;
+ width:auto !important;
+ max-width:none !important;
+ object-fit:contain !important;
+ transform:none !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-field > .approved-goalpost.left {
+ left:-6.5% !important;
+ right:auto !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-field > .approved-goalpost.right {
+ right:-6.5% !important;
+ left:auto !important;
+}
