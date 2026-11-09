@@ -1,8 +1,39 @@
 'use strict';
 // Sport-specific data replaces the original basketball-only comparison definitions.
-const sportStats={NFL:[['TOTAL YARDS',['totalYards']],['PASSING YARDS',['netPassingYards']],['RUSHING YARDS',['rushingYards']],['TURNOVERS',['turnovers']]],CFB:[['TOTAL YARDS',['totalYards']],['PASSING YARDS',['netPassingYards']],['RUSHING YARDS',['rushingYards']],['TURNOVERS',['turnovers']]],NHL:[['SHOTS',['shotsTotal','shots','shotsOnGoal']],['HITS',['hits']],['POWER PLAY %',['powerPlayPct']],['FACEOFF %',['faceoffPercent']]],MLB:[['HITS',['hits']],['RUNS',['runs']],['ERRORS',['errors']],['LEFT ON BASE',['runnersLeftOnBase','LOB','leftOnBase']]]};
+const sportStats={
+ NFL:[['TOTAL YARDS',['totalYards']],['FIRST DOWNS',['firstDowns','firstDownsTotal']],['SACKS',['sacks','defensiveSacks','totalSacks']],['TURNOVERS',['turnovers','totalTurnovers']]],
+ CFB:[['TOTAL YARDS',['totalYards']],['FIRST DOWNS',['firstDowns','firstDownsTotal']],['SACKS',['sacks','defensiveSacks','totalSacks']],['TURNOVERS',['turnovers','totalTurnovers']]],
+ NHL:[['SHOTS ON GOAL',['shotsTotal','shotsOnGoal','shots']],['FACEOFF %',['faceoffPercent','faceoffPct','faceoffsWonPct']],['POWER PLAY',['powerPlayGoals','powerPlay','powerPlayPct','powerPlayPercentage']],['HITS',['hits']]],
+ MLB:[['HITS',['hits']],['HOME RUNS',['homeRuns','homeruns']],['PITCHING STRIKEOUTS',['strikeouts','pitchingStrikeouts','strikeoutsPitching']],['RUNNERS LEFT ON BASE',['runnersLeftOnBase','leftOnBase','LOB']]]
+};
 const oldRenderStats=renderStats;
-renderStats=function(a,h){if(!sportStats[sport])return oldRenderStats(a,h);const root=el('stats');root.replaceChildren();for(const [label,keys]of sportStats[sport]){const find=t=>(t?.statistics||[]).flatMap(x=>x.stats||[x]).find(x=>keys.some(k=>k.toLowerCase()===String(x.name).toLowerCase()));const av=find(a),hv=find(h);const row=document.createElement('div');row.className='statrow';const l=document.createElement('strong'),r=document.createElement('strong'),pill=document.createElement('span');l.textContent=av?.displayValue??av?.value??'—';r.textContent=hv?.displayValue??hv?.value??'—';pill.className='stat-pill-label';const an=Number.parseFloat(l.textContent),hn=Number.parseFloat(r.textContent),share=Number.isFinite(an+hn)&&an+hn>0?Math.max(12,Math.min(88,100*an/(an+hn))):50;for(const[side,width]of [['away',share],['home',100-share]]){const half=document.createElement('i');half.className='pill-half pill-'+side;half.style.backgroundColor=el('stage').style.getPropertyValue('--'+side+'-color');half.style.setProperty('width',width+'%','important');pill.append(half)}const text=document.createElement('em');text.className='pill-text';text.textContent=label;pill.append(text);row.append(l,pill,r);root.append(row)}};
+renderStats=function(a,h){
+ if(!sportStats[sport])return oldRenderStats(a,h);
+ const root=el('stats');root.replaceChildren();
+ const normalize=v=>String(v??'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const find=(team,keys)=>{
+  const stats=(team?.statistics||[]).flatMap(x=>x.stats||[x]);
+  return stats.find(x=>keys.some(k=>normalize(k)===normalize(x.name)||normalize(k)===normalize(x.label)||normalize(k)===normalize(x.abbreviation)));
+ };
+ for(const [label,keys] of sportStats[sport]){
+  const av=find(a,keys),hv=find(h,keys);
+  const row=document.createElement('div');row.className='statrow';
+  const l=document.createElement('strong'),r=document.createElement('strong'),pill=document.createElement('span');
+  l.textContent=av?.displayValue??av?.value??'—';r.textContent=hv?.displayValue??hv?.value??'—';
+  pill.className='stat-pill-label';
+  const an=Number.parseFloat(l.textContent),hn=Number.parseFloat(r.textContent);
+  const lowerBetter=label==='TURNOVERS'||label==='RUNNERS LEFT ON BASE';
+  const valid=Number.isFinite(an)&&Number.isFinite(hn);
+  const share=valid&&an+hn>0?Math.max(12,Math.min(88,100*(lowerBetter?hn:an)/(an+hn))):50;
+  for(const[side,width]of[['away',share],['home',100-share]]){
+   const half=document.createElement('i');half.className='pill-half pill-'+side;
+   half.style.backgroundColor=el('stage').style.getPropertyValue('--'+side+'-color');
+   half.style.setProperty('width',width+'%','important');pill.append(half);
+  }
+  const text=document.createElement('em');text.className='pill-text';text.textContent=label;pill.append(text);
+  row.append(l,pill,r);root.append(row);
+ }
+};
 showPerformer=function(side,summary){
  const player=window.ManCaveSpotlight.select(summary,sport,side,window.manCaveRankSnapshot?.event?.id),container=el(side+'PlayerStats');
  el(side+'Player').textContent=player?.athlete?.displayName||'Verified player unavailable';
