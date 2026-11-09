@@ -48,3 +48,9 @@
 .football-field>.static-scrimmage,.football-field>.static-first-down{width:5px!important;z-index:18!important;opacity:1!important;display:block!important;box-shadow:0 0 0 1px #08111dcc!important;pointer-events:none}
 .football-field>.static-scrimmage{background:#178bff!important}
 .football-field>.static-first-down{background:#ffe52e!important}
+/* Both LAST PLAY panels follow the recorded play/portrait team, not matchup order. */
+.dashboard .game-story::before{border-left-color:var(--play-accent,#a9bdcc);border-right-color:var(--play-accent,#a9bdcc)}
+.dashboard .game-story .play-portrait{border-right-color:color-mix(in srgb,var(--play-accent,#a9bdcc) 55%,transparent)}
+.dashboard .game-story .story-event{border-left-color:color-mix(in srgb,var(--play-accent,#a9bdcc) 55%,transparent);background:linear-gradient(90deg,color-mix(in srgb,var(--play-accent,#a9bdcc) 17%,#04101b),#02070de8 46%,#06121de8)}
+.dashboard .game-story .play-portrait>span,.dashboard .game-story .story-event>span{color:color-mix(in srgb,var(--play-accent,#a9bdcc) 72%,white)}
+.dashboard .game-story.is-live:has(.football-field) .story-event>strong{color:var(--play-accent,#a9bdcc)!important}

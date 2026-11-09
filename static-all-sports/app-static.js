@@ -224,9 +224,23 @@ function Vm({game}){
   }
   return decorate(OriginalVm({game}));
 }
+function staticPlaySide(game){
+  const play=game.staticState?.play;
+  const text=String(play?.text||game.lastPlay||'').trim();
+  const type=String(play?.type?.text||'').toLowerCase().replace(/[^a-z]/g,'');
+  // Stoppages belong to neither team, even if the feed attaches the offense.
+  if(/^(?:twominutewarning|officialtimeout|officialtvtimeout|endgame|gameend|endperiod|periodend|endinning|endhalf)$/.test(type)
+    ||/^(?:two[- ]minute warning|official(?: tv)? time[- ]?out|game end(?:ed)?|end of (?:the )?(?:game|(?:[0-9]+(?:st|nd|rd|th)? )?(?:quarter|period|half|inning)))\b/i.test(text))return null;
+  const teams=[['away',game.away],['home',game.home]];
+  const actorTeam=game.lastPlayActor?.team;
+  const actor=teams.find(([,team])=>actorTeam&&(String(team.short)===String(actorTeam)||String(team.id)===String(actorTeam)));
+  if(actor)return actor[0];
+  const recorded=teams.find(([,team])=>play?.team?.id!=null&&String(team.id)===String(play.team.id));
+  return recorded?.[0]||null;
+}
 function Qm({game,colorCollision}){
-  const a=my(game),baseball=game.sport==='MLB',p=game.baseball?.pitcher;
-  return I.createElement('section',{className:'game-story is-live story-'+game.sport.toLowerCase(),'aria-label':'Game playing surface',style:{'--story-accent':game.home.color}},
+  const a=my(game),baseball=game.sport==='MLB',p=game.baseball?.pitcher,playSide=staticPlaySide(game),playTeam=playSide?game[playSide]:null;
+  return I.createElement('section',{className:'game-story is-live story-'+game.sport.toLowerCase(),'aria-label':'Game playing surface','data-play-team':playTeam?.short||'neutral',style:{'--play-accent':playSide?'var(--'+playSide+'-display,var(--'+playSide+'))':'#a9bdcc','--story-accent':'var(--play-accent)'}},
     I.createElement(LastPlayPortrait,{game,key:JSON.stringify(game.lastPlayActor||{})}),
     I.createElement('div',{className:'story-header'},I.createElement('div',{className:'story-kicker'},baseball?'ON THE MOUND':'GAME FLOW'),I.createElement('strong',{},game.state==='post'?'GAME COMPLETE':baseball?[p?.name,game.situation].filter(Boolean).join(' · '):game.situation)),
     I.createElement('div',{className:'story-live-body'},I.createElement(Vm,{game})),
