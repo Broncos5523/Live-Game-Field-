@@ -483,3 +483,28 @@
  font-weight:900 !important;
  white-space:nowrap !important;
 }
+
+/* Build 27: possession-team primary fill with white outline on play text. */
+.dashboard .game-story.is-live:has(.football-field) .story-header .football-down-distance,
+.dashboard .game-story.is-live:has(.football-field) .story-event > strong {
+ color:var(--football-primary,#E31837) !important;
+ -webkit-text-stroke:1px #fff !important;
+ paint-order:stroke fill;
+ text-shadow:0 2px 3px #000c !important;
+}
+/* Match right LAST PLAY heading to the top-center placement of the left portrait heading. */
+.dashboard .game-story.is-live:has(.football-field) .story-event {
+ justify-content:flex-start !important;
+ padding-top:.6rem !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > span {
+ position:absolute !important;
+ top:.6rem !important;
+ left:0 !important;
+ width:100% !important;
+ text-align:center !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .story-event > strong {
+ flex:1 1 auto !important;
+ margin-top:1.5rem !important;
+}
