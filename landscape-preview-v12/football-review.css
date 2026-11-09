@@ -536,3 +536,11 @@
 .dashboard .hero .team .football-timeout-dots i.used {
  background:transparent;border-color:#ffd52c80;box-shadow:none;opacity:.5;
 }
+
+/* Build 31: vertically center portrait and spotlight label as a group; keep LAST PLAY heading fixed. */
+.dashboard .game-story.is-live:has(.football-field) .play-portrait {
+ display:flex !important;
+ flex-direction:column !important;
+ justify-content:center !important;
+ align-items:center !important;
+}
