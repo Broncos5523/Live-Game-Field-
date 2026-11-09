@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Man Cave Sports Book — Final Game Review</title><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#020a14;color:#f2f6ff;font-family:Arial,sans-serif;overflow:hidden}#stage{position:absolute;width:1280px;height:720px;top:50%;left:50%;transform:translate(-50%,-50%) scale(var(--scale,1));transform-origin:center;background:linear-gradient(120deg,#061523d9,#09182cc9),url('../landscape-preview-v1/assets/branding/man-cave-sports-book-transparent.png') center/contain no-repeat;display:grid;grid-template-rows:75px 132px 1fr 67px;gap:9px;padding:12px 22px}.glass{background:#10243bc7;border:1px solid #5c76914d;border-radius:13px;backdrop-filter:blur(9px)}header{display:flex;align-items:center;justify-content:space-between}header img{height:69px;max-width:300px;object-fit:contain}header .title{font-size:21px;font-weight:900;letter-spacing:3px}#league{font-size:22px;font-weight:900;color:#b5d4ee}#score{display:grid;grid-template-columns:1fr 220px 1fr;align-items:center;padding:12px 25px}.team{display:flex;align-items:center;gap:20px;font-weight:800;font-size:24px}.team.home{justify-content:flex-end}.team img{width:74px;height:74px;object-fit:contain}.team strong{font-size:58px}.middle{text-align:center}.middle b{display:block;font-size:28px;color:#f4d185}.middle small{display:block;margin-top:6px;color:#a9c1d4;font-size:16px}#body{display:grid;grid-template-columns:19% 1fr 19%;gap:10px;min-height:0}.panel{padding:18px;min-height:0;overflow:hidden}.panel h2{margin:0 0 20px;color:#efc976;font-size:18px;letter-spacing:1px;text-align:center}.performer{text-align:center}.performer img{height:160px;max-width:100%;object-fit:contain}.performer h3{font-size:24px;margin:12px 0}.performer p{font-size:19px;color:#cbdceb}.statrow{display:grid;grid-template-columns:1fr 1.2fr 1fr;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #53657a40;text-align:center;font-size:23px}.statrow span{font-size:16px;color:#b2c9db}.logos{display:flex;justify-content:space-around;align-items:center;margin:6px 0 16px}.logos img{width:90px;height:90px;object-fit:contain}.logos b{font-size:14px;color:#b7cde0}#ticker{display:flex;align-items:center;gap:22px;padding:10px 20px;overflow:hidden}#ticker-label{color:#f3d080;white-space:nowrap;font-size:19px;font-weight:900}#ticker-track{white-space:nowrap;overflow:hidden;font-size:20px}#ticker-content{display:inline-block;animation:marquee 28s linear infinite}@keyframes marquee{to{transform:translateX(-50%)}}.muted{color:#9bb1c4}.notice{font-size:17px;color:#b4c9d9;text-align:center;margin-top:55px}</style><style id="live-board-visual-alignment">
+#stage{background:#06111d;isolation:isolate;grid-template-rows:62px 132px 1fr 53px;gap:8px;padding:12px 20px}
+#stage:before{content:"";position:absolute;inset:0;z-index:-2;background:var(--venue-image,none) center/cover no-repeat;opacity:1}
+#stage:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(2,10,20,.33),rgba(3,13,25,.08) 45%,rgba(2,10,20,.36))}
+.glass{background:rgba(8,21,36,.47);border:1px solid rgba(205,225,248,.22);border-radius:14px;backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);box-shadow:0 5px 24px rgba(0,0,0,.13)}
+header .title{display:none}header img{height:72px;max-width:355px}#league{background:rgba(6,18,32,.5);border:1px solid #ffffff2b;border-radius:12px;padding:10px 16px}
+#score{grid-template-columns:1fr 230px 1fr;background:linear-gradient(90deg,rgba(8,21,37,.48),rgba(8,21,37,.22),rgba(8,21,37,.48));border:1px solid rgba(213,231,250,.23);border-radius:15px}
+.team{gap:16px;font-size:25px}.team img{height:86px;width:86px}.team strong{font-size:65px;text-shadow:0 3px 12px #0008}.middle b{font-size:32px;color:#e7edf7}.middle small{font-size:14px}
+.panel{background:linear-gradient(145deg,rgba(7,23,39,.54),rgba(2,8,17,.49))}.panel h2{color:#f4f7ff;text-shadow:0 2px 8px #000;font-size:17px}.statrow{border-bottom-color:#ffffff27}.statrow strong{text-shadow:0 2px 8px #000}.logos img{filter:drop-shadow(0 3px 7px #0008)}
+#ticker{background:rgba(5,17,30,.65)}#ticker-label{color:#e6edf7}
+</style><style id="final-layout-alignment">
+/* Final-game information occupies the same broad center and slim flanks as the live game surface. */
+#body{grid-template-columns:18% minmax(0,1fr) 18%;gap:7px}
+#body>.panel{border-radius:9px;padding:11px 13px;background:linear-gradient(145deg,rgba(7,23,39,.62),rgba(2,8,17,.55));border-color:rgba(156,200,225,.3)}
+#body>.panel h2{font-size:15px;letter-spacing:1px;margin:0 0 12px}
+#body>.performer img{height:150px}
+#body>.performer h3{font-size:19px}
+#body>.performer p{font-size:16px;line-height:1.5}
+#body .logos{justify-content:space-between;padding:0 14%;margin:0 0 5px}
+#body .logos img{width:83px;height:83px}
+#body .statrow{padding:8px 0;font-size:20px}
+#body .statrow span{font-size:15px}
+#score{border:0;border-radius:4px;background:linear-gradient(90deg,rgba(5,15,28,.28),rgba(5,15,28,.12),rgba(5,15,28,.28))}
+#score .middle{background:rgba(3,11,23,.37);border-radius:10px;padding:8px}
+#ticker{border-radius:5px}
+</style><style id="final-ticker-team-logos">#ticker-content{display:inline-flex;align-items:center;gap:28px;animation-duration:45s}.ticker-final-item{display:inline-flex;align-items:center;gap:11px;padding-right:20px;border-right:1px solid #ffffff40}.ticker-final-team{display:inline-flex;align-items:center;gap:6px}.ticker-final-team img{width:30px;height:30px;object-fit:contain;filter:drop-shadow(0 1px 3px #0008)}.ticker-final-team b{font-size:17px}.ticker-final-team strong{font-size:19px}.ticker-final-dash{color:#a5b6c8}.ticker-final-item small{font-size:13px;color:#b8cbdc}#ticker-track{flex:1;min-width:0}</style><style id="league-logo-ticker-fix">#league{display:flex;align-items:center;justify-content:center;gap:8px;padding:5px 12px;background:transparent;border:0}#leagueLogo{height:47px;width:57px;object-fit:contain}#leagueText{display:none}#leagueLogo[hidden]+#leagueText{display:inline}#ticker-content{animation:none!important;transform:none!important;gap:20px;min-width:max-content}#ticker-track{overflow:hidden}#ticker-content .ticker-final-team img{display:inline-block!important;width:28px;height:28px;min-width:28px;vertical-align:middle}#ticker-content .ticker-final-item{flex-shrink:0}</style><style id="scoreboard-final-count">header{position:relative;justify-content:space-between}header>img{position:absolute;left:50%;transform:translateX(-50%);height:60px;max-width:270px}#finalCount{font-size:15px;font-weight:800;letter-spacing:1px;color:#edf6ff;padding:9px 12px;background:rgba(4,16,31,.5);border-radius:8px}#score{position:relative;background:transparent!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}#score .middle{background:transparent!important;padding:0!important}#score .middle b{font-size:38px;font-weight:900;color:#fff;text-shadow:0 2px 8px #000}#score .team{background:transparent}#score .team strong{color:var(--team-score,#fff)}#score .team.away strong{color:#f2f6ff}#score .team.home strong{color:#f2f6ff}</style><style id="team-accent-polish">
+#stage{--away-color:#b19b7a;--home-color:#6f9dc7;--winner-color:#6f9dc7}
+#score{background:linear-gradient(90deg,color-mix(in srgb,var(--away-color) 21%,transparent),transparent 43%,color-mix(in srgb,var(--home-color) 23%,transparent))!important}
+#score .away strong{color:color-mix(in srgb,var(--away-color) 65%,white)!important}
+#score .home strong{color:color-mix(in srgb,var(--home-color) 65%,white)!important}
+#score .team img{filter:drop-shadow(0 0 13px color-mix(in srgb,var(--winner-color) 55%,transparent))}
+#body>.panel:first-child{border-top:3px solid var(--away-color);background:linear-gradient(160deg,color-mix(in srgb,var(--away-color) 20%,rgba(7,23,39,.65)),rgba(2,8,17,.56))}
+#body>.panel:last-child{border-top:3px solid var(--home-color);background:linear-gradient(160deg,color-mix(in srgb,var(--home-color) 20%,rgba(7,23,39,.65)),rgba(2,8,17,.56))}
+#body>.panel:nth-child(2){border-top:3px solid var(--winner-color)}
+#body>.panel:first-child h2{color:color-mix(in srgb,var(--away-color) 45%,white)}
+#body>.panel:last-child h2{color:color-mix(in srgb,var(--home-color) 45%,white)}
+#body>.panel:first-child .performer img,#awayPlayerImg{filter:drop-shadow(0 0 18px color-mix(in srgb,var(--away-color) 35%,transparent))}
+#homePlayerImg{filter:drop-shadow(0 0 18px color-mix(in srgb,var(--home-color) 35%,transparent))}
+#body .logos>div:first-child img{filter:drop-shadow(0 0 12px color-mix(in srgb,var(--away-color) 42%,transparent))}
+#body .logos>div:last-child img{filter:drop-shadow(0 0 12px color-mix(in srgb,var(--home-color) 42%,transparent))}
+#body .statrow{padding:8px 0 4px;border:0}
+.comparison-bars{display:grid;grid-template-columns:1fr 1fr;gap:8px;height:7px;margin:0 5px 12px}
+.comparison-bars span{height:100%;border-radius:5px;background:var(--away-color);justify-self:end}
+.comparison-bars span:last-child{background:var(--home-color);justify-self:start}
+#stage[data-winner="away"] #body>.panel:first-child,#stage[data-winner="home"] #body>.panel:last-child{box-shadow:inset 0 0 30px color-mix(in srgb,var(--winner-color) 17%,transparent)}
+</style><style id="team-accent-stronger">
+/* High-contrast broadcast accents, with direct CSS colors for TV/mobile compatibility. */
+#score{border-top:3px solid var(--winner-color)!important}
+#score .team.away{border-left:6px solid var(--away-color);padding-left:12px}
+#score .team.home{border-right:6px solid var(--home-color);padding-right:12px}
+#body>.panel:first-child{border-top:5px solid var(--away-color)!important;box-shadow:inset 0 16px 25px -22px var(--away-color)}
+#body>.panel:last-child{border-top:5px solid var(--home-color)!important;box-shadow:inset 0 16px 25px -22px var(--home-color)}
+#body>.panel:nth-child(2){border-top:5px solid var(--winner-color)!important}
+#body .comparison-bars{height:11px;margin:1px 5px 17px}
+#body .comparison-bars span{box-shadow:0 0 12px var(--away-color)}
+#body .comparison-bars span:last-child{box-shadow:0 0 12px var(--home-color)}
+#body .statrow strong:first-child{color:var(--away-color)}
+#body .statrow strong:last-child{color:var(--home-color)}
+#awayPlayer,#awayPlayerStats{border-left:3px solid var(--away-color);padding-left:8px}
+#homePlayer,#homePlayerStats{border-right:3px solid var(--home-color);padding-right:8px}
+#stage[data-winner="away"] #body>.panel:first-child{outline:1px solid var(--away-color)}
+#stage[data-winner="home"] #body>.panel:last-child{outline:1px solid var(--home-color)}
+</style><style id="team-stats-pill-layout">
+/* Team stats: one translucent broadcast pill per comparison, preserving the center panel. */
+#stats{display:flex;flex-direction:column;gap:12px;padding:8px 20px}
+#stats .statrow{display:grid;grid-template-columns:1fr 1.45fr 1fr;align-items:center;min-height:54px;padding:9px 18px!important;margin:0;border:1px solid rgba(219,235,255,.23)!important;border-radius:999px;background:linear-gradient(90deg,rgba(10,28,49,.76),rgba(12,24,42,.46),rgba(10,28,49,.76));box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 3px 12px rgba(0,0,0,.13)}
+#stats .statrow strong{font-size:22px!important;color:#f7fbff!important;text-shadow:0 1px 4px #000}
+#stats .statrow span{font-size:14px!important;font-weight:800;letter-spacing:.45px;color:#d8e7f6}
+#stats .statrow strong:first-child{border-left:4px solid var(--away-color);border-radius:3px;padding-left:7px}
+#stats .statrow strong:last-child{border-right:4px solid var(--home-color);border-radius:3px;padding-right:7px}
+#stats .comparison-bars{display:none!important}
+</style><style id="split-stat-label-pill">
+/* Values outside; central label alone is a split-color comparison pill. */
+#stats{gap:14px!important}
+#stats .statrow{grid-template-columns:1fr 2.1fr 1fr!important;background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:4px 10px!important;min-height:54px!important;gap:12px!important}
+#stats .statrow strong{font-size:25px!important;color:#fff!important;border:0!important;padding:0!important}
+#stats .statrow strong:first-child{text-align:right}
+#stats .statrow strong:last-child{text-align:left}
+#stats .statrow span{display:flex;align-items:center;justify-content:center;min-height:42px;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.36);background:linear-gradient(90deg,var(--away-color) 0%,var(--away-color) var(--away-share,50%),var(--home-color) var(--away-share,50%),var(--home-color) 100%);color:#fff!important;font-weight:900!important;font-size:15px!important;text-shadow:0 1px 5px #000,0 1px 2px #000;box-shadow:0 3px 12px rgba(0,0,0,.25),inset 0 1px 2px #ffffff36}
+#stats .comparison-bars{display:none!important}
+</style><style id="scorebox-removal-and-split-pills">
+/* Final scoreboard floats directly on venue art; no surrounding card, bars or borders. */
+#score,#score.glass{background:transparent!important;border:none!important;border-top:none!important;border-radius:0!important;box-shadow:none!important;outline:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+#score .team.away,#score .team.home{border:0!important;padding-left:0!important;padding-right:0!important}
+#score .middle{background:transparent!important;border:0!important;box-shadow:none!important}
+#score .team strong,#score .team.away strong,#score .team.home strong{color:#fff!important;opacity:1!important;text-shadow:0 2px 9px #000,0 0 3px #000}
+#stats .statrow{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;grid-template-columns:1fr 1.45fr 1fr;gap:12px;padding:6px 10px!important;min-height:52px}
+#stats .statrow span{border-radius:999px;padding:13px 10px;background:linear-gradient(90deg,var(--away-color) 0%,var(--away-color) 44%,rgba(8,18,34,.74) 49%,rgba(8,18,34,.74) 51%,var(--home-color) 56%,var(--home-color) 100%);border:1px solid rgba(255,255,255,.4);box-shadow:inset 0 1px 5px rgba(255,255,255,.12),0 2px 12px rgba(0,0,0,.3);color:#fff!important;text-shadow:0 1px 5px #000;font-weight:900}
+#stats .statrow strong:first-child,#stats .statrow strong:last-child{border:0!important;padding:0!important;color:#fff!important}
+</style><style id="final-hard-reset-v11">
+/* High-specificity reset of earlier experimental styling. */
+html body #stage #score.glass{background:none!important;background-image:none!important;border:0!important;border-width:0!important;border-color:transparent!important;outline:0!important;box-shadow:none!important;border-radius:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+html body #stage #score::before,html body #stage #score::after,html body #stage #score .team::before,html body #stage #score .team::after{display:none!important;content:none!important}
+html body #stage #score .team{border:0!important;border-left:0!important;border-right:0!important;background:none!important;box-shadow:none!important}
+html body #stage #score .team strong{color:#fff!important;opacity:1!important}
+html body #stage #body>.panel #awayPlayer,html body #stage #body>.panel #awayPlayerStats,html body #stage #body>.panel #homePlayer,html body #stage #body>.panel #homePlayerStats{border:0!important;border-left:0!important;border-right:0!important;padding-left:0!important;padding-right:0!important}
+html body #stage #stats .statrow span{background:var(--pill-gradient,linear-gradient(90deg,#d3a34d,#19283d 50%,#d43c54))!important;background-image:var(--pill-gradient)!important;color:#fff!important;border:1px solid #ffffff70!important;box-shadow:0 2px 10px #0007!important}
+html body #stage #stats .statrow{background:none!important;border:0!important;box-shadow:none!important}
+</style><style id="structural-pill-halves-v13">
+/* Actual independently colored halves: no CSS gradient or color-mix dependency. */
+html body #stage #stats .statrow span.stat-pill-label{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;isolation:isolate;min-height:45px;padding:0!important;border:1px solid #ffffff70!important;border-radius:999px!important;background:none!important;background-image:none!important;box-shadow:0 2px 10px #0008!important}
+html body #stage #stats .statrow .pill-half{position:absolute;top:0;bottom:0;width:50%;display:block;z-index:0}
+html body #stage #stats .statrow .pill-away{left:0}
+html body #stage #stats .statrow .pill-home{right:0}
+html body #stage #stats .statrow .pill-text{position:relative;z-index:1;display:block;min-width:54%;padding:8px 10px;text-align:center;background:rgba(4,12,25,.67);border-radius:999px;color:#fff;font-style:normal;font-size:15px;font-weight:900;text-shadow:0 1px 3px #000}
+</style><style id="pill-center-clean-v14">
+/* Remove dark center capsule: preserve a clean, uninterrupted 50/50 color split. */
+html body #stage #stats .statrow .pill-text{background:transparent!important;background-image:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:8px 5px!important;min-width:0!important;width:auto!important;text-shadow:0 1px 3px #000,0 0 5px #000!important}
+html body #stage #stats .statrow .pill-half{width:50%!important}
+html body #stage #stats .statrow .pill-away{left:0!important;right:auto!important}
+html body #stage #stats .statrow .pill-home{right:0!important;left:auto!important}
+</style><style id="proportional-stat-pill-v15">
+html body #stage #stats .statrow .pill-away{left:0!important;right:auto!important;width:var(--unused,auto)}
+html body #stage #stats .statrow .pill-home{right:0!important;left:auto!important;width:var(--unused,auto)}
+</style></head><body><main id="stage"><header><div id="finalCount" aria-label="Number of completed games">0 GAMES</div><img src="../landscape-preview-v1/assets/branding/man-cave-sports-book-transparent.png" alt="Man Cave Sports Book"><div class="title">GAME CENTER</div><div id="league"><img id="leagueLogo" alt="League logo"><span id="leagueText">LOADING</span></div></header><section class="glass" id="score"><div class="team away"><img id="awayLogo" alt=""><span id="awayName">AWAY</span><strong id="awayScore">—</strong></div><div class="middle"><b id="status">FINAL</b><small id="date">Verified results only</small></div><div class="team home"><strong id="homeScore">—</strong><span id="homeName">HOME</span><img id="homeLogo" alt=""></div></section><div id="body"><section class="glass panel performer"><h2>AWAY TOP PERFORMER</h2><img id="awayPlayerImg" hidden alt=""><h3 id="awayPlayer">Awaiting game data</h3><p id="awayPlayerStats">—</p></section><section class="glass panel"><h2>TEAM COMPARISON</h2><div class="logos"><div><img id="awayCenterLogo" alt=""><b id="awayAbbr"></b></div><div><img id="homeCenterLogo" alt=""><b id="homeAbbr"></b></div></div><div id="stats"><div class="notice">Loading verified team statistics…</div></div></section><section class="glass panel performer"><h2>HOME TOP PERFORMER</h2><img id="homePlayerImg" hidden alt=""><h3 id="homePlayer">Awaiting game data</h3><p id="homePlayerStats">—</p></section></div><footer class="glass" id="ticker"><span id="ticker-label">LAST 24H</span><div id="ticker-track"><div id="ticker-content">Loading completed games…</div></div></footer></main><script>
+const leagues={NBA:['basketball','nba'],WNBA:['basketball','wnba'],NFL:['football','nfl'],CFB:['football','college-football'],NHL:['hockey','nhl'],MLB:['baseball','mlb'],CBB:['basketball','mens-college-basketball']};const params=new URLSearchParams(location.search);const sport=(params.get('sport')||'NBA').toUpperCase();const cfg=leagues[sport]||leagues.NBA;document.getElementById('leagueText').textContent=sport;document.getElementById('leagueLogo').src='../landscape-preview-v1/assets/league-logos/'+sport+'.png';document.getElementById('leagueLogo').onerror=function(){this.hidden=true};function fit(){document.documentElement.style.setProperty('--scale',Math.min(innerWidth/1280,innerHeight/720))}addEventListener('resize',fit);fit();const el=id=>document.getElementById(id);const api='https://site.api.espn.com/apis/site/v2/sports/'+cfg.join('/');async function json(url){if(window.manCaveSummary!==undefined)return window.manCaveSummary;const r=await fetch(url);if(!r.ok)throw Error('HTTP '+r.status);return r.json()}function team(event,side){return event.competitions?.[0]?.competitors?.find(c=>c.homeAway===side)}function setImg(id,src){const x=el(id);if(src){x.src=src;x.hidden=false}else{x.hidden=true}}function showGame(event){const venueTeam=team(event,'home');const venueCode=(venueTeam?.team?.abbreviation||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(venueCode){const image=new Image();const path='../landscape-preview-v1/assets/venues/'+sport+'/'+venueCode+'.webp';image.onload=()=>el('stage').style.setProperty('--venue-image','url("'+path+'")');image.onerror=()=>el('stage').style.removeProperty('--venue-image');image.src=path;}const a=team(event,'away'),h=team(event,'home');if(!a||!h)return;const cleanColor=v=>{if(!/^#?[0-9a-f]{6}$/i.test(v||''))return '#607f9e';const hex=v.replace('#','');const rgb=[0,2,4].map(i=>parseInt(hex.slice(i,i+2),16));return '#'+rgb.map(c=>Math.round(c*.65+255*.35).toString(16).padStart(2,'0')).join('')};const palette={NO:['#0C2340','#B4975A'],LAC:['#1D428A','#C8102E'],BOS:['#007A33','#BA9653'],LAL:['#552583','#FDB927'],NYK:['#006BB6','#F58426'],GS:['#1D428A','#FFC72C'],CHI:['#CE1141','#000000'],MIA:['#98002E','#F9A01B'],DAL:['#00538C','#B8C4CA'],DEN:['#0E2240','#FEC524'],PHX:['#1D1160','#E56020'],MIL:['#00471B','#EEE1C6'],PHI:['#006BB6','#ED174C'],SAC:['#5A2D81','#63727A'],CLE:['#6F263D','#FFB81C'],ATL:['#E03A3E','#C1D32F'],BKN:['#000000','#FFFFFF'],ORL:['#0077C0','#C4CED4'],IND:['#002D62','#FDBB30'],MIN:['#0C2340','#78BE20'],UTA:['#27251F','#F9A01B'],POR:['#E03A3E','#000000'],TOR:['#CE1141','#A1A1A4'],WAS:['#002B5C','#E31837'],CHA:['#1D1160','#00788C'],DET:['#C8102E','#006BB6'],MEM:['#5D76A9','#12173F'],OKC:['#007AC1','#EF3B24'],SA:['#C4CED4','#000000'],HOU:['#CE1141','#000000']};const rgb=v=>[1,3,5].map(i=>parseInt(v.slice(i,i+2),16));const distance=(x,y)=>{const p=rgb(x),q=rgb(y);return Math.sqrt(p.reduce((t,v,i)=>t+(v-q[i])**2,0))};const awayCode=a.team?.abbreviation||'',homeCode=h.team?.abbreviation||'';const homeHex=cleanColor(h.team?.color);let awayHex=cleanColor(a.team?.color);if(distance(awayHex,homeHex)<115){const secondary=a.team?.alternateColor&&/^#?[0-9a-f]{6}$/i.test(a.team.alternateColor)?'#'+a.team.alternateColor.replace('#',''):palette[awayCode]?.[1];if(secondary)awayHex=secondary} el('stage').style.setProperty('--away-color',awayHex);el('stage').style.setProperty('--home-color',homeHex);el('stage').style.setProperty('--pill-gradient','linear-gradient(90deg,'+awayHex+' 0%,'+awayHex+' 44%,#14243b 49%,#14243b 51%,'+homeHex+' 56%,'+homeHex+' 100%)');el('stage').style.setProperty('--winner-color',cleanColor(Number(a.score)>Number(h.score)?a.team?.color:h.team?.color));el('stage').dataset.winner=Number(a.score)>Number(h.score)?'away':'home';for(const [key,t] of [['away',a],['home',h]]){el(key+'Name').textContent=t.team?.shortDisplayName||t.team?.displayName||key;el(key+'Score').textContent=t.score??'—';el(key+'Abbr').textContent=t.team?.abbreviation||key;const logo=t.team?.logo||t.team?.logos?.[0]?.href;setImg(key+'Logo',logo);setImg(key+'CenterLogo',logo)}el('status').textContent='FINAL';el('date').textContent=new Date(event.date).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});loadSummary(event.id)}function renderStats(a,h){
+ const statsA=a?.statistics||[],statsH=h?.statistics||[];
+ const normalize=v=>String(v||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+ const defs=[
+  {label:'FIELD GOAL %',keys:['fieldgoalpct','fieldgoalpercentage','fieldgoalpercent','fgpct','fgpercentage'],percent:true},
+  {label:'REBOUNDS',keys:['totalrebounds','rebounds','reb']},
+  {label:'ASSISTS',keys:['assists','ast']},
+  {label:'STEALS',keys:['steals','stl']}
+ ];
+ const lookup=(arr,def)=>arr.find(x=>def.keys.some(k=>normalize(x.name)===k||normalize(x.label)===k||normalize(x.abbreviation)===k));
+ const numeric=x=>{if(!x)return NaN;const raw=String(x.displayValue??x.value??'');if(raw.includes('-')&&!raw.includes('%'))return NaN;const n=Number.parseFloat(raw.replace(/,/g,''));return Number.isFinite(n)?n:NaN};
+ const fmt=(x,def)=>{const n=numeric(x);if(!Number.isFinite(n))return '—';if(def.percent){const val=n<=1&&String(x?.displayValue??'').indexOf('%')===-1?n*100:n;return Number(val.toFixed(1))+'%'}return String(x.displayValue??x.value)};
+ const container=el('stats');container.replaceChildren();
+ for(const def of defs){
+  const x=lookup(statsA,def),y=lookup(statsH,def),av=numeric(x),hv=numeric(y);
+  const row=document.createElement('div');row.className='statrow';
+  const leftValue=document.createElement('strong');leftValue.textContent=fmt(x,def);
+  const pill=document.createElement('span');pill.className='stat-pill-label';
+  const away=document.createElement('i'),home=document.createElement('i'),label=document.createElement('em');
+  away.className='pill-half pill-away';home.className='pill-half pill-home';label.className='pill-text';label.textContent=def.label;
+  away.style.backgroundColor=el('stage').style.getPropertyValue('--away-color').trim()||'#B4975A';
+  home.style.backgroundColor=el('stage').style.getPropertyValue('--home-color').trim()||'#1D428A';
+  let share=50;
+  if(Number.isFinite(av)&&Number.isFinite(hv)&&av>=0&&hv>=0&&av+hv>0){share=Math.max(12,Math.min(88,100*av/(av+hv)))}
+  away.style.setProperty('width',share+'%','important');home.style.setProperty('width',(100-share)+'%','important');
+  pill.append(away,home,label);
+  const rightValue=document.createElement('strong');rightValue.textContent=fmt(y,def);
+  row.append(leftValue,pill,rightValue);container.appendChild(row);
+ }
+}
+function showPerformer(side,summary){const teams=summary.boxscore?.players||[];const entry=teams.find(x=>x.team?.id===team(summary.header||{},side)?.team?.id);const competitor=summary.header?.competitions?.[0]?.competitors?.find(x=>x.homeAway===side);const box=teams.find(x=>x.team?.id===competitor?.team?.id);const players=(box?.statistics||[]).flatMap(x=>x.athletes||[]).filter(x=>x.athlete);const p=players.find(x=>x.starter)||players[0];el(side+'Player').textContent=p?.athlete?.displayName||'Player data unavailable';el(side+'PlayerStats').textContent=p?.stats?.slice(0,3).join(' • ')||'—';setImg(side+'PlayerImg',p?.athlete?.headshot?.href)}async function loadSummary(id){el('stats').textContent='Loading team comparison…';for(const side of ['away','home']){el(side+'Player').textContent='Loading performer…';el(side+'PlayerStats').textContent='—';setImg(side+'PlayerImg',null)}try{const s=await json(api+'/summary?event='+encodeURIComponent(id));const c=s.boxscore?.teams||[];renderStats(c.find(x=>String(x.team?.id)===String(s.header?.competitions?.[0]?.competitors?.find(t=>t.homeAway==='away')?.team?.id)),c.find(x=>String(x.team?.id)===String(s.header?.competitions?.[0]?.competitors?.find(t=>t.homeAway==='home')?.team?.id)));showPerformer('away',s);showPerformer('home',s)}catch(e){el('stats').textContent='Verified statistics unavailable';for(const side of ['away','home'])el(side+'Player').textContent='Player data unavailable'}}window.renderApprovedFinal=function(snapshot){
+ const event=snapshot.event;
+ el('finalCount').textContent=snapshot.events.length+' GAMES';
+ el('ticker-label').textContent=snapshot.recent?'LAST 24H':'RECENT GAMES';
+ const track=el('ticker-content');track.replaceChildren();
+ for(let repeat=0;repeat<2;repeat++)for(const e of snapshot.events){
+  const item=document.createElement('span');item.className='ticker-final-item';
+  for(const side of ['away','home']){const t=team(e,side);const span=document.createElement('span');span.className='ticker-final-team';const img=document.createElement('img');img.src=t?.team?.logo||t?.team?.logos?.[0]?.href||'';img.alt=t?.team?.abbreviation||'';const text=document.createElement('b');text.textContent=(t?.team?.abbreviation||'—')+' '+(t?.score??'—');span.append(img,text);item.append(span)}track.append(item);
+ }
+ if(window.tickerAnimation)window.tickerAnimation.cancel();window.tickerAnimation=track.animate([{transform:'translateX(0)'},{transform:'translateX(-50%)'}],{duration:Math.max(25000,snapshot.events.length*5000),iterations:Infinity});window.tickerAnimation.currentTime=Date.now()-(snapshot.tickerStartedAt||Date.now());
+ window.manCaveSummary=snapshot.summary||{};showGame(event);document.getElementById('stage').dataset.event=event.id;
+};
+</script><script src="./final-bridge.js"></script><script src="../rotation-preview/assets.js"></script></body></html>
