@@ -32,6 +32,9 @@
       .game-story .basketball-status .basketball-court[data-play-cue]::before { content: none !important; display: none !important; }
     </style>
   <link rel="stylesheet" href="../static-all-sports/static.css?v=3"><style>
+/* Restore approved continuous score ticker only; all playing surfaces remain static. */
+.ticker .ticker-fade-content > div { animation: mancave-live-ticker 35s linear infinite !important; will-change: transform; }
+@keyframes mancave-live-ticker { from { transform:translateX(0); } to { transform:translateX(-50%); } }
 /* A recorded final has no current drive or next down to advertise. */
 .dashboard[data-state="post"] .game-story.is-live:has(.football-field) .football-drive-banner,
 .dashboard[data-state="post"] .game-story.is-live:has(.football-field) .football-down-distance{display:none!important}
