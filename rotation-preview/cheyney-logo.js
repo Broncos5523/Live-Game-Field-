@@ -16,6 +16,18 @@ function apply(){
    }
   }
  }
+ // ESPN shortens Cheyney to CHE in ticker rows; use the full on-screen
+ // team name as confirmation so unrelated CHE abbreviations stay untouched.
+ const cheyneyIsCurrent=!!document.querySelector('.dashboard')&&
+   isCheyney(document.querySelector('.dashboard')?.textContent);
+ if(cheyneyIsCurrent){
+  document.querySelectorAll('.ticker .ticker-team').forEach(node=>{
+   const abbreviation=node.querySelector('b')?.textContent?.trim().toUpperCase();
+   if(abbreviation!=='CHE')return;
+   const img=node.querySelector('.ticker-logo img');
+   if(img&&img.getAttribute('src')!==logo)img.src=logo;
+  });
+ }
  document.querySelectorAll('.ticker-final-team,.ticker-team,.team,.ticker-matchup').forEach(node=>{
   if(!isCheyney(node.textContent)&&!isCheyney(node.querySelector('img')?.alt))return;
   const target=node.classList.contains('ticker-matchup')?null:node;
