@@ -544,3 +544,6 @@
  justify-content:center !important;
  align-items:center !important;
 }
+
+/* Build 32: remove PLAYER SPOTLIGHT caption; preserve LAST PLAY and headshot. */
+.dashboard .game-story.is-live:has(.football-field) .play-portrait > strong {display:none !important;}
