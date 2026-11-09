@@ -65,13 +65,16 @@
   const path=document.createElementNS(ns,'path');
   const x1=data.from*10,x2=data.to*10,y=200;
   const d=data.pass&&data.hasMovement?`M ${x1} ${y} Q ${(x1+x2)/2} 40 ${x2} ${y}`:`M ${x1} ${y} Q ${x1+(x2-x1)*.30} ${y-48} ${x1+(x2-x1)*.55} ${y+20} T ${x2} ${y}`;
-  path.setAttribute('d',d);path.setAttribute('fill','none');if(!data.hasMovement)path.setAttribute('opacity','0');path.setAttribute('stroke',data.loss?'#ff4141':data.pass?'#f5f5ee':data.teamColor);path.setAttribute('stroke-width','6');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-dasharray',data.pass?'none':'14 14');path.classList.add('mcsb-path');svg.append(path);
+  path.setAttribute('d',d);path.setAttribute('fill','none');if(!data.hasMovement)path.setAttribute('opacity','0');const trailColor=data.loss?'#ff4141':data.pass?'#f5f5ee':(runReview?'#E31837':data.teamColor);
+  path.setAttribute('stroke',trailColor);
+  path.style.setProperty('stroke',trailColor,'important');path.setAttribute('stroke-width','6');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-dasharray',data.pass?'none':'14 14');path.classList.add('mcsb-path');svg.append(path);
   if(data.x||data.success){
    const mark=document.createElementNS(ns,'text');mark.setAttribute('x',x2);mark.setAttribute('y',y+14);mark.setAttribute('text-anchor','middle');mark.setAttribute('font-size','58');mark.setAttribute('font-weight','900');mark.setAttribute('fill',data.x?'#ff3434':'#39ff6a');mark.textContent=data.x?'×':'✓';mark.classList.add('mcsb-mark');svg.append(mark);
   }
   field.append(svg); 
   field.dataset.motionStatus='active'; 
   field.dataset.motionPlay=data.play.slice(0,80);
+  if(runReview){let info=document.getElementById('run34-proof');if(!info){info=document.createElement('div');info.id='run34-proof';info.style.cssText='position:fixed;top:5px;right:5px;z-index:999999;padding:5px 9px;background:#0b1629;color:#fff;font:12px monospace;border:1px solid #E31837';document.body.append(info);}info.textContent='RUN 34 | '+(data.pass?'PASS':'RUN')+' | stroke '+getComputedStyle(path).stroke+' | endpoint '+Math.round(data.to)+'%';}
   let label=field.querySelector('.mcsb-announcement');
   if(!label){label=document.createElement('div');label.className='mcsb-announcement';field.append(label);}
   label.textContent=data.announcement?((story.querySelector('.story-header strong')?.textContent.match(/^([A-Z]{2,4}) BALL/)?.[1]||'')+' '+data.announcement).trim():'';
