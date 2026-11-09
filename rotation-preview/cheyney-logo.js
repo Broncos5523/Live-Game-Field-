@@ -24,10 +24,20 @@ function apply(){
   document.querySelectorAll('.ticker .ticker-team').forEach(node=>{
    const abbreviation=node.querySelector('b')?.textContent?.trim().toUpperCase();
    if(abbreviation!=='CHE')return;
-   const img=node.querySelector('.ticker-logo img');
-   if(img&&img.getAttribute('src')!==logo)img.src=logo;
+   const holder=node.querySelector('.ticker-logo');
+   if(!holder)return;
+   // React's image fallback can render a SPAN instead of IMG. Replace it.
+   let img=holder.querySelector('img');
+   if(!img){
+    img=document.createElement('img');
+    img.alt='Cheyney Wolves';
+    img.dataset.cheyneyLogo='true';
+    holder.replaceChildren(img);
+   }
+   if(!img.src.endsWith('/A06F4D27-EC5C-4F25-AF50-6F59A24D9435.png'))img.src=logo;
   });
  }
+
  document.querySelectorAll('.ticker-final-team,.ticker-team,.team,.ticker-matchup').forEach(node=>{
   if(!isCheyney(node.textContent)&&!isCheyney(node.querySelector('img')?.alt))return;
   const target=node.classList.contains('ticker-matchup')?null:node;
