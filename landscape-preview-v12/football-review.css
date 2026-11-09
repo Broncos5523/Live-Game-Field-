@@ -474,3 +474,12 @@
  right:-6.5% !important;
  left:auto !important;
 }
+
+/* Build 26: enlarge end-zone team wordmarks along the full sideline-to-sideline span. */
+.dashboard .game-story.is-live:has(.football-field) .football-field .field-endzone {
+ width:clamp(165px,26cqw,360px) !important;
+ font-size:clamp(20px,2.9cqw,39px) !important;
+ letter-spacing:.075em !important;
+ font-weight:900 !important;
+ white-space:nowrap !important;
+}
