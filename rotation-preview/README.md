@@ -29,3 +29,7 @@ Browser QA uses actual recorded ESPN snapshots, separately labeled as recorded r
 - ESPN public endpoints have no guaranteed uptime/SLA. Old scheduled games are never promoted to live solely by wall-clock time.
 
 The main page is `/rotation-preview/`. Development and preview publishing must not change `/index.html`, approved builds, or other projects.
+
+## College rank indicators
+
+Live and final scoreboards display a compact #1–#25 label before ranked CFB/CBB team names. The display receives the same frozen home/away ranks used by selection. Explicit unranked values suppress the badge; recorded renderer QA can use event-provided ranks when no engine rank snapshot exists. Professional leagues never display these labels. Four additional rank tests cover identity, frozen ranks, unranked/invalid values and professional-sport exclusion.
