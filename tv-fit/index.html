@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><title>Man Cave Sports Book — TV Fit</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#020811}
+#screen{position:fixed;inset:0;background:#020811;overflow:hidden}
+#game{position:absolute;left:50%;top:50%;width:100%;height:100%;border:0;background:#020811;transform:translate(-50%,-50%) scale(var(--tv-fit,.90));transform-origin:center}
+</style></head><body><main id="screen"><iframe id="game" src="../rotation-preview/" title="Man Cave Sports Book Live Game Center" allow="fullscreen"></iframe></main>
+<script>
+/* TV overscan correction: only the wrapper is scaled; the approved board is unmodified.
+   Optional ?fit=88 through ?fit=98 supports different older televisions. */
+const requested=Number(new URLSearchParams(location.search).get('fit'));
+const fit=Number.isFinite(requested)&&requested>=80&&requested<=100?requested:90;
+document.documentElement.style.setProperty('--tv-fit',String(fit/100));
+</script></body></html>
