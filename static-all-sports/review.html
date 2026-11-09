@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Man Cave Sports Book — All-League Review</title>
+<link rel="stylesheet" href="./review.css?v=1">
+<script src="./review.js?v=1" defer></script>
+</head>
+<body>
+<header class="review-header">
+  <img src="../landscape-preview-v1/assets/branding/man-cave-sports-book-transparent.png" alt="Man Cave Sports Book">
+  <div><h1>All-league review</h1><p>One layout. Seven leagues. Live where available; recorded games are clearly labeled.</p></div>
+  <button id="refresh-games" type="button">Refresh games</button>
+</header>
+<nav class="league-nav" aria-label="Jump to a league">
+<a href="#NFL">NFL</a><a href="#NBA">NBA</a><a href="#NHL">NHL</a><a href="#MLB">MLB</a><a href="#WNBA">WNBA</a><a href="#CFB">College football</a><a href="#CBB">College basketball</a>
+</nav>
+<main id="review-grid" class="review-grid" aria-label="All seven league boards"></main>
+<noscript><p>This review needs JavaScript to load the game boards.</p></noscript>
+<dialog id="enlarged-board" aria-labelledby="enlarged-title">
+  <div class="enlarged-bar"><h2 id="enlarged-title">League board</h2><button id="close-enlarged" type="button">Close</button></div>
+  <div id="enlarged-stage"></div>
+</dialog>
+</body>
+</html>

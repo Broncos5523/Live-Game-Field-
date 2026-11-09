@@ -1,0 +1,82 @@
+{
+  "verifiedAt": "2026-11-09T00:23:37.057223-05:00",
+  "games": [
+    {
+      "code": "NFL",
+      "sport": "football",
+      "league": "nfl",
+      "event": "401873050",
+      "date": "20261108",
+      "name": "Tampa Bay Buccaneers at Chicago Bears",
+      "startsAt": "2026-11-09T01:20Z",
+      "state": "post",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=20261108&limit=100"
+    },
+    {
+      "code": "NBA",
+      "sport": "basketball",
+      "league": "nba",
+      "event": "401909950",
+      "date": "20261108",
+      "name": "New Orleans Pelicans at LA Clippers",
+      "startsAt": "2026-11-09T02:00Z",
+      "state": "post",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard?dates=20261108&limit=100"
+    },
+    {
+      "code": "NHL",
+      "sport": "hockey",
+      "league": "nhl",
+      "event": "401892679",
+      "date": "20261108",
+      "name": "Pittsburgh Penguins at Anaheim Ducks",
+      "startsAt": "2026-11-09T01:00Z",
+      "state": "post",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/hockey/nhl/scoreboard?dates=20261108&limit=100"
+    },
+    {
+      "code": "MLB",
+      "sport": "baseball",
+      "league": "mlb",
+      "event": "401908046",
+      "date": "20261028",
+      "name": "Milwaukee Brewers at Tampa Bay Rays",
+      "startsAt": "2026-10-29T00:00Z",
+      "state": "post",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=20261028&limit=100"
+    },
+    {
+      "code": "WNBA",
+      "sport": "basketball",
+      "league": "wnba",
+      "event": "401918311",
+      "date": "20261031",
+      "name": "Atlanta Dream at Golden State Valkyries",
+      "startsAt": "2026-11-01T00:00Z",
+      "state": "post",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/wnba/scoreboard?dates=20261031&limit=100"
+    },
+    {
+      "code": "CFB",
+      "sport": "football",
+      "league": "college-football",
+      "event": "401864535",
+      "date": "20261107",
+      "name": "Wyoming Cowboys at UNLV Rebels",
+      "startsAt": "2026-11-08T03:30Z",
+      "state": "post",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20261107&limit=100"
+    },
+    {
+      "code": "CBB",
+      "sport": "basketball",
+      "league": "mens-college-basketball",
+      "event": "401919029",
+      "date": "20261108",
+      "name": "Wichita State Shockers at USC Trojans",
+      "startsAt": "2026-11-09T04:00Z",
+      "state": "in",
+      "source": "https://site.api.espn.com/apis/site/v2/sports/basketball/mens-college-basketball/scoreboard?dates=20261108&limit=100"
+    }
+  ]
+}
