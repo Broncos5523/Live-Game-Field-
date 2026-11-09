@@ -54,4 +54,10 @@ class Scheduler{
  return {game:chosen,mode:selection.mode,durationMs:selection.durationMs};
  }
 }
-return {Store,Scheduler,valid,status,lastPlay,signature,MIN};});
+function cacheRecords(records,activeKey,maxBytes=3500000){
+ const ordered=Object.entries(records).sort(([ak,a],[bk,b])=>(bk===activeKey)-(ak===activeKey)||(b.confirmedAt||0)-(a.confirmedAt||0));
+ const kept={};let size=2;
+ for(const [key,g]of ordered){const summary=g.summary||{};const compact={...g,summary:{header:summary.header,leaders:summary.leaders,boxscore:{teams:summary.boxscore?.teams,players:key===activeKey?summary.boxscore?.players:undefined},plays:g.play?[g.play]:[]}};let encoded=JSON.stringify(compact);if(size+encoded.length*2>maxBytes){compact.summary.boxscore.players=undefined;encoded=JSON.stringify(compact);}if(size+encoded.length*2<=maxBytes){kept[key]=compact;size+=encoded.length*2+key.length*2+8;}}
+ return kept;
+}
+return {Store,Scheduler,cacheRecords,valid,status,lastPlay,signature,MIN};});

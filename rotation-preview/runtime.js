@@ -7,7 +7,7 @@ const ranks={},seen={},latest={},tickerStarts={},busy=new Set();let active=null,
 const api=s=>'https://site.api.espn.com/apis/site/v2/sports/'+CONFIG[s].join('/');
 function day(t){const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(t);return ['year','month','day'].map(k=>parts.find(p=>p.type===k).value).join('');}
 async function json(url){const response=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(12000)});if(!response.ok)throw Error('HTTP '+response.status);return response.json();}
-function save(){try{localStorage.setItem(cacheKey,JSON.stringify({records:store.records,at:Date.now()}));}catch{}}
+function save(){try{localStorage.setItem(cacheKey,JSON.stringify({records:ManCaveEngine.cacheRecords(store.records,scheduler.current?scheduler.current.sport+':'+scheduler.current.id:null),at:Date.now()}));}catch{}}
 async function rankings(sport){if(!['CFB','CBB'].includes(sport))return;try{const data=await json(api(sport)+'/rankings');const polls=data.rankings||[];const poll=(sport==='CFB'?polls.find(p=>/playoff/i.test(p.name)):null)||polls.find(p=>/associated press|ap top/i.test(p.name+' '+p.shortName));if(poll?.ranks?.length)ranks[sport]=Object.fromEntries(poll.ranks.map(r=>[String(r.team?.id),r.current]));}catch{}}
 async function board(sport,date){const group=sport==='CFB'?'&groups=80':sport==='CBB'?'&groups=50':'';const data=await json(api(sport)+'/scoreboard?limit=1000'+group+'&dates='+date);if(!Array.isArray(data.events))throw Error('Missing events');return data.events;}
 function meta(sport){return {ranks:ranks[sport]||{},division:sport==='CFB'?'FBS':sport==='CBB'?'D1':undefined};}
