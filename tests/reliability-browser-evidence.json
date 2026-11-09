@@ -1,0 +1,176 @@
+{
+  "recordedAt": "2026-11-09T14:36:51.763Z",
+  "scope": "Actual ESPN games; browser feed-request outage, cached-data reload and restoration. Not a full browser-network outage or TV power-cycle.",
+  "cachedReload": {
+    "type": "qa-state",
+    "paused": true,
+    "failures": 36,
+    "mode": "final",
+    "event": "401909946",
+    "started": "1794234914179",
+    "ends": "1794234944179",
+    "notice": "Feed delayed · last verified data",
+    "bootHidden": true,
+    "at": 1794234926595
+  },
+  "afterRestore": {
+    "type": "qa-state",
+    "paused": false,
+    "failures": 36,
+    "mode": "final",
+    "event": "401909949",
+    "started": "1794235011326",
+    "ends": "1794235041326",
+    "notice": "",
+    "bootHidden": true,
+    "at": 1794235011492
+  },
+  "cache": {
+    "controlled": true,
+    "caches": [
+      {
+        "name": "mancave-rotation-20261109-v1",
+        "files": 12,
+        "core": [
+          "http://127.0.0.1:4173/rotation-preview/runtime.js",
+          "http://127.0.0.1:4173/rotation-preview/final.html",
+          "http://127.0.0.1:4173/rotation-preview/spotlight.js",
+          "http://127.0.0.1:4173/rotation/engine.js"
+        ],
+        "images": 0,
+        "api": 0
+      },
+      {
+        "name": "mancave-rotation-20261109-v2",
+        "files": 83,
+        "core": [
+          "http://127.0.0.1:4173/rotation-preview/final.html",
+          "http://127.0.0.1:4173/rotation/engine.js",
+          "http://127.0.0.1:4173/rotation-preview/runtime.js",
+          "http://127.0.0.1:4173/rotation-preview/final.html?sport=CBB",
+          "http://127.0.0.1:4173/rotation-preview/final.html?sport=NBA",
+          "http://127.0.0.1:4173/rotation-preview/spotlight.js"
+        ],
+        "images": 67,
+        "api": 0
+      }
+    ],
+    "records": 78,
+    "playerRows": 8
+  },
+  "transitions": [
+    {
+      "event": "401919029",
+      "mode": "final",
+      "start": 1794234563108,
+      "end": 1794234593108,
+      "duration": 30000
+    },
+    {
+      "event": "401920424",
+      "mode": "final",
+      "start": 1794234572272,
+      "end": 1794234602272,
+      "duration": 30000
+    },
+    {
+      "event": "401918053",
+      "mode": "final",
+      "start": 1794234606032,
+      "end": 1794234636032,
+      "duration": 30000
+    },
+    {
+      "event": "401924646",
+      "mode": "final",
+      "start": 1794234637542,
+      "end": 1794234667542,
+      "duration": 30000
+    },
+    {
+      "event": "401919029",
+      "mode": "final",
+      "start": 1794234668334,
+      "end": 1794234698334,
+      "duration": 30000
+    },
+    {
+      "event": "401909950",
+      "mode": "final",
+      "start": 1794234701896,
+      "end": 1794234731896,
+      "duration": 30000
+    },
+    {
+      "event": "401909951",
+      "mode": "final",
+      "start": 1794234733408,
+      "end": 1794234763408,
+      "duration": 30000
+    },
+    {
+      "event": "401909949",
+      "mode": "final",
+      "start": 1794234765930,
+      "end": 1794234795930,
+      "duration": 30000
+    },
+    {
+      "event": "401909948",
+      "mode": "final",
+      "start": 1794234797446,
+      "end": 1794234827446,
+      "duration": 30000
+    },
+    {
+      "event": "401909947",
+      "mode": "final",
+      "start": 1794234829552,
+      "end": 1794234859552,
+      "duration": 30000
+    },
+    {
+      "event": "401909946",
+      "mode": "final",
+      "start": 1794234862078,
+      "end": 1794234892078,
+      "duration": 30000
+    },
+    {
+      "event": "401920424",
+      "mode": "final",
+      "start": 1794234882580,
+      "end": 1794234912580,
+      "duration": 30000
+    },
+    {
+      "event": "401909946",
+      "mode": "final",
+      "start": 1794234914179,
+      "end": 1794234944179,
+      "duration": 30000
+    },
+    {
+      "event": "401909950",
+      "mode": "final",
+      "start": 1794234945191,
+      "end": 1794234975191,
+      "duration": 30000
+    },
+    {
+      "event": "401909951",
+      "mode": "final",
+      "start": 1794234978800,
+      "end": 1794235008800,
+      "duration": 30000
+    },
+    {
+      "event": "401909949",
+      "mode": "final",
+      "start": 1794235011326,
+      "end": 1794235041326,
+      "duration": 30000
+    }
+  ],
+  "applicationErrors": []
+}
