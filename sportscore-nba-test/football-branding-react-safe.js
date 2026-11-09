@@ -1,0 +1,131 @@
+/* V12 football-only DOM enhancement; never changes basketball or hockey. */
+(() => {
+  const names={ARI:'CARDINALS',ATL:'FALCONS',BAL:'RAVENS',BUF:'BILLS',CAR:'PANTHERS',CHI:'BEARS',CIN:'BENGALS',CLE:'BROWNS',DAL:'COWBOYS',DEN:'BRONCOS',DET:'LIONS',GB:'PACKERS',HOU:'TEXANS',IND:'COLTS',JAX:'JAGUARS',KC:'CHIEFS',LV:'RAIDERS',LAC:'CHARGERS',LAR:'RAMS',MIA:'DOLPHINS',MIN:'VIKINGS',NE:'PATRIOTS',NO:'SAINTS',NYG:'GIANTS',NYJ:'JETS',PHI:'EAGLES',PIT:'STEELERS',SEA:'SEAHAWKS',SF:'49ERS',TB:'BUCCANEERS',TEN:'TITANS',WAS:'COMMANDERS'};
+  const aliases={WSH:'WAS',LA:'LAR',JAC:'JAX'};
+  // Exact user-approved PNGs uploaded to the repository root; no mirroring or redrawing.
+  const approvedGoalposts={
+    left:'../AFF78C80-6B47-477E-83A7-489D241D57E9.png',
+    right:'../94BBD4D8-3479-4E99-81A2-EEC1C42D98A1.png'
+  };
+
+  const primaryColors={ARI:'#97233F',ATL:'#A71930',BAL:'#241773',BUF:'#00338D',CAR:'#0085CA',CHI:'#0B162A',CIN:'#FB4F14',CLE:'#311D00',DAL:'#003594',DEN:'#FB4F14',DET:'#0076B6',GB:'#203731',HOU:'#03202F',IND:'#002C5F',JAX:'#006778',KC:'#E31837',LV:'#A5ACAF',LAC:'#0080C6',LAR:'#003594',MIA:'#008E97',MIN:'#4F2683',NE:'#002244',NO:'#D3BC8D',NYG:'#0B2265',NYJ:'#125740',PHI:'#004C54',PIT:'#FFB612',SEA:'#002244',SF:'#AA0000',TB:'#D50A0A',TEN:'#4B92DB',WAS:'#5A1414'};
+  function updateTimeoutDots(){
+    document.querySelectorAll('.dashboard.sport-nfl .hero .team, .dashboard.sport-cfb .hero .team').forEach(team=>{
+      let dots=team.querySelector('.football-timeout-dots');
+      if(!dots){dots=document.createElement('div');dots.className='football-timeout-dots';team.appendChild(dots);}
+      const dashboard=team.closest('.dashboard');
+      const isDemo=!!dashboard?.querySelector('.live-count.demo');
+      const raw=team.dataset.timeoutsRemaining;
+      const count=raw!==undefined&&raw!==''?Number(raw):(isDemo?3:null);
+      if(count===null||!Number.isFinite(count)){dots.hidden=true;return;}
+      dots.hidden=false;
+      if(dots.dataset.count===String(count))return;
+      dots.dataset.count=String(count);
+      dots.replaceChildren();
+      for(let i=0;i<3;i++){const dot=document.createElement('i');if(i>=count)dot.className='used';dots.appendChild(dot);}
+    });
+  }
+  function enhance(){
+    // React reuses the story between sports. Remove only nodes this decorator owns.
+    document.querySelectorAll('.game-story.is-live:not(:has(.football-field))').forEach(story=>{
+      story.querySelectorAll('.football-drive-banner,.football-down-distance,.football-midfield,.approved-goalpost,.football-goalpost,.football-goalpost-external,.football-goalpost-overlay,[data-football-decoration]').forEach(node=>node.remove());
+      story.style.removeProperty('--football-primary');
+    });
+    document.querySelectorAll('.dashboard:not(.sport-nfl):not(.sport-cfb) .football-timeout-dots').forEach(node=>node.remove());
+    updateTimeoutDots();
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      if(!story.querySelector('.football-field') || story.querySelector('.play-portrait'))return;
+      const leader=document.querySelector('.leader-card img');
+      const portrait=document.createElement('aside');portrait.className='play-portrait';portrait.dataset.footballDecoration='true';
+      const title=document.createElement('span');title.textContent='LAST PLAY';
+      const frame=document.createElement('div');frame.className='play-portrait-image has-photo';
+      if(leader){const img=document.createElement('img');img.src=leader.src;img.alt='';frame.appendChild(img);}
+      const name=document.createElement('strong');name.textContent='PLAYER SPOTLIGHT';
+      portrait.append(title,frame,name);story.prepend(portrait);
+    });
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      const field=story.querySelector('.football-field');
+      if(!field)return;
+      const surface=story.querySelector('.story-live-body');
+      if(!surface)return;
+      let bar=surface.querySelector('.football-drive-banner');
+      if(!bar){
+        bar=document.createElement('div');
+        bar.className='football-drive-banner';
+        bar.setAttribute('aria-label','Current drive');
+        surface.appendChild(bar);
+      }
+      const situation=story.querySelector('.story-header strong')?.textContent?.trim()||'';
+      const match=situation.match(/^([A-Z]{2,4})\s+BALL\s*[•·-]?\s*(.*)$/i);
+      const possession=match?.[1]||'';
+      const teamCode=aliases[possession]||possession;
+      story.style.setProperty('--football-primary',primaryColors[teamCode]||'#E31837');
+      const metrics=surface.querySelectorAll('.drive-metrics > div');
+      const metric=(index)=>metrics[index]?.querySelector('strong')?.textContent?.trim()||'—';
+      const plays=metric(0),yards=metric(1);
+      const teamName=names[teamCode]||possession||'';
+      const driveText='CURRENT DRIVE  ·  '+(teamName?teamName+'  ·  ':'')+plays+' PLAYS  ·  '+yards+' YARDS';
+      if(bar.textContent!==driveText)bar.textContent=driveText;
+    });
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      if(!story.querySelector('.football-field'))return;
+      const header=story.querySelector('.story-header');
+      if(!header)return;
+      const original=header.querySelector('strong')?.textContent?.trim()||'';
+      const down=original.match(/(1ST|2ND|3RD|4TH)\s*(?:&|AND)\s*(GOAL|\d+)/i);
+      const label=down ? down[1].toUpperCase()+' & '+down[2].toUpperCase() : 'DOWN & DISTANCE';
+      let badge=header.querySelector('.football-down-distance');
+      if(!badge){badge=document.createElement('strong');badge.className='football-down-distance';header.appendChild(badge);}
+      if(badge.textContent!==label)badge.textContent=label;
+    });
+    document.querySelectorAll('.game-story.is-live').forEach(story=>{
+      if(!story.querySelector('.football-field'))return;
+      const label=story.querySelector('.story-event > span');
+      if(label && label.textContent!=='LAST PLAY')label.textContent='LAST PLAY';
+      const surface=story.querySelector('.story-live-body');
+      if(!surface)return;
+      const field=surface.querySelector('.football-field');
+      if(!field)return;
+      // Keep React's reference node mounted; hide its label without removing it.
+      field.querySelectorAll('.field-position').forEach(n=>n.style.display='none');
+      field.querySelectorAll('.football-goalpost').forEach(n=>n.remove());
+      surface.querySelectorAll(':scope > .football-goalpost-external, :scope > .football-goalpost-overlay').forEach(n=>n.remove());
+      field.querySelectorAll(':scope > .football-goalpost-overlay').forEach(n=>n.remove());
+      ['left','right'].forEach(side=>{
+        if(field.querySelector(':scope > .approved-goalpost.'+side))return;
+        const img=document.createElement('img');
+        img.className='approved-goalpost '+side;
+        img.src=approvedGoalposts[side];
+        img.alt='';
+        img.decoding='async';
+        img.draggable=false;
+        field.appendChild(img);
+      });
+    });
+    document.querySelectorAll('.football-field').forEach(field=>{
+      const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
+      if(!away||!home)return;
+      const a=(away.dataset.teamCode||away.textContent||'').trim().toUpperCase();
+      const h=(home.dataset.teamCode||home.textContent||'').trim().toUpperCase();
+      if(!a||!h)return;
+      const aa=aliases[a]||a,hh=aliases[h]||h;
+      if(field.dataset.v12Teams===a+'-'+h && field.querySelector('.football-midfield'))return;
+      away.dataset.teamCode=a;home.dataset.teamCode=h;
+      away.textContent=names[aa]||a;home.textContent=names[hh]||h;
+      field.dataset.v12Teams=a+'-'+h;
+      field.querySelectorAll('.football-midfield,.football-goalpost').forEach(n=>n.remove());
+
+      if(names[hh]){
+        const logo=document.createElement('img');logo.className='football-midfield';
+        logo.alt='';logo.decoding='async';logo.src='https://a.espncdn.com/i/teamlogos/nfl/500/'+hh.toLowerCase()+'.png';
+        field.appendChild(logo);
+      }
+
+    });
+  }
+  let pending=false;
+  const observer=new MutationObserver(()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;enhance();});});
+  observer.observe(document.documentElement,{childList:true,subtree:true});
+  enhance();
+})();
+
