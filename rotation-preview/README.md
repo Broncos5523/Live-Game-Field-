@@ -16,7 +16,7 @@ Isolated integration on `feature/approved-rotation-20261109`. Original productio
 
 ## Verification
 
-`node --test tests/rotation.test.cjs`: 14 tests, including a live/final boundary test for each of seven sports, NCAA ordering/cap/divisions, sport grouping, exact suspension/missing boundaries, correction verification, frozen ranking persistence, invalid data and recovery.
+`node --test tests/rotation.test.cjs`: 15 tests, including a live/final boundary test for each of seven sports, NCAA ordering/cap/divisions, sport grouping, exact suspension/missing boundaries, correction verification, frozen ranking persistence, invalid data and recovery.
 
 Browser QA uses actual recorded ESPN snapshots, separately labeled as recorded renderer tests. Both live-surface and final renderers are checked at 1280×720 for all seven sports. Synthetic policy inputs are unit-test data only and never shown as live gameplay.
 

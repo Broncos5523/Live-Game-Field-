@@ -11,3 +11,5 @@ test('last play retention, correction confirmation, frozen ranks, persistence re
 test('invalid snapshots never replace verified state',()=>{const s=new E.Store();assert.equal(s.ingest('NBA',event(),{},now),true);assert.equal(s.ingest('NBA',{id:'42'},null,now+10),false);assert.equal(s.games()[0].homeScore,10);});
 
 test('offline cache stays bounded and retains selected game identity',()=>{const records={};for(let i=0;i<100;i++)records['NBA:'+i]={id:String(i),sport:'NBA',confirmedAt:i,summary:{plays:Array(200).fill({text:'play'.repeat(100)}),boxscore:{players:Array(100).fill({name:'player'.repeat(100)})}}};const cached=E.cacheRecords(records,'NBA:0',150000);assert.ok(cached['NBA:0']);assert.ok(JSON.stringify(cached).length*2<150000);});
+
+test('a pregame delay does not enter live rotation',()=>{assert.equal(E.status({status:{period:0,type:{state:'pre',name:'STATUS_DELAYED'}}}),'scheduled');assert.equal(E.status({status:{period:2,type:{state:'in',name:'STATUS_DELAYED'}}}),'suspended');});
