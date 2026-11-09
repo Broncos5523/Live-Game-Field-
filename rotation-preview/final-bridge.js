@@ -22,4 +22,12 @@ showPerformer=function(side,summary){const competitor=summary.header?.competitio
   stat.append(number,caption);container.append(stat);
  }
 }else el(side+'PlayerStats').textContent=leader.displayValue||'—';setImg(side+'PlayerImg',leader.athlete.headshot?.href);return;}el(side+'Player').textContent='Verified leader unavailable';el(side+'PlayerStats').textContent='—';setImg(side+'PlayerImg',null)};
+const originalShowGame=showGame;
+showGame=function(event){
+ const copy={...event,competitions:(event.competitions||[]).map(c=>({...c,competitors:(c.competitors||[]).map(t=>{
+  const detail=(window.manCaveSummary?.boxscore?.teams||[]).find(x=>String(x.team?.id)===String(t.team?.id))?.team;
+  return {...t,team:{...t.team,...detail}};
+ })}))};
+ return originalShowGame(copy);
+};
 window.receiveApproved=async snapshot=>{window.renderApprovedFinal(snapshot);await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));return true;};
