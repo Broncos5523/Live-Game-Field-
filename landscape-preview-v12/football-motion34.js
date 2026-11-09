@@ -9,10 +9,11 @@
   if(!story)return;
   const field=story.querySelector('.football-field');
   const runReview=new URLSearchParams(location.search).get('run-review')==='1';
-  const play=runReview?'Derrick Henry rushes for 8 yards':clean(story.querySelector('.story-event strong')?.textContent);
+  const play=runReview?'Isiah Pacheco rushes for 8 yards':clean(story.querySelector('.story-event strong')?.textContent);
   const game=clean(document.querySelector('.hero')?.getAttribute('aria-label'))||clean(document.querySelector('.hero')?.textContent).slice(0,120);
   if(!play||/waiting|no play|loading/i.test(play))return;
   const key=game+'|'+play+'|'+(runReview?'run-review':'live');
+  if(runReview){const playLabel=story.querySelector('.story-event strong');if(playLabel&&playLabel.textContent!==play)playLabel.textContent=play;}
   const prior=memory.get(game);
   if(prior?.key!==key){
    const home=clean(field.querySelector('.home-zone')?.dataset.teamCode);
@@ -58,7 +59,7 @@
   const svg=document.createElementNS(ns,'svg');svg.setAttribute('viewBox','0 0 1000 400');svg.setAttribute('preserveAspectRatio','none');svg.setAttribute('aria-hidden','true');svg.classList.add('mcsb-motion');
   const path=document.createElementNS(ns,'path');
   const x1=data.from*10,x2=data.to*10,y=200;
-  const d=data.pass&&data.hasMovement?`M ${x1} ${y} Q ${(x1+x2)/2} 40 ${x2} ${y}`:`M ${x1} ${y} L ${x2} ${y}`;
+  const d=data.pass&&data.hasMovement?`M ${x1} ${y} Q ${(x1+x2)/2} 40 ${x2} ${y}`:`M ${x1} ${y} Q ${x1+(x2-x1)*.30} ${y-48} ${x1+(x2-x1)*.55} ${y+20} T ${x2} ${y}`;
   path.setAttribute('d',d);path.setAttribute('fill','none');if(!data.hasMovement)path.setAttribute('opacity','0');path.setAttribute('stroke',data.loss?'#ff4141':'#f5f5ee');path.setAttribute('stroke-width','6');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-dasharray',data.pass?'none':'14 14');path.classList.add('mcsb-path');svg.append(path);
   if(data.x||data.success){
    const mark=document.createElementNS(ns,'text');mark.setAttribute('x',x2);mark.setAttribute('y',y+14);mark.setAttribute('text-anchor','middle');mark.setAttribute('font-size','58');mark.setAttribute('font-weight','900');mark.setAttribute('fill',data.x?'#ff3434':'#39ff6a');mark.textContent=data.x?'×':'✓';mark.classList.add('mcsb-mark');svg.append(mark);
@@ -72,7 +73,7 @@
   label.style.color=data.color;
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
    const length=path.getTotalLength();
-   if(data.hasMovement&&length>0){if(data.pass){path.setAttribute('stroke-dasharray',String(length));path.animate([{strokeDashoffset:length},{strokeDashoffset:0}],{duration:data.duration,easing:'ease-in-out',fill:'forwards'});}else{path.setAttribute('stroke-dasharray','14 14');path.animate([{opacity:0},{opacity:1}],{duration:data.duration,easing:'ease-in-out',fill:'forwards'});}}
+   if(data.hasMovement&&length>0){if(data.pass){path.setAttribute('stroke-dasharray',String(length));path.animate([{strokeDashoffset:length},{strokeDashoffset:0}],{duration:data.duration,easing:'ease-in-out',fill:'forwards'});}else{path.setAttribute('stroke-dasharray','14 14');path.animate([{strokeDashoffset:length,opacity:.2},{strokeDashoffset:0,opacity:1}],{duration:data.duration,easing:'ease-in-out',fill:'forwards'});}}
    if(label.textContent)label.animate([{opacity:0,transform:'translateX(-50%) scale(.94)'},{opacity:1,transform:'translateX(-50%) scale(1)'}],{duration:650,delay:data.duration,fill:'both'});
   }
  }
