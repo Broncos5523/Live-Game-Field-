@@ -19,7 +19,8 @@
    const pos=clean(story.querySelector('.story-header strong')?.textContent).match(/^([A-Z]{2,4}) BALL/i)?.[1]||home;
    const code=pos==='WSH'?'WAS':pos;
    const t=play.toLowerCase();
-   const yardsMatch=t.match(/(?:for|gain of|loss of)\s+(-?\d+)\s+yards?/);\n   const yards=yardsMatch?Number(yardsMatch[1]):null;
+   const yardsMatch=t.match(/(?:for|gain of|loss of)\s+(-?\d+)\s+yards?/);
+   const yards=yardsMatch?Number(yardsMatch[1]):null;
    const loss=(yards!==null&&yards<0)||/sacked|tackled for a loss|loss of \d+ yards/.test(t);
    const pass=/pass|intercept|sacked/.test(t)&&!/pass interference/.test(t);
    const incomplete=/incomplete|intended for|pass falls/.test(t)&&!/complete to/.test(t);
@@ -40,7 +41,9 @@
    const px=parseFloat(rawLeft);
    const from=rawLeft.endsWith('%')?px:Number.isFinite(px)&&field.clientWidth?px/field.clientWidth*100:50;
    const end=Math.max(8,Math.min(92,from));
-   // Never invent yardage or a trail length when the feed lacks movement data.\n   const distance=yards===null?0:Math.max(0,Math.min(30,Math.abs(yards)*.88));\n   const start=Math.max(8,Math.min(92,end-(loss?-1:1)*distance));
+   // Never invent yardage or a trail length when the feed lacks movement data.
+   const distance=yards===null?0:Math.max(0,Math.min(30,Math.abs(yards)*.88));
+   const start=Math.max(8,Math.min(92,end-(loss?-1:1)*distance));
    const data={key,play,announcement,color,from:start,to:end,pass,loss,x,success:pass&&!incomplete&&!interception, duration:pass?2000:1500,hasMovement:distance>0};
    memory.set(game,data);if(memory.size>100)memory.delete(memory.keys().next().value);
   }
@@ -53,7 +56,7 @@
   const path=document.createElementNS(ns,'path');
   const x1=data.from*10,x2=data.to*10,y=200;
   const d=data.pass&&data.hasMovement?`M ${x1} ${y} Q ${(x1+x2)/2} 70 ${x2} ${y}`:`M ${x1} ${y} L ${x2} ${y}`;
-  path.setAttribute('d',d);path.setAttribute('fill','none');if(!data.hasMovement)path.setAttribute('opacity','0');path.setAttribute('stroke',data.loss?'#ff4141':'#f5f5ee');path.setAttribute('stroke-width','6');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-dasharray',data.pass?'0':'12 10');path.classList.add('mcsb-path');svg.append(path);
+  path.setAttribute('d',d);path.setAttribute('fill','none');if(!data.hasMovement)path.setAttribute('opacity','0');path.setAttribute('stroke',data.loss?'#ff4141':'#f5f5ee');path.setAttribute('stroke-width','6');path.setAttribute('stroke-linecap','round');path.setAttribute('stroke-dasharray',data.pass?'none':'12 10');path.classList.add('mcsb-path');svg.append(path);
   if(data.x||data.success){
    const mark=document.createElementNS(ns,'text');mark.setAttribute('x',x2);mark.setAttribute('y',y+14);mark.setAttribute('text-anchor','middle');mark.setAttribute('font-size','58');mark.setAttribute('font-weight','900');mark.setAttribute('fill',data.x?'#ff3434':'#39ff6a');mark.textContent=data.x?'×':'✓';mark.classList.add('mcsb-mark');svg.append(mark);
   }
@@ -64,7 +67,7 @@
   label.style.color=data.color;
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
    const length=path.getTotalLength();
-   if(data.hasMovement&&length>0)path.animate([{strokeDasharray:`0 ${length}`,strokeDashoffset:length},{strokeDasharray:`${length} 0`,strokeDashoffset:0}],{duration:data.duration,easing:'ease-in-out',fill:'both'});
+   if(data.hasMovement&&length>0){path.setAttribute('stroke-dasharray',String(length));path.animate([{strokeDashoffset:length},{strokeDashoffset:0}],{duration:data.duration,easing:'ease-in-out',fill:'both'});}
    if(label.textContent)label.animate([{opacity:0,transform:'translateX(-50%) scale(.94)'},{opacity:1,transform:'translateX(-50%) scale(1)'}],{duration:650,delay:data.duration,fill:'both'});
   }
  }
