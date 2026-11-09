@@ -442,3 +442,17 @@
 .dashboard .game-story.is-live:has(.football-field) .football-field > .football-goalpost-overlay svg {
  width:100% !important; height:100% !important; display:block !important; overflow:visible !important;
 }
+
+/* Build 24: preserve approved image pixels and aspect ratio. */
+.dashboard .game-story.is-live:has(.football-field) .football-field > .approved-goalpost {
+ position:absolute !important; display:block !important; top:14% !important;
+ height:66% !important; width:auto !important; max-width:none !important;
+ object-fit:contain !important; transform:none !important; z-index:28 !important;
+ pointer-events:none !important; filter:drop-shadow(0 2px 2px #000a);
+}
+.dashboard .game-story.is-live:has(.football-field) .football-field > .approved-goalpost.left {
+ left:-3.5% !important; right:auto !important;
+}
+.dashboard .game-story.is-live:has(.football-field) .football-field > .approved-goalpost.right {
+ right:-3.5% !important; left:auto !important;
+}
