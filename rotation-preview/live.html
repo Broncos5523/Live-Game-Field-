@@ -42,6 +42,14 @@
 /* Fixed ESPN network mark on every live-game ticker, independent of scrolling scores. */
 .ticker .ticker-brand{width:92px!important;min-width:92px!important;flex:0 0 92px!important;height:35px!important;display:flex!important;align-items:center!important;justify-content:center!important;background:url('../landscape-preview-v1/assets/network_logos/ESPN.png') center/contain no-repeat!important}
 .ticker .ticker-brand span{visibility:hidden!important}
+</style><style id="clearer-glass-master">
+/* Clearer venue-facing glass on the seven-sport Live board.
+   Preserve player/team color cards and intentionally transparent surfaces. */
+.dashboard .game-story{background:#050d181c!important;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px)}
+.dashboard .leaders{background:#050d181a!important;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px)}
+.dashboard .game-story .story-header,.dashboard .game-story .story-event,.dashboard .game-story .play-portrait,.dashboard .game-story .final-story-body{background:linear-gradient(145deg,#122d4536,#030a133d)!important;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px)}
+.dashboard .game-story .story-live-body,.dashboard .game-story .surface-body{background:#07162612!important}
+.dashboard .ticker{background:linear-gradient(180deg,#0a192744,#02070d66)!important;backdrop-filter:blur(1px);-webkit-backdrop-filter:blur(1px)}
 </style></head>
   <body>
     <div id="app">
