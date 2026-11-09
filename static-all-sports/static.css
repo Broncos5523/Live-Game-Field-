@@ -1,0 +1,46 @@
+/* One approved broadcast layout, immediate state changes, no motion. */
+*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+.drive-path,.puck-path,.court-motion{display:none!important}
+.basketball-court[data-play-cue]::before,.hockey-rink[data-play-cue]::before{content:none!important;display:none!important}
+.static-play-marker{position:absolute;z-index:15;width:13px;height:13px;border:2px solid white;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 1px 4px #000b;background:#ed414a;pointer-events:none}
+.static-play-marker.make{background:#25cf74}
+.static-play-marker.block{border:0;border-radius:0;background:transparent;box-shadow:none;color:#f23243;font:bold 34px/1 Arial;width:28px;height:32px;text-align:center;text-shadow:0 1px 2px #fff}
+.static-scrimmage,.static-first-down{position:absolute;top:0;height:100%;width:3px;background:#248cff;z-index:10;transform:translateX(-50%);box-shadow:0 0 2px #fff}
+.static-first-down{background:#ffe23e}
+.static-center-logo{position:absolute;left:50%;top:50%;width:15%;height:55%;transform:translate(-50%,-50%);display:grid;place-items:center;z-index:3}
+.static-center-logo img{width:100%;height:100%;object-fit:contain}
+.hockey-rink .rink-logo,.hockey-rink .power-clock{display:none!important}
+.static-baseball-status{grid-template-rows:minmax(0,1fr)!important}
+.static-baseball-status .surface-body{position:relative;display:grid;grid-template-rows:minmax(0,1fr) auto;place-items:center;overflow:hidden;background:transparent}
+.static-baseball-field{position:relative;height:96%;aspect-ratio:1;max-width:100%;margin:0 auto}
+.static-baseball-lines{display:block;width:100%;height:100%}
+.static-base{position:absolute;width:10px;height:10px;background:#f7f3e9;border:1px solid #734f30;transform:translate(-50%,-50%) rotate(45deg);z-index:4}
+.static-base.occupied{background:#ffd83a;box-shadow:0 0 0 3px #ffd83a66}
+.static-baseball-logo{position:absolute;left:39%;top:9%;width:22%;height:23%;display:grid;place-items:center}
+.static-baseball-logo img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 1px 2px #000)}
+.static-count{display:flex;gap:2rem;font:700 13px Arial;color:#d6e7f3;padding:.35rem}
+.static-count b{font-size:20px;color:white}
+.static-baseball-status .static-play-marker{z-index:8}
+.game-story .story-probability{display:none!important}
+.game-story .story-header{grid-area:2/3!important;min-width:0;overflow:hidden}
+.game-story .story-event{grid-area:1/3!important;min-width:0;overflow:hidden;align-content:center!important}
+.game-story .story-event strong{-webkit-line-clamp:9!important}
+.game-story .story-live-body{grid-area:1/2/3/3!important;grid-template-columns:minmax(0,1fr)!important;min-width:0;min-height:0}
+.game-story{grid-template-columns:minmax(0,15%) minmax(0,1fr) minmax(0,17%)!important;grid-template-rows:minmax(0,1fr) auto!important}
+.football-field .static-center-logo{width:14%;height:60%}
+.football-field .football-midfield{display:none!important}
+/* Apply the approved enlarged header to every league. */
+.dashboard{grid-template-rows:0 minmax(0,19.45fr) minmax(0,58.7fr) minmax(0,15.85fr) minmax(0,5fr)!important;row-gap:.45%!important}
+.dashboard .topbar{position:absolute!important;grid-area:auto!important;inset:.35rem 0 auto!important;height:max(2rem,6vh)!important;pointer-events:none}
+.dashboard .topbar .brand-logo{height:max(1.5rem,5.67vh)!important}
+.dashboard .score-clock{margin-top:calc(1.25rem + 3.33vh)!important;row-gap:0}
+.dashboard .hero .team{grid-template-columns:minmax(0,44%) minmax(0,56%)!important;grid-template-rows:minmax(0,.7fr) minmax(0,1fr)!important;max-width:20rem;width:95%;justify-self:center;row-gap:0}
+.dashboard .hero .team-home{grid-template-columns:minmax(0,56%) minmax(0,44%)!important}
+.dashboard .hero .team>:is(img,.logo-fallback){grid-row:1/3;grid-column:1;max-height:90%}
+.dashboard .hero .team-home>:is(img,.logo-fallback){grid-column:2}
+.dashboard .hero .team p{align-self:end;font-size:clamp(.55rem,1.2cqw,1.15rem)}
+.dashboard .hero .team strong,.dashboard .score-clock strong{font-size:clamp(1.35rem,3.35cqw,3.7rem)!important}
+.dashboard[data-state="post"] .football-drive-banner,.dashboard[data-state="post"] .football-down-distance{display:none!important}
+.story-cfb{--football-primary:var(--possession)!important}
+.basketball-court{border-left-color:var(--away)!important;border-right-color:var(--home)!important}
+.hockey-rink{border-color:var(--home)!important}
