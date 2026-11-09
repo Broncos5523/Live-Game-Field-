@@ -2,12 +2,11 @@
 (() => {
   const names={ARI:'CARDINALS',ATL:'FALCONS',BAL:'RAVENS',BUF:'BILLS',CAR:'PANTHERS',CHI:'BEARS',CIN:'BENGALS',CLE:'BROWNS',DAL:'COWBOYS',DEN:'BRONCOS',DET:'LIONS',GB:'PACKERS',HOU:'TEXANS',IND:'COLTS',JAX:'JAGUARS',KC:'CHIEFS',LV:'RAIDERS',LAC:'CHARGERS',LAR:'RAMS',MIA:'DOLPHINS',MIN:'VIKINGS',NE:'PATRIOTS',NO:'SAINTS',NYG:'GIANTS',NYJ:'JETS',PHI:'EAGLES',PIT:'STEELERS',SEA:'SEAHAWKS',SF:'49ERS',TB:'BUCCANEERS',TEN:'TITANS',WAS:'COMMANDERS'};
   const aliases={WSH:'WAS',LA:'LAR',JAC:'JAX'};
-  // End-zone goalposts seen almost edge-on, as in the ESPN Gamecast reference.
-  // Mirror the geometry at opposite ends; avoid a front-facing U silhouette.
-  // Edge-on goalposts: uprights overlap in perspective, not a wide U shape.
-  // One full-surface SVG: short ESPN-style goal silhouettes, no narrow post boxes.
-  // Crossbars follow the back end-zone lines: vertical in this horizontal field view.
-  const goalOverlay='<svg viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#ffdf24" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><path d="M25 250 L0 250 M0 218 L0 282 M0 218 L-9 194 M0 282 L-9 306"/><path d="M975 250 L1000 250 M1000 218 L1000 282 M1000 218 L1009 194 M1000 282 L1009 306"/></g><g fill="none" stroke="#fff4a4" stroke-width="1.2"><path d="M0 219 L0 281 M1000 219 L1000 281"/></g></svg>';
+  // Exact user-approved PNGs uploaded to the repository root; no mirroring or redrawing.
+  const approvedGoalposts={
+    left:'../AFF78C80-6B47-477E-83A7-489D241D57E9.png',
+    right:'../94BBD4D8-3479-4E99-81A2-EEC1C42D98A1.png'
+  };
 
   function enhance(){
     document.querySelectorAll('.game-story.is-live').forEach(story=>{
@@ -62,11 +61,17 @@
       if(!field)return;
       field.querySelectorAll('.football-goalpost').forEach(n=>n.remove());
       surface.querySelectorAll(':scope > .football-goalpost-external, :scope > .football-goalpost-overlay').forEach(n=>n.remove());
-      const overlay=document.createElement('div');
-      overlay.className='football-goalpost-overlay';
-      overlay.innerHTML=goalOverlay;
       field.querySelectorAll(':scope > .football-goalpost-overlay').forEach(n=>n.remove());
-      field.appendChild(overlay);
+      ['left','right'].forEach(side=>{
+        if(field.querySelector(':scope > .approved-goalpost.'+side))return;
+        const img=document.createElement('img');
+        img.className='approved-goalpost '+side;
+        img.src=approvedGoalposts[side];
+        img.alt='';
+        img.decoding='async';
+        img.draggable=false;
+        field.appendChild(img);
+      });
     });
     document.querySelectorAll('.football-field').forEach(field=>{
       const away=field.querySelector('.away-zone'),home=field.querySelector('.home-zone');
