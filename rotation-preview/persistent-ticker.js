@@ -46,5 +46,20 @@ function update(games,selectedMode){
  });
  root.hidden=false;
 }
+let previousTransform='',stalledChecks=0;
+setInterval(()=>{
+ if(root.hidden||cycle<=40||!strip.isConnected)return;
+ const current=getComputedStyle(strip).transform;
+ if(current==='none')return;
+ stalledChecks=current===previousTransform?stalledChecks+1:0;
+ previousTransform=current;
+ if(stalledChecks<3)return;
+ stalledChecks=0;
+ const phase=((performance.now()-startedAt)*0.042)%cycle;
+ strip.style.animationName='none';
+ void strip.offsetWidth;
+ strip.style.animationDelay=(-(phase/42))+'s';
+ strip.style.animationName='ticker-crawl';
+},5000);
 window.ManCavePersistentTicker={update};
 })();
