@@ -36,9 +36,9 @@ function update(games,selectedMode){
  root.hidden=false;
 }
 function frame(now){
- const elapsed=Math.min(0.1,Math.max(0,(now-previous)/1000));previous=now;
+ const elapsed=Math.max(0,(now-previous)/1000);previous=now;
  travelled+=elapsed*42;
- if(cycle>40)strip.style.transform='translate3d('+(-(travelled%cycle)).toFixed(2)+'px,0,0)';
+ if(cycle>40)strip.style.transform='translate3d('+(-(travelled%cycle))+'px,0,0)';
  requestAnimationFrame(frame);
 }
 window.ManCavePersistentTicker={update};
