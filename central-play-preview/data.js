@@ -3,6 +3,8 @@
 'use strict';
 const SPORTS=new Set(['NFL','CFB','NBA','CBB','WNBA','NHL']);
 const retained=new Map();
+// League brand pairs; team events continue to use their own supplied colors.
+const LEAGUE_COLORS={NFL:['#013369','#d50a0a'],CFB:['#005eb8','#ffffff'],NBA:['#17408b','#c9082a'],CBB:['#005eb8','#ffffff'],WNBA:['#ff4713','#000000'],NHL:['#a2aaad','#000000']};
 const basketball=s=>['NBA','CBB','WNBA'].includes(s);
 const clean=v=>String(v??'').replace(/\s+/g,' ').trim();
 const norm=v=>clean(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
@@ -140,7 +142,7 @@ function fromGame(game,summary,options={}){
  const possession=football?(situation.possession||(!options.recordedPlay&&game.footballField?.possession?game[game.footballField.possession]?.id:null)):null;
  const eventTeamId=actor?.teamId||play?.team?.id||play?.start?.team?.id;
  const neutral=['HALFTIME','FINAL','INTERMISSION','END OF QUARTER','END OF PERIOD','END OF HALF'].includes(label)||/official|referee|\btv timeout\b|\bmedia timeout\b/i.test((play?.type?.text||'')+' '+(play?.text||''));
- const team=neutral?null:sides.find(t=>String(t.id)===String(['TIMEOUT','CHALLENGE'].includes(label)?eventTeamId:possession||eventTeamId));
+ const team=neutral?null:sides.find(t=>String(t.id)===String(eventTeamId||possession));
  const values=statistics(game.sport,actor);
  const portrait=actor?(typeof actor.athlete.headshot==='string'?actor.athlete.headshot:actor.athlete.headshot?.href)||'':team?.logo||'./assets/league-logos/'+game.sport+'.png';
  let top=label,topLabel='EVENT RESULT',footer=actor?clean(actor.athlete.displayName||actor.athlete.fullName):team?.name||game.sport;
@@ -157,7 +159,7 @@ function fromGame(game,summary,options={}){
   situationItems=[['DOWN',ordinal(down)],['DISTANCE',goal?'GOAL':distance!==null&&distance>=0?distance+' YDS':'—'],['FIELD POSITION',field||'—']];
   footer=options.recordedPlay?'RECORDED PLAY-END SITUATION':game.state==='post'?'GAME COMPLETE':'GAME SITUATION';
  }
- return {headline:label,tone:outcome(game.sport,label,play),sport:game.sport,playId:String(play?.id||text),top,topLabel,text:text||'WAITING FOR THE NEXT VERIFIED PLAY',name:actor?clean(actor.athlete.displayName||actor.athlete.fullName):team?.name||'',athleteId:actor?.id||null,teamId:team?.id||null,portrait,fallback:team?.logo||'./assets/league-logos/'+game.sport+'.png',isPlayer:!!actor,stats:values,footer,situation:situationItems,primary:hex(team?.color)||'#344659',secondary:hex(team?.secondary)||'#182434'};
+ return {headline:label,tone:outcome(game.sport,label,play),sport:game.sport,playId:String(play?.id||text),top,topLabel,text:text||'WAITING FOR THE NEXT VERIFIED PLAY',name:actor?clean(actor.athlete.displayName||actor.athlete.fullName):team?.name||'',athleteId:actor?.id||null,teamId:team?.id||null,portrait,fallback:team?.logo||'./assets/league-logos/'+game.sport+'.png',isPlayer:!!actor,stats:values,footer,situation:situationItems,primary:hex(team?.color)||LEAGUE_COLORS[game.sport][0],secondary:hex(team?.secondary)||LEAGUE_COLORS[game.sport][1]};
 }
 function outcome(sport,label,play){
  if(label==='FINAL')return 'neutral';

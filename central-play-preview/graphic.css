@@ -60,3 +60,11 @@
 .dashboard:has(.central-updated) .leader-copy small{font-size:13px}
 .dashboard:has(.central-updated) .leader-copy strong{font-size:18px;line-height:1.1;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
 .dashboard:has(.central-updated) .leader-copy b{font-size:20px;line-height:1.15;margin:0;overflow-wrap:normal}
+
+/* Full-width team/league colors share one aligned gradient across all tiers. */
+.central-updated .central-broadcast .central-tier{background-image:linear-gradient(#0009,#0009),linear-gradient(90deg,var(--central-primary) 0%,var(--central-secondary) 100%);background-size:100% 100%;background-position:center}
+.central-updated .central-broadcast .central-top{background-size:100% 100%,114.943% 100%}
+.central-updated .central-broadcast .central-bottom{background-size:100% 100%,108.696% 100%}
+.central-updated .central-broadcast .central-middle{background-size:100% 100%}
+.central-updated .central-play-copy,.central-updated .central-portrait{background:transparent}
+.central-updated .central-portrait>strong{background:#0004}
