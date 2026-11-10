@@ -16,7 +16,7 @@ function timeoutInfo(snapshot,competitor){
  if(sport==='MLB')return null;
  const limits={NFL:3,CFB:3,NBA:7,WNBA:5,CBB:5,NHL:1};
  const max=limits[sport];if(!max)return null;
- const numeric=v=>v!==null&&v!==undefined&&String(v).trim()!==''&&/^\\d+$/.test(String(v))?Number(v):null;
+ const numeric=v=>v!==null&&v!==undefined&&String(v).trim()!==''&&/^\d+$/.test(String(v))?Number(v):null;
  const remaining=[competitor?.timeoutsRemaining,competitor?.timeoutRemaining,competitor?.timeouts?.remaining,competitor?.team?.timeoutsRemaining].map(numeric).find(v=>v!==null);
  if(remaining===undefined||remaining<0||remaining>max)return null;
  // Period-specific resets and caps must come from the provider's actual remaining count.
