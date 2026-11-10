@@ -4,7 +4,7 @@
 const root=document.getElementById('persistent-ticker');
 const strip=document.getElementById('persistent-ticker-strip');
 const label=document.getElementById('persistent-ticker-label');
-let signature='', cycle=0, travelled=0, previous=performance.now(), mode='';
+let signature='', cycle=0, startedAt=performance.now(), mode='';
 const sports=['NFL','NBA','NHL','MLB','WNBA','CFB','CBB'];
 const team=(event,side)=>{
  const c=event?.competitions?.[0]?.competitors||[];
@@ -30,17 +30,21 @@ function update(games,selectedMode){
   }
   const status=document.createElement('small');status.textContent=g.event.status?.type?.shortDetail||g.event.status?.type?.detail||'';item.append(status);fragment.append(item);
  }
- // Retain absolute travel distance; never restart the crawl when content changes.
+ // CSS compositor handles continuous movement; preserve travel phase when scores change.
+ const oldDistance=cycle>40?((performance.now()-startedAt)*0.042)%cycle:0;
+ strip.style.animation='none';
  strip.replaceChildren(fragment);
- requestAnimationFrame(()=>{cycle=strip.children[entries.length]?.offsetLeft-strip.firstElementChild?.offsetLeft||strip.scrollWidth/2;});
+ requestAnimationFrame(()=>{
+  cycle=strip.children[entries.length]?.offsetLeft-strip.firstElementChild?.offsetLeft||strip.scrollWidth/2;
+  if(cycle>40){
+   strip.style.setProperty('--ticker-distance',cycle+'px');
+   strip.style.animationDuration=(cycle/42)+'s';
+   strip.style.animationDelay=(-(oldDistance/42))+'s';
+   startedAt=performance.now()-oldDistance/0.042;
+   strip.style.animationName='ticker-crawl';
+  }
+ });
  root.hidden=false;
 }
-function frame(now){
- const elapsed=Math.max(0,(now-previous)/1000);previous=now;
- travelled+=elapsed*42;
- if(cycle>40)strip.style.transform='translate3d('+(-(travelled%cycle))+'px,0,0)';
- requestAnimationFrame(frame);
-}
 window.ManCavePersistentTicker={update};
-requestAnimationFrame(frame);
 })();
