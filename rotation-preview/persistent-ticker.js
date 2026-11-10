@@ -5,6 +5,8 @@ const root=document.getElementById('persistent-ticker');
 const strip=document.getElementById('persistent-ticker-strip');
 const label=document.getElementById('persistent-ticker-label');
 let signature='', cycle=0, startedAt=performance.now(), mode='';
+const SPEED=42, FRAME_MS=1000/30;
+let lastPaint=0;
 const sports=['NFL','NBA','NHL','MLB','WNBA','CFB','CBB'];
 const team=(event,side)=>{
  const c=event?.competitions?.[0]?.competitors||[];
@@ -30,36 +32,26 @@ function update(games,selectedMode){
   }
   const status=document.createElement('small');status.textContent=g.event.status?.type?.shortDetail||g.event.status?.type?.detail||'';item.append(status);fragment.append(item);
  }
- // CSS compositor handles continuous movement; preserve travel phase when scores change.
- const oldDistance=cycle>40?((performance.now()-startedAt)*0.042)%cycle:0;
- strip.style.animation='none';
+ // Rebuild only on actual score/mode changes; never restart the animation clock.
+ const oldDistance=cycle>40?((performance.now()-startedAt)*SPEED/1000)%cycle:0;
  strip.replaceChildren(fragment);
  requestAnimationFrame(()=>{
   cycle=strip.children[entries.length]?.offsetLeft-strip.firstElementChild?.offsetLeft||strip.scrollWidth/2;
-  if(cycle>40){
-   strip.style.setProperty('--ticker-distance',cycle+'px');
-   strip.style.animationDuration=(cycle/42)+'s';
-   strip.style.animationDelay=(-(oldDistance/42))+'s';
-   startedAt=performance.now()-oldDistance/0.042;
-   strip.style.animationName='ticker-crawl';
-  }
+  if(cycle>40)startedAt=performance.now()-oldDistance*1000/SPEED;
  });
  root.hidden=false;
 }
-let previousTransform='',stalledChecks=0;
-setInterval(()=>{
- if(root.hidden||cycle<=40||!strip.isConnected)return;
- const current=getComputedStyle(strip).transform;
- if(current==='none')return;
- stalledChecks=current===previousTransform?stalledChecks+1:0;
- previousTransform=current;
- if(stalledChecks<3)return;
- stalledChecks=0;
- const phase=((performance.now()-startedAt)*0.042)%cycle;
- strip.style.animationName='none';
- void strip.offsetWidth;
- strip.style.animationDelay=(-(phase/42))+'s';
- strip.style.animationName='ticker-crawl';
-},5000);
+// Absolute elapsed time prevents cumulative slowdown after dropped frames.
+// Limit DOM writes to 30 fps; never read layout or computed style in this loop.
+strip.style.animation='none';
+function animate(now){
+ if(cycle>40&&!root.hidden&&now-lastPaint>=FRAME_MS){
+  const distance=((now-startedAt)*SPEED/1000)%cycle;
+  strip.style.transform='translate3d('+(-distance)+'px,0,0)';
+  lastPaint=now;
+ }
+ requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
 window.ManCavePersistentTicker={update};
 })();
