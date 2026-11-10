@@ -1,0 +1,17 @@
+/* Scope every rule to the isolated review. No production stylesheet touched. */
+#three-tier-review{--event-gradient:linear-gradient(105deg,#c4cbd2,#090d14);position:relative;width:100%;color:white;font:700 16px Arial,sans-serif}
+#three-tier-review .tier-top{height:34px;display:flex;align-items:center;justify-content:center;gap:9px;background:var(--event-gradient);border:1px solid #b5c9dd;clip-path:polygon(4% 0,95% 0,100% 100%,0 100%);font-size:13px;text-transform:uppercase}
+#three-tier-review .tier-main{display:grid;grid-template-columns:23% 77%;min-height:104px;background:var(--event-gradient);border:2px solid #b8d4e9;box-shadow:0 3px 18px #0009}
+#three-tier-review .tier-headshot{display:flex;justify-content:center;align-items:end;overflow:hidden;border-right:1px solid #b8d4e9}
+#three-tier-review .tier-headshot img{max-height:116px;max-width:100%;object-fit:contain}
+#three-tier-review .tier-description{display:flex;flex-direction:column;justify-content:center;padding:12px 18px;min-width:0}
+#three-tier-review .tier-description small{font-size:11px;letter-spacing:.1em;color:#e7edf3}
+#three-tier-review .tier-description strong{font-size:clamp(15px,2vw,25px);overflow-wrap:anywhere}
+#three-tier-review .tier-bottom{min-height:33px;background:var(--event-gradient);display:flex;justify-content:flex-end;align-items:center;gap:18px;padding:5px 14px;border:1px solid #b5c9dd;font-size:12px}
+#three-tier-review .tier-bottom .timeout-group{display:flex;align-items:center;gap:5px}
+#three-tier-review .timeout-dot{width:10px;height:10px;border-radius:50%;display:inline-block;border:1px solid #ffffff77}
+#three-tier-review .timeout-dot.available{background:#facc15}
+#three-tier-review .timeout-dot.used{background:#d1d5db}
+#three-tier-review .live-dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff345d;animation:mancave-live-pulse 1.15s ease-in-out infinite}
+@keyframes mancave-live-pulse{0%,100%{opacity:1}50%{opacity:.18}}
+@media(prefers-reduced-motion:reduce){#three-tier-review .live-dot{animation:none}}
