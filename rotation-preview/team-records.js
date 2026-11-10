@@ -14,12 +14,15 @@ function verifiedRecord(competitor){
 function timeoutInfo(snapshot,competitor){
  const sport=String(snapshot?.sport||'').toUpperCase();
  if(sport==='MLB')return null;
+ // The maximum is a display capacity, not an inferred remaining count.
  const limits={NFL:3,CFB:3,NBA:7,WNBA:5,CBB:5,NHL:1};
- const max=limits[sport];if(!max)return null;
+ const max=limits[sport];if(!max||!competitor?.id)return null;
+ const summaryCompetitor=snapshot?.summary?.header?.competitions?.[0]?.competitors?.find(x=>String(x.id)===String(competitor.id));
  const numeric=v=>v!==null&&v!==undefined&&String(v).trim()!==''&&/^\d+$/.test(String(v))?Number(v):null;
- const remaining=[competitor?.timeoutsRemaining,competitor?.timeoutRemaining,competitor?.timeouts?.remaining,competitor?.team?.timeoutsRemaining].map(numeric).find(v=>v!==null);
+ const remaining=[summaryCompetitor?.timeoutsRemaining,summaryCompetitor?.timeoutRemaining,summaryCompetitor?.timeouts?.remaining,
+  competitor?.timeoutsRemaining,competitor?.timeoutRemaining,competitor?.timeouts?.remaining,
+  competitor?.team?.timeoutsRemaining].map(numeric).find(v=>v!==null);
  if(remaining===undefined||remaining<0||remaining>max)return null;
- // Period-specific resets and caps must come from the provider's actual remaining count.
  return {remaining,max};
 }
 function timeoutDots(snapshot,host,competitor,recordBadge){
