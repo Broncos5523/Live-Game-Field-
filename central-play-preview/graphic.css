@@ -1,0 +1,62 @@
+/* Every rule is scoped to an opted-in central section. No global selectors. */
+.game-story.central-updated{position:relative;display:block!important;overflow:hidden!important;isolation:isolate;background:#08121a!important;border-color:#7b8b9b88!important}
+.game-story.central-updated>.central-preserved-context{display:none!important}
+.game-story.central-updated::before,.game-story.central-updated::after{display:none!important}
+.game-story.central-updated>.central-arena{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;z-index:0;opacity:1}
+.game-story.central-updated>.central-stage{position:absolute;inset:0;z-index:1;display:flex;align-items:flex-end;justify-content:center;padding:1.5% 8% 2%;background:linear-gradient(180deg,transparent 25%,#02060b15 50%,#02060b70 100%);box-sizing:border-box}
+.central-updated .central-broadcast{--central-rim:#91a0ad;position:relative;width:100%;max-width:1050px;box-sizing:border-box;color:#f4f6f8;display:grid;grid-template-rows:44px minmax(126px,auto) 54px;filter:none;box-shadow:none;font-family:Arial,Helvetica,sans-serif}
+.central-updated .central-tier{position:relative;box-sizing:border-box;min-width:0;overflow:hidden;border:2px solid var(--central-rim);background:linear-gradient(170deg,#66707b 0%,#252e38 10%,#101720 46%,#313b46 91%,#7b8791 100%);box-shadow:inset 0 1px 0 #ffffff99,inset 0 -2px 0 #030609}
+.central-updated .central-top{width:87%;justify-self:center;border-bottom:0;border-radius:9px 9px 0 0;display:flex;align-items:center;justify-content:center;gap:15px;padding:6px 18px;background:repeating-linear-gradient(0deg,#ffffff04 0px,#ffffff04 1px,transparent 1px,transparent 3px),linear-gradient(170deg,#78828b,#1d2731 25%,#101821 55%,#414e5b);clip-path:polygon(2.5% 0,97.5% 0,100% 100%,0 100%)}
+.central-updated .central-top>span{font-size:10px;letter-spacing:1.5px;font-weight:800;color:#bac7d2;flex-shrink:0}
+.central-updated .central-top>strong{font-size:21px;line-height:1.05;letter-spacing:.8px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
+.central-updated .central-middle{display:grid;grid-template-columns:23% minmax(0,1fr);border-radius:7px 7px 4px 4px;background:linear-gradient(125deg,var(--central-primary) 0%,var(--central-secondary) 51%,#0c121b 90%);border-width:3px}
+.central-updated .central-middle::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,#ffffff32 0%,transparent 17%,transparent 87%,#00000055 100%);border:1px solid #ffffff33}
+.central-updated .central-portrait{position:relative;min-width:0;min-height:0;display:flex;align-items:flex-end;justify-content:center;border-right:2px solid #b8c4cd66;background:linear-gradient(105deg,#ffffff12,#00000028);overflow:hidden;padding:0 8px 23px}
+.central-updated .central-portrait img{position:absolute;width:100%;height:100%;inset:0;object-fit:contain;object-position:center bottom}
+.central-updated .central-portrait.central-headshot img{width:100%;height:126%;top:-10%;bottom:auto;object-fit:contain;object-position:center bottom}
+.central-updated .central-portrait.central-mark img{width:70%;height:73%;left:15%;top:8%;object-position:center}
+.central-updated .central-portrait>strong{position:absolute;bottom:0;left:0;right:0;z-index:1;padding:6px 4px;background:linear-gradient(90deg,#071019eb,#0e1824ed);font-size:10px;letter-spacing:.2px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid #ffffff33;color:white}
+.central-updated .central-play-copy{padding:12px 23px 14px;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:7px;background:linear-gradient(100deg,#07121c99,#07121ccc)}
+.central-updated .central-play-copy>span{font-size:10px;letter-spacing:2.1px;font-weight:800;color:#dee7f0}
+.central-updated .central-play-copy>p{margin:0;font-size:25px;font-weight:800;line-height:1.14;color:#fff;overflow-wrap:anywhere;text-shadow:none}
+.central-updated .central-play-copy>p[data-length=medium]{font-size:22px}
+.central-updated .central-play-copy>p[data-length=long]{font-size:18px;line-height:1.15}
+.central-updated .central-bottom{width:92%;justify-self:center;margin-top:-1px;border-top:1px solid #a7b5c0;border-radius:0 0 10px 10px;clip-path:polygon(0 0,100% 0,98% 100%,2% 100%);padding:4px 22px;background:repeating-linear-gradient(0deg,#ffffff03 0,#ffffff03 1px,transparent 1px,transparent 3px),linear-gradient(170deg,#515f6a,#1e2934 30%,#101924 70%,#586674)}
+.central-updated .central-player-line{height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.central-updated .central-player-line>strong{font-size:17px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.central-updated .central-stats{display:flex;align-items:center;gap:22px;flex-shrink:0}
+.central-updated .central-stat{display:flex;align-items:baseline;gap:5px}
+.central-updated .central-stat b{font-size:25px;font-weight:900;color:white}
+.central-updated .central-stat small,.central-updated .central-situation small{font-size:10px;font-weight:800;letter-spacing:.8px;color:#bac9d7}
+.central-updated .central-event-detail{font-size:9px;letter-spacing:1px;color:#b8c7d5;text-align:right}
+.central-updated .central-situation{height:100%;display:flex;align-items:center;justify-content:space-evenly;gap:12px}
+.central-updated .central-situation>span{display:flex;align-items:center;gap:12px;min-width:0}
+.central-updated .central-situation b{font-size:24px;white-space:nowrap;color:white}
+.central-updated .central-ice{--central-rim:#c0d5e6}
+.central-updated .central-ice .central-top,.central-updated .central-ice .central-bottom{background:repeating-linear-gradient(-12deg,#c5e5ff0b 0,#c5e5ff0b 1px,transparent 1px,transparent 4px),linear-gradient(165deg,#b5cbdc 0%,#496277 8%,#1c3448 28%,#102333 65%,#3a5369 100%)}
+.central-updated .central-ice .central-middle{border-color:#b8d3e6;background:linear-gradient(115deg,var(--central-primary),var(--central-secondary) 57%,#15354d)}
+
+/* Approved venue-first presentation and steady outcome colors. */
+.dashboard .game-story.central-updated{background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-color:transparent!important}
+.game-story.central-updated>.central-stage{background:none}
+.central-updated .central-broadcast{--central-result-color:#fff}
+.central-updated .central-broadcast[data-tone=positive]{--central-result-color:#39ff14}
+.central-updated .central-broadcast[data-tone=negative]{--central-result-color:#ff3939}
+.central-updated .central-broadcast[data-tone=timing]{--central-result-color:#ffe600}
+.central-updated .central-top>strong.central-result,.central-updated .central-result{color:var(--central-result-color)}
+.central-updated .central-football-result{font-size:30px;line-height:1.05;font-weight:900;letter-spacing:.4px}
+.central-updated [data-football=true] .central-play-copy>p{font-size:17px;line-height:1.18;font-weight:600;color:#fff}
+.central-updated [data-football=true] .central-play-copy>p[data-length=long]{font-size:15px}
+/* Requested spacing and larger Game Leaders: six-sport review only. */
+.dashboard:has(.central-updated){grid-template-rows:0 minmax(0,19.45fr) minmax(0,48.7fr) minmax(0,25.85fr) minmax(0,5fr)!important}
+.game-story.central-updated>.central-stage{align-items:center;padding-block:0}
+.dashboard:has(.central-updated) .leaders{grid-template-rows:24px minmax(0,1fr)}
+.dashboard:has(.central-updated) .leaders h2{font-size:18px;line-height:22px}
+.dashboard:has(.central-updated) .leader-grid{padding:7px 12px;align-items:stretch}
+.dashboard:has(.central-updated) .leader-card{grid-template-columns:40% 60%}
+.dashboard:has(.central-updated) .leader-avatar{overflow:hidden}
+.dashboard:has(.central-updated) .leader-avatar img{width:145%;max-width:none;height:100%;object-fit:contain;object-position:center bottom}
+.dashboard:has(.central-updated) .leader-copy{gap:8px;padding:8px 8px 8px 2px}
+.dashboard:has(.central-updated) .leader-copy small{font-size:13px}
+.dashboard:has(.central-updated) .leader-copy strong{font-size:18px;line-height:1.1;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.dashboard:has(.central-updated) .leader-copy b{font-size:20px;line-height:1.15;margin:0;overflow-wrap:normal}

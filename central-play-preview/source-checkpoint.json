@@ -1,0 +1,5 @@
+{
+  "source": "rotation-preview/live-app.js",
+  "sha256": "bfd1a0e3f16b3a824aa2b4279302ce6dd30a7d08c004a43f72abc039b8d38d9e",
+  "change": "Qm central component hook only; MLB delegates to unchanged legacy result"
+}
