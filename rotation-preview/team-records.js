@@ -70,7 +70,7 @@ function bonusBadge(snapshot,host,competitor){
  if(!host)return;
  const label=bonusLevel(snapshot,competitor);
  if(!label)return;
- const score=host.querySelector('strong');
+ const score=Array.from(host.children).find(x=>x.tagName==='STRONG');
  if(!score)return;
  const badge=document.createElement('span');
  badge.className='mancave-bonus-indicator';
@@ -91,7 +91,7 @@ function add(snapshot,selector,side){
  host?.querySelector('.mancave-season-record')?.remove();
  if(!host||!img)return;
  if(selector.startsWith('.hero'))host.querySelector('.mancave-bonus-indicator')?.remove();
- if(!record){host.querySelector('.mancave-timeout-dots')?.remove();return;}
+ if(!record){host.querySelector('.mancave-timeout-dots')?.remove();if(selector.startsWith('.hero'))bonusBadge(snapshot,host,competitor);return;}
  const badge=document.createElement('span');
  badge.className='mancave-season-record';
  badge.textContent=record;
