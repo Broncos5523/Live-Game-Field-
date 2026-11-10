@@ -13,7 +13,7 @@ function verifiedRecord(competitor){
 // MLB intentionally has no timeout indicators. The NHL uses one per team.
 function timeoutInfo(snapshot,competitor){
  const sport=String(snapshot?.sport||'').toUpperCase();
- if(sport==='MLB')return null;
+ if(sport==='MLB'||snapshot?.event?.status?.type?.completed===true)return null;
  // The maximum is a display capacity, not an inferred remaining count.
  const limits={NFL:3,CFB:3,NBA:7,WNBA:5,CBB:5,NHL:1};
  const max=limits[sport];if(!max||!competitor?.id)return null;
@@ -51,7 +51,8 @@ function add(snapshot,selector,side){
  const competitor=snapshot?.event?.competitions?.[0]?.competitors?.find(x=>x.homeAway===side);
  const record=verifiedRecord(competitor);
  host?.querySelector('.mancave-season-record')?.remove();
- if(!host||!img||!record){host?.querySelector('.mancave-timeout-dots')?.remove();return;}
+ if(!host||!img)return;
+ if(!record){host.querySelector('.mancave-timeout-dots')?.remove();return;}
  const badge=document.createElement('span');
  badge.className='mancave-season-record';
  badge.textContent=record;
