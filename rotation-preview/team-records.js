@@ -45,6 +45,44 @@ function timeoutDots(snapshot,host,competitor,recordBadge){
  dots.style.transform='translateX(-50%)';
 }
 
+// Bonus belongs to the team awarded free throws, not the team committing fouls.
+// Only consume explicit, team-specific feed flags; never infer from generic foul totals.
+function bonusLevel(snapshot,competitor){
+ const sport=String(snapshot?.sport||'').toUpperCase();
+ if(!['NBA','WNBA','CBB'].includes(sport)||snapshot?.event?.status?.type?.completed===true)return '';
+ const entries=[snapshot?.summary?.header?.competitions?.[0]?.competitors?.find(x=>String(x.id)===String(competitor?.id)),competitor];
+ for(const item of entries){
+  if(!item)continue;
+  const raw=item.bonus??item.bonusStatus??item.team?.bonus??item.team?.bonusStatus;
+  if(typeof raw==='string'){
+   const v=raw.trim().toLowerCase();
+   if(sport==='CBB'&&/^(double.?bonus|bonus\\+|double)$/.test(v))return 'BONUS+';
+   if(/^(bonus|in bonus|single.?bonus)$/.test(v))return 'BONUS';
+   if(/^(none|no bonus|false)$/.test(v))return '';
+  }
+  if(sport==='CBB'&&(item.doubleBonus===true||item.inDoubleBonus===true))return 'BONUS+';
+  if(item.inBonus===true||item.isInBonus===true||raw===true)return 'BONUS';
+ }
+ return '';
+}
+function bonusBadge(snapshot,host,competitor){
+ host?.querySelector('.mancave-bonus-indicator')?.remove();
+ if(!host)return;
+ const label=bonusLevel(snapshot,competitor);
+ if(!label)return;
+ const score=host.querySelector('strong');
+ if(!score)return;
+ const badge=document.createElement('span');
+ badge.className='mancave-bonus-indicator';
+ badge.textContent=label;
+ badge.setAttribute('aria-label',label==='BONUS+'?'Double bonus':'Bonus');
+ badge.style.cssText='position:absolute;z-index:4;pointer-events:none;white-space:nowrap;font:800 11px Arial,sans-serif;letter-spacing:.08em;color:#facc15;text-shadow:0 1px 4px #000,0 2px 7px #000;line-height:14px';
+ host.append(badge);
+ const h=host.getBoundingClientRect(),s=score.getBoundingClientRect();
+ badge.style.left=(s.left-h.left+s.width/2)+'px';
+ badge.style.top=(s.bottom-h.top+2)+'px';
+ badge.style.transform='translateX(-50%)';
+}
 function add(snapshot,selector,side){
  const host=document.querySelector(selector);
  const img=host?.querySelector('img');
@@ -52,6 +90,7 @@ function add(snapshot,selector,side){
  const record=verifiedRecord(competitor);
  host?.querySelector('.mancave-season-record')?.remove();
  if(!host||!img)return;
+ if(selector.startsWith('.hero'))host.querySelector('.mancave-bonus-indicator')?.remove();
  if(!record){host.querySelector('.mancave-timeout-dots')?.remove();return;}
  const badge=document.createElement('span');
  badge.className='mancave-season-record';
@@ -65,7 +104,7 @@ function add(snapshot,selector,side){
  badge.style.left=(r.left-h.left+r.width/2)+'px';
  badge.style.top=(r.bottom-h.top+1)+'px';
  badge.style.transform='translateX(-50%)';
- if(selector.startsWith('.hero'))timeoutDots(snapshot,host,competitor,badge);
+ if(selector.startsWith('.hero')){timeoutDots(snapshot,host,competitor,badge);bonusBadge(snapshot,host,competitor);}
 }
 window.ManCaveTeamRecords={
  live:s=>{requestAnimationFrame(()=>{add(s,'.hero .team-away','away');add(s,'.hero .team-home','home');});},
