@@ -4,9 +4,9 @@
 function verifiedRecord(competitor){
  const records=competitor?.records||competitor?.record||[];
  const list=Array.isArray(records)?records:[records];
- const r=list.find(x=>/^(overall|total)$/i.test(x?.name||x?.type||''))||list.find(x=>x?.summary&&/^\\d+-\\d+/.test(x.summary));
+ const r=list.find(x=>/^(overall|total)$/i.test(x?.name||x?.type||''))||list.find(x=>x?.summary&&/^\d+-\d+/.test(x.summary));
  const summary=String(r?.summary||'').trim();
- return /^\\d+-\\d+(?:-\\d+)?$/.test(summary)?summary:'';
+ return /^\d+-\d+(?:-\d+)?$/.test(summary)?summary:'';
 }
 function add(snapshot,selector,side){
  const host=document.querySelector(selector);
