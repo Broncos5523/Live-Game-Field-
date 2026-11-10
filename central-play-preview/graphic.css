@@ -68,3 +68,7 @@
 .central-updated .central-broadcast .central-middle{background-size:100% 100%}
 .central-updated .central-play-copy,.central-updated .central-portrait{background:transparent}
 .central-updated .central-portrait>strong{background:#0004}
+/* Blink only live indicators; the ticker and FINAL badges are unaffected. */
+@keyframes mancave-live-blink{0%,49%{opacity:1}50%,100%{opacity:.25}}
+.dashboard[data-state="in"] .clock-live:not(.is-final),.dashboard[data-state="in"] .live-count:not(.idle) i{animation:mancave-live-blink 1.6s steps(1,end) infinite!important}
+@media(prefers-reduced-motion:reduce){.dashboard[data-state="in"] .clock-live:not(.is-final),.dashboard[data-state="in"] .live-count:not(.idle) i{animation:none!important;opacity:1}}
