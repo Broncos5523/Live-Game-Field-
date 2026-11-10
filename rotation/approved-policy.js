@@ -46,7 +46,9 @@
   function finalRotation(games,now=Date.now()){
     const all=unique(games).filter(g=>divisionEligible(g)&&g.status==='final');
     const recent=all.filter(g=>finished(g)&&now-finished(g)<=24*HOUR&&now>=finished(g));
-    const pool=recent.length?recent:all;
+    // Keep each sport represented by its newest verified final even when other sports have newer results.
+    const newestBySport=SPORTS.flatMap(s=>all.filter(g=>g.sport===s).sort((a,b)=>finished(b)-finished(a)).slice(0,1));
+    const pool=recent.length?unique(recent.concat(newestBySport)):all;
     const sports=SPORTS.filter(s=>pool.some(g=>g.sport===s)).sort((a,b)=>Math.max(...pool.filter(g=>g.sport===b).map(finished))-Math.max(...pool.filter(g=>g.sport===a).map(finished)));
     return sports.flatMap(s=>{const subset=pool.filter(g=>g.sport===s);return COLLEGE.has(s)?collegeSelect(subset):subset.sort((a,b)=>finished(b)-finished(a));});
   }
