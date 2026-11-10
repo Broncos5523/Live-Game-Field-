@@ -8,13 +8,47 @@ function verifiedRecord(competitor){
  const summary=String(r?.summary||'').trim();
  return /^\d+-\d+(?:-\d+)?$/.test(summary)?summary:'';
 }
+
+// Only render verified remaining counts from the active game's scoreboard data.
+// MLB intentionally has no timeout indicators. The NHL uses one per team.
+function timeoutInfo(snapshot,competitor){
+ const sport=String(snapshot?.sport||'').toUpperCase();
+ if(sport==='MLB')return null;
+ const limits={NFL:3,CFB:3,NBA:7,WNBA:5,CBB:5,NHL:1};
+ const max=limits[sport];if(!max)return null;
+ const numeric=v=>v!==null&&v!==undefined&&String(v).trim()!==''&&/^\\d+$/.test(String(v))?Number(v):null;
+ const remaining=[competitor?.timeoutsRemaining,competitor?.timeoutRemaining,competitor?.timeouts?.remaining,competitor?.team?.timeoutsRemaining].map(numeric).find(v=>v!==null);
+ if(remaining===undefined||remaining<0||remaining>max)return null;
+ // Period-specific resets and caps must come from the provider's actual remaining count.
+ return {remaining,max};
+}
+function timeoutDots(snapshot,host,competitor,recordBadge){
+ host?.querySelector('.mancave-timeout-dots')?.remove();
+ const info=timeoutInfo(snapshot,competitor);
+ if(!host||!recordBadge||!info)return;
+ const dots=document.createElement('span');
+ dots.className='mancave-timeout-dots';
+ dots.setAttribute('aria-label',info.remaining+' team timeouts remaining');
+ dots.style.cssText='position:absolute;z-index:3;pointer-events:none;display:flex;justify-content:center;gap:4px;white-space:nowrap';
+ for(let i=0;i<info.max;i++){
+  const dot=document.createElement('i');
+  dot.style.cssText='display:block;width:7px;height:7px;border-radius:50%;background:'+(i<info.remaining?'#facc15':'#d1d5db');
+  dots.append(dot);
+ }
+ host.append(dots);
+ const h=host.getBoundingClientRect(),b=recordBadge.getBoundingClientRect();
+ dots.style.left=(b.left-h.left+b.width/2)+'px';
+ dots.style.top=(b.bottom-h.top+3)+'px';
+ dots.style.transform='translateX(-50%)';
+}
+
 function add(snapshot,selector,side){
  const host=document.querySelector(selector);
  const img=host?.querySelector('img');
  const competitor=snapshot?.event?.competitions?.[0]?.competitors?.find(x=>x.homeAway===side);
  const record=verifiedRecord(competitor);
  host?.querySelector('.mancave-season-record')?.remove();
- if(!host||!img||!record)return;
+ if(!host||!img||!record){host?.querySelector('.mancave-timeout-dots')?.remove();return;}
  const badge=document.createElement('span');
  badge.className='mancave-season-record';
  badge.textContent=record;
@@ -27,6 +61,7 @@ function add(snapshot,selector,side){
  badge.style.left=(r.left-h.left+r.width/2)+'px';
  badge.style.top=(r.bottom-h.top+1)+'px';
  badge.style.transform='translateX(-50%)';
+ if(selector.startsWith('.hero'))timeoutDots(snapshot,host,competitor,badge);
 }
 window.ManCaveTeamRecords={
  live:s=>{requestAnimationFrame(()=>{add(s,'.hero .team-away','away');add(s,'.hero .team-home','home');});},
