@@ -26,7 +26,7 @@ async function nbaSituation(g){
   return {homeTimeouts:data.homeTimeouts,awayTimeouts:data.awayTimeouts,homeFouls:data.homeFouls,awayFouls:data.awayFouls};
  }catch{return null;}
 }
-async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(key))return;busy.add(key);try{const summary=await json(api(g.sport)+'/summary?event='+g.id),event=summaryEvent(summary,g);if(g.sport==='NBA'&&g.status!=='final'){const situation=await nbaSituation(g);if(situation)summary.mancaveSituation=situation;}if(event){
+async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(key))return;busy.add(key);try{const [summary,situation]=await Promise.all([json(api(g.sport)+'/summary?event='+g.id),nbaSituation(g)]);const event=summaryEvent(summary,g);if(situation)summary.mancaveSituation=situation;if(event){
  // Summary is a same-provider recovery path, never an independent-provider claim.
  const observation=summary.meta?.lastUpdated||summary.header?.lastUpdated;
  const newer=Date.parse(observation)||0;
