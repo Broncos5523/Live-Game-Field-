@@ -91,6 +91,7 @@ function result(sport,play){
  if(sport==='NHL'){
   if(/no goal|disallowed/i.test(all))return 'NO GOAL';
   if(play?.scoringPlay===true||/^goal$/i.test(type))return 'GOAL';
+  if(/goalie\s+stopped|goaltender\s+stopped|goalie\s+stoppage|goalie\s+stops\s+play/i.test(all))return 'PUCK FROZEN';
   if(/puck.{0,24}(?:froz|freez|frozen|cover|smother)|(?:froz|freez|frozen|cover|smother).{0,24}puck|(?:goalie|goaltender).{0,35}(?:froz|freez|cover|smother)|(?:froz|freez|cover|smother).{0,35}(?:goalie|goaltender)/i.test(all))return 'PUCK FROZEN';
   if(/off[ -]?side|offsides|offside/i.test(all))return 'OFFSIDE';
   if(/icing/i.test(all))return 'ICING';
@@ -109,6 +110,11 @@ function actorFor(sport,play,summary,game){
  const role=sport==='NHL'?(label==='GOAL'?'scorer':['SAVE','PUCK FROZEN'].includes(label)?'goalie':label==='PENALTY'?'penalty':null):null;
  const roleRef=role?refs.find(p=>new RegExp(role,'i').test(p.type||'')):null;
  if(roleRef&&byId(roleRef.athlete.id))return byId(roleRef.athlete.id);
+ // A goalie stoppage must never borrow a skater portrait from generic participants.
+ if(sport==='NHL'&&label==='PUCK FROZEN'){
+  const goalieRefs=refs.map(p=>byId(p.athlete.id)).filter(p=>p?.goalie);
+  if(goalieRefs.length===1)return goalieRefs[0];
+ }
  let phrase=text;
  if(sport==='NHL'&&['SAVE','PUCK FROZEN'].includes(label))phrase=text.split(/saved by|frozen by|covered by|smothered by/i)[1]||text;
  else if(/intercepted by/i.test(text))phrase=text.split(/intercepted by/i)[1]||'';
@@ -122,7 +128,7 @@ function actorFor(sport,play,summary,game){
  }
  matches.sort((a,b)=>a.index-b.index);
  if(matches.length&&(!matches[1]||matches[0].index<matches[1].index))return matches[0].player;
- if(refs.length===1)return byId(refs[0].athlete.id);
+ if(refs.length===1){const candidate=byId(refs[0].athlete.id);if(!(sport==='NHL'&&label==='PUCK FROZEN')||candidate?.goalie)return candidate;}
  return null;
 }
 function fromGame(game,summary,options={}){
