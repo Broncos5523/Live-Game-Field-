@@ -13,7 +13,20 @@ async function rankings(sport){if(!['CFB','CBB'].includes(sport))return;try{cons
 async function board(sport,date){const group=sport==='CFB'?'&groups=80':sport==='CBB'?'&groups=50':'';const data=await json(api(sport)+'/scoreboard?limit=1000'+group+'&dates='+date);if(!Array.isArray(data.events))throw Error('Missing events');return data.events;}
 function meta(sport){return {ranks:ranks[sport]||{},division:sport==='CFB'?'FBS':sport==='CBB'?'D1':undefined};}
 function summaryEvent(summary,g){const c=summary.header?.competitions?.[0];if(!c||String(summary.header.id)!==g.id)return null;const event={...g.event,competitions:[c],status:c.status||summary.header.status||g.event.status};return ManCaveEngine.valid(event)?event:null;}
-async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(key))return;busy.add(key);try{const summary=await json(api(g.sport)+'/summary?event='+g.id),event=summaryEvent(summary,g);if(event){
+// Optional NBA situation: verified game-specific timeouts and bonus flags.
+// Failure must never block the existing scoreboard, summaries, finals, or ticker.
+async function nbaSituation(g){
+ if(g.sport!=='NBA'||g.status==='final'||!/^[0-9]+$/.test(String(g.id)))return null;
+ const cid=String(g.event?.competitions?.[0]?.id||g.id);
+ if(!/^[0-9]+$/.test(cid))return null;
+ try{
+  const url='https://sports.core.api.espn.com/v2/sports/basketball/leagues/nba/events/'+g.id+'/competitions/'+cid+'/situation?lang=en&region=us';
+  const data=await json(url);
+  if(!data||typeof data!=='object')return null;
+  return {homeTimeouts:data.homeTimeouts,awayTimeouts:data.awayTimeouts,homeFouls:data.homeFouls,awayFouls:data.awayFouls};
+ }catch{return null;}
+}
+async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(key))return;busy.add(key);try{const summary=await json(api(g.sport)+'/summary?event='+g.id),event=summaryEvent(summary,g);if(g.sport==='NBA'&&g.status!=='final'){const situation=await nbaSituation(g);if(situation)summary.mancaveSituation=situation;}if(event){
  // Summary is a same-provider recovery path, never an independent-provider claim.
  const observation=summary.meta?.lastUpdated||summary.header?.lastUpdated;
  const newer=Date.parse(observation)||0;
