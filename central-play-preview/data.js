@@ -91,7 +91,10 @@ function result(sport,play){
  if(sport==='NHL'){
   if(/no goal|disallowed/i.test(all))return 'NO GOAL';
   if(play?.scoringPlay===true||/^goal$/i.test(type))return 'GOAL';
-  if(/saved by|save\b/i.test(all))return 'SAVE';
+  if(/(?:puck\s+)?(?:frozen|covered|smothered)\s+by|(?:goalie|goaltender)\s+(?:freezes|covers|smothers)|freezes?\s+(?:the\s+)?puck|puck\s+frozen/i.test(all))return 'PUCK FROZEN';
+  if(/off[ -]?side/i.test(all))return 'OFFSIDE';
+  if(/icing/i.test(all))return 'ICING';
+  if(/saved by|save\\b/i.test(all))return 'SAVE';
   if(/penalty|hooking|slashing|tripping|holding|high sticking|interference|roughing|cross.?checking/i.test(type)||/penalty|\b\d+ min/i.test(text))return 'PENALTY';
   if(/^power play$/i.test(type))return 'POWER PLAY';
   if(/^blocked$/i.test(type))return 'BLOCKED SHOT';
@@ -103,11 +106,11 @@ function actorFor(sport,play,summary,game){
  if(['CHALLENGE','FINAL','TIMEOUT','HALFTIME','END OF QUARTER','END OF HALF','END OF PERIOD','INTERMISSION','POWER PLAY'].includes(label))return null;
  const pool=playerRows(summary),refs=(play?.participants||[]).filter(x=>x.athlete?.id);
  const byId=id=>{const matches=pool.filter(p=>p.id===String(id));return matches.length===1?matches[0]:null;};
- const role=sport==='NHL'?(label==='GOAL'?'scorer':label==='SAVE'?'goalie':label==='PENALTY'?'penalty':null):null;
+ const role=sport==='NHL'?(label==='GOAL'?'scorer':['SAVE','PUCK FROZEN'].includes(label)?'goalie':label==='PENALTY'?'penalty':null):null;
  const roleRef=role?refs.find(p=>new RegExp(role,'i').test(p.type||'')):null;
  if(roleRef&&byId(roleRef.athlete.id))return byId(roleRef.athlete.id);
  let phrase=text;
- if(sport==='NHL'&&label==='SAVE')phrase=text.split(/saved by/i)[1]||'';
+ if(sport==='NHL'&&['SAVE','PUCK FROZEN'].includes(label))phrase=text.split(/saved by|frozen by|covered by|smothered by/i)[1]||text;
  else if(/intercepted by/i.test(text))phrase=text.split(/intercepted by/i)[1]||'';
  else if(sport==='NHL'&&/blocked by/i.test(text))phrase=text.split(/blocked by/i)[1]||'';
  const normalized=norm(phrase),matches=[];
@@ -141,11 +144,17 @@ function fromGame(game,summary,options={}){
  const football=['NFL','CFB'].includes(game.sport);
  const possession=football?(situation.possession||(!options.recordedPlay&&game.footballField?.possession?game[game.footballField.possession]?.id:null)):null;
  const eventTeamId=actor?.teamId||play?.team?.id||play?.start?.team?.id;
+ // For offsides/icing ESPN's event team is the offending team; never infer
+ // from possession or assign the opposite team if the event team is missing.
+ const infraction=game.sport==='NHL'&&['OFFSIDE','ICING'].includes(label);
+ const specificTeamId=infraction?(play?.team?.id||play?.start?.team?.id):eventTeamId;
  const neutral=['HALFTIME','FINAL','INTERMISSION','END OF QUARTER','END OF PERIOD','END OF HALF'].includes(label)||/official|referee|\btv timeout\b|\bmedia timeout\b/i.test((play?.type?.text||'')+' '+(play?.text||''));
- const team=neutral?null:sides.find(t=>String(t.id)===String(eventTeamId||possession));
- const values=statistics(game.sport,actor);
- const portrait=actor?(typeof actor.athlete.headshot==='string'?actor.athlete.headshot:actor.athlete.headshot?.href)||'':team?.logo||'./assets/league-logos/'+game.sport+'.png';
- let top=label,topLabel='EVENT RESULT',footer=actor?clean(actor.athlete.displayName||actor.athlete.fullName):team?.name||game.sport;
+ const team=neutral?null:sides.find(t=>String(t.id)===String(specificTeamId||(infraction?null:possession)));
+ // Goalie events must not borrow an unrelated player headshot.
+ const verifiedActor=game.sport==='NHL'&&label==='PUCK FROZEN'&&actor&&!actor.goalie?null:actor;
+ const values=statistics(game.sport,verifiedActor);
+ const portrait=verifiedActor?(typeof verifiedActor.athlete.headshot==='string'?verifiedActor.athlete.headshot:verifiedActor.athlete.headshot?.href)||'':team?.logo||'./assets/league-logos/'+game.sport+'.png';
+ let top=label,topLabel='EVENT RESULT',footer=verifiedActor?clean(verifiedActor.athlete.displayName||verifiedActor.athlete.fullName):team?.name||game.sport;
  let situationItems=[];
  if(football){
   const current=game.state!=='post'?summary.drives?.current:null;
@@ -159,7 +168,7 @@ function fromGame(game,summary,options={}){
   situationItems=[['DOWN',ordinal(down)],['DISTANCE',goal?'GOAL':distance!==null&&distance>=0?distance+' YDS':'—'],['FIELD POSITION',field||'—']];
   footer=options.recordedPlay?'RECORDED PLAY-END SITUATION':game.state==='post'?'GAME COMPLETE':'GAME SITUATION';
  }
- return {headline:label,tone:outcome(game.sport,label,play),sport:game.sport,playId:String(play?.id||text),top,topLabel,text:text||'WAITING FOR THE NEXT VERIFIED PLAY',name:actor?clean(actor.athlete.displayName||actor.athlete.fullName):team?.name||'',athleteId:actor?.id||null,teamId:team?.id||null,portrait,fallback:team?.logo||'./assets/league-logos/'+game.sport+'.png',isPlayer:!!actor,stats:values,footer,situation:situationItems,primary:hex(team?.color)||LEAGUE_COLORS[game.sport][0],secondary:hex(team?.secondary)||LEAGUE_COLORS[game.sport][1]};
+ return {headline:label,tone:outcome(game.sport,label,play),sport:game.sport,playId:String(play?.id||text),top,topLabel,text:text||'WAITING FOR THE NEXT VERIFIED PLAY',name:verifiedActor?clean(verifiedActor.athlete.displayName||verifiedActor.athlete.fullName):team?.name||'',athleteId:verifiedActor?.id||null,teamId:team?.id||null,portrait,fallback:team?.logo||'./assets/league-logos/'+game.sport+'.png',isPlayer:!!verifiedActor,stats:values,footer,situation:situationItems,primary:hex(team?.color)||LEAGUE_COLORS[game.sport][0],secondary:hex(team?.secondary)||LEAGUE_COLORS[game.sport][1]};
 }
 function outcome(sport,label,play){
  if(label==='FINAL')return 'neutral';
