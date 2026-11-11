@@ -147,8 +147,9 @@ function fromGame(game,summary,options={}){
  // For offsides/icing ESPN's event team is the offending team; never infer
  // from possession or assign the opposite team if the event team is missing.
  const infraction=game.sport==='NHL'&&['OFFSIDE','ICING'].includes(label);
- const specificTeamId=infraction?(play?.team?.id||play?.start?.team?.id):eventTeamId;
- const neutral=['HALFTIME','FINAL','INTERMISSION','END OF QUARTER','END OF PERIOD','END OF HALF'].includes(label)||/official|referee|\btv timeout\b|\bmedia timeout\b/i.test((play?.type?.text||'')+' '+(play?.text||''));
+ const participantTeamId=(play?.participants||[]).map(p=>p?.team?.id||p?.athlete?.team?.id).find(Boolean);
+ const specificTeamId=infraction?(play?.team?.id||play?.start?.team?.id||participantTeamId):eventTeamId;
+ const neutral=['HALFTIME','FINAL','INTERMISSION','END OF QUARTER','END OF PERIOD','END OF HALF'].includes(label)||(!infraction&&label!=='PUCK FROZEN'&&/official|referee|\btv timeout\b|\bmedia timeout\b/i.test((play?.type?.text||'')+' '+(play?.text||'')));
  const team=neutral?null:sides.find(t=>String(t.id)===String(specificTeamId||(infraction?null:possession)));
  // Goalie events must not borrow an unrelated player headshot.
  const verifiedActor=game.sport==='NHL'&&label==='PUCK FROZEN'&&actor&&!actor.goalie?null:actor;
