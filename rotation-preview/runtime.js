@@ -31,7 +31,7 @@ async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(
  // when the event has verified play-by-play. Recover only from this game.
  if(g.sport==='CBB'&&event){
   const competition=summary.header?.competitions?.[0];
-  if(competition&&!competition.situation?.lastPlay){
+  if(competition&&(!competition.situation?.lastPlay||/^\\s*\\d{1,2}:\\d{2}\\s*[-–]\\s*(?:1st|2nd|first|second)\\s*half\\s*$/i.test(String(competition.situation.lastPlay.text||'')))){
    const plays=Array.isArray(summary.plays)?summary.plays:[];
    // A clock/period marker is not a basketball play. Do not replace a valid
    // scoreboard play with an ESPN clock-only summary entry.
@@ -47,7 +47,7 @@ async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(
  const observation=summary.meta?.lastUpdated||summary.header?.lastUpdated;
  const newer=Date.parse(observation)||0;
  if(g.missingSince){store.ingest(g.sport,event,summary,Date.now(),{...meta(g.sport),fallback:true,verified:!!newer,observedAt:newer});}
- else{const previous=store.records[key];store.ingest(g.sport,event,stats?summary:{...summary,boxscore:previous?.summary?.boxscore,leaders:previous?.summary?.leaders},Date.now(),meta(g.sport));}
+ else{const previous=store.records[key];store.ingest(g.sport,event,stats||g.sport==='CBB'?summary:{...summary,boxscore:previous?.summary?.boxscore||summary.boxscore,leaders:previous?.summary?.leaders||summary.leaders},Date.now(),meta(g.sport));}
  save();}
 }catch{}finally{busy.delete(key);}}
 async function discover(){await Promise.all(ManCaveRotation.SPORTS.map(async sport=>{try{const dates=[day(Date.now()),day(Date.now()-86400000)];const results=await Promise.all(dates.map(d=>board(sport,d)));const events=Array.from(new Map(results.flat().map(e=>[String(e.id),e])).values());latest[sport]=events;const ids=new Set(events.map(e=>String(e.id)));seen[sport]=Date.now();for(const event of events){const old=store.records[sport+':'+event.id];if(!old||old.status==='scheduled'||['live','halftime','intermission','overtime'].includes(old.status))store.ingest(sport,event,null,Date.now(),meta(sport));else old.missingSince=null;}store.missing(sport,ids,Date.now());}catch{/* Failed discovery is missing verification, never an empty final result. */store.missing(sport,new Set(),Date.now());}}));save();}
