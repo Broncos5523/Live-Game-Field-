@@ -91,8 +91,8 @@ function result(sport,play){
  if(sport==='NHL'){
   if(/no goal|disallowed/i.test(all))return 'NO GOAL';
   if(play?.scoringPlay===true||/^goal$/i.test(type))return 'GOAL';
-  if(/(?:puck\s+)?(?:frozen|covered|smothered)\s+by|(?:goalie|goaltender)\s+(?:freezes|covers|smothers)|freezes?\s+(?:the\s+)?puck|puck\s+frozen/i.test(all))return 'PUCK FROZEN';
-  if(/off[ -]?side/i.test(all))return 'OFFSIDE';
+  if(/puck.{0,24}(?:froz|freez|frozen|cover|smother)|(?:froz|freez|frozen|cover|smother).{0,24}puck|(?:goalie|goaltender).{0,35}(?:froz|freez|cover|smother)|(?:froz|freez|cover|smother).{0,35}(?:goalie|goaltender)/i.test(all))return 'PUCK FROZEN';
+  if(/off[ -]?side|offsides|offside/i.test(all))return 'OFFSIDE';
   if(/icing/i.test(all))return 'ICING';
   if(/saved by|save\\b/i.test(all))return 'SAVE';
   if(/penalty|hooking|slashing|tripping|holding|high sticking|interference|roughing|cross.?checking/i.test(type)||/penalty|\b\d+ min/i.test(text))return 'PENALTY';
@@ -146,11 +146,12 @@ function fromGame(game,summary,options={}){
  const eventTeamId=actor?.teamId||play?.team?.id||play?.start?.team?.id;
  // For offsides/icing ESPN's event team is the offending team; never infer
  // from possession or assign the opposite team if the event team is missing.
+ const nhlTeamEvent=game.sport==='NHL'&&['OFFSIDE','ICING','PUCK FROZEN'].includes(label);
  const infraction=game.sport==='NHL'&&['OFFSIDE','ICING'].includes(label);
  const participantTeamId=(play?.participants||[]).map(p=>p?.team?.id||p?.athlete?.team?.id).find(Boolean);
- const specificTeamId=infraction?(play?.team?.id||play?.start?.team?.id||participantTeamId):eventTeamId;
- const neutral=['HALFTIME','FINAL','INTERMISSION','END OF QUARTER','END OF PERIOD','END OF HALF'].includes(label)||(!infraction&&label!=='PUCK FROZEN'&&/official|referee|\btv timeout\b|\bmedia timeout\b/i.test((play?.type?.text||'')+' '+(play?.text||'')));
- const team=neutral?null:sides.find(t=>String(t.id)===String(specificTeamId||(infraction?null:possession)));
+ const specificTeamId=nhlTeamEvent?(play?.team?.id||play?.start?.team?.id||actor?.teamId||participantTeamId):eventTeamId;
+ const neutral=['HALFTIME','FINAL','INTERMISSION','END OF QUARTER','END OF PERIOD','END OF HALF'].includes(label)||(!nhlTeamEvent&&/official|referee|\btv timeout\b|\bmedia timeout\b/i.test((play?.type?.text||'')+' '+(play?.text||'')));
+ const team=neutral?null:sides.find(t=>String(t.id)===String(specificTeamId||(nhlTeamEvent?null:possession)));
  // Goalie events must not borrow an unrelated player headshot.
  const verifiedActor=game.sport==='NHL'&&label==='PUCK FROZEN'&&actor&&!actor.goalie?null:actor;
  const values=statistics(game.sport,verifiedActor);
