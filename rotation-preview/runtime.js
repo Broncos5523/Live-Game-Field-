@@ -33,7 +33,13 @@ async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(
   const competition=summary.header?.competitions?.[0];
   if(competition&&!competition.situation?.lastPlay){
    const plays=Array.isArray(summary.plays)?summary.plays:[];
-   const latest=[...plays].reverse().find(p=>p&&p.id&&p.text&&p.type&&!/^(?:period start|start of|game start)$/i.test(String(p.type.text||'')));
+   // A clock/period marker is not a basketball play. Do not replace a valid
+   // scoreboard play with an ESPN clock-only summary entry.
+   const isAction=p=>p&&p.id&&p.text&&(
+    /shot|jumper|layup|dunk|free throw|rebound|foul|turnover|steal|block|assist|substitution|timeout|travel|violation|jump ball/i.test(String(p.type?.text||'')+' '+String(p.text||''))||
+    p.shootingPlay===true||p.scoringPlay===true
+   )&&!/^\\s*\\d{1,2}:\\d{2}\\s*[-–]\\s*(?:1st|2nd|first|second)\\s*half\\s*$/i.test(String(p.text));
+   const latest=[...plays].reverse().find(isAction);
    if(latest)competition.situation={...(competition.situation||{}),lastPlay:latest};
   }
  }if(event){
