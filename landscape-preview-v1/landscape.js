@@ -58,10 +58,12 @@ function hasLandscapeVenue(sport, code) {
     const src = original?.complete && original.naturalWidth > 0
       ? original.currentSrc || original.src
       : "";
-    // When no team venue image exists, use existing football venue artwork as
-    // an unlabeled generic fallback. This does not change approved venue images.
-    const fallback = (dashboard.classList.contains("sport-cfb") || dashboard.classList.contains("sport-nfl"))
-      ? "./assets/venues/CFB/UTAH.webp" : "";
+    // Approved venue images always win. For missing or failed images,
+    // use an unlabeled existing venue image from the same league.
+    const league = [...dashboard.classList].find(x=>x.startsWith("sport-"))?.slice(6).toUpperCase();
+    const genericVenueCode = {NFL:"DEN",CFB:"UTAH",NBA:"BOS",WNBA:"IND",NHL:"BOS",MLB:"BOS",CBB:"DUKE"};
+    const code = genericVenueCode[league];
+    const fallback = code ? "./assets/venues/"+league+"/"+code+".webp" : "";
     const chosen = src || fallback;
     if (background.dataset.src === chosen) return;
 
@@ -70,7 +72,7 @@ function hasLandscapeVenue(sport, code) {
     if (chosen) {
       const image = document.createElement("img");
       image.alt = "";
-      image.onerror = () => { if (background.contains(image)) { image.remove(); background.dataset.src = ""; } };
+      image.onerror = () => { if (background.contains(image)) { image.remove(); background.dataset.src = chosen; } };
       image.src = chosen;
       background.appendChild(image);
     }
