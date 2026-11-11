@@ -58,9 +58,22 @@ function hasLandscapeVenue(sport, code) {
     const src = original?.complete && original.naturalWidth > 0
       ? original.currentSrc || original.src
       : "";
-    // Never substitute a different team's venue for a missing home venue.
-    // Approved generic backgrounds will be mapped here after asset upload.
-    const chosen = src;
+    // Approved generic artwork: use only when the actual venue image is unavailable.
+    // These files were uploaded by the owner on 2026-11-11; never borrow another team's venue.
+    const league = [...dashboard.classList].find(x=>x.startsWith("sport-"))?.slice(6).toUpperCase();
+    const approvedFallbacks = {
+      NFL: "60A3B2FD-6F18-4919-97F5-1E2DDEED857D.png",
+      NBA: "4727AE9F-FC4C-4D40-879D-C2AAAB312C2D.png",
+      NHL: "ADEC6367-3A4C-4E71-B8A1-07FC1FBE9C06.png",
+      MLB: "EC0753DD-EB0A-4A84-93A0-BDD4D7ACB934.png",
+      WNBA: "3F577664-BAD2-4180-9277-61933C4570D0.png",
+      CFB: "8559430E-9F9E-4715-8B5D-372382E13146.png",
+      CBB: "6D35F8F8-A640-444C-BAAA-95F81DAB6249.png"
+    };
+    const fallback = approvedFallbacks[league]
+      ? new URL("../" + approvedFallbacks[league], document.baseURI).href
+      : "";
+    const chosen = src || fallback;
     if (background.dataset.src === chosen) return;
 
     background.dataset.src = chosen;
