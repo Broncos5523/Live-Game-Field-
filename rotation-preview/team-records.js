@@ -19,7 +19,8 @@ function timeoutInfo(snapshot,competitor){
  const max=limits[sport];if(!max||!competitor?.id)return null;
  const summaryCompetitor=snapshot?.summary?.header?.competitions?.[0]?.competitors?.find(x=>String(x.id)===String(competitor.id));
  const numeric=v=>v!==null&&v!==undefined&&String(v).trim()!==''&&/^\d+$/.test(String(v))?Number(v):null;
- const remaining=[summaryCompetitor?.timeoutsRemaining,summaryCompetitor?.timeoutRemaining,summaryCompetitor?.timeouts?.remaining,
+ const liveTimeout=sport==='NBA'?snapshot?.summary?.mancaveSituation?.[competitor.homeAway==='home'?'homeTimeouts':'awayTimeouts']?.timeoutsRemainingCurrent:null;
+ const remaining=[liveTimeout,summaryCompetitor?.timeoutsRemaining,summaryCompetitor?.timeoutRemaining,summaryCompetitor?.timeouts?.remaining,
   competitor?.timeoutsRemaining,competitor?.timeoutRemaining,competitor?.timeouts?.remaining,
   competitor?.team?.timeoutsRemaining].map(numeric).find(v=>v!==null);
  if(remaining===undefined||remaining<0||remaining>max)return null;
@@ -50,6 +51,9 @@ function timeoutDots(snapshot,host,competitor,recordBadge){
 function bonusLevel(snapshot,competitor){
  const sport=String(snapshot?.sport||'').toUpperCase();
  if(!['NBA','WNBA','CBB'].includes(sport)||snapshot?.event?.status?.type?.completed===true)return '';
+ const situationFouls=sport==='NBA'?snapshot?.summary?.mancaveSituation?.[competitor?.homeAway==='home'?'homeFouls':'awayFouls']:null;
+ const explicitState=String(situationFouls?.bonusState||'').trim().toLowerCase();
+ if(explicitState){if(/^(bonus|in.?bonus|yes|true|1)$/.test(explicitState))return 'BONUS';if(/^(none|no.?bonus|false|0)$/.test(explicitState))return '';}
  const entries=[snapshot?.summary?.header?.competitions?.[0]?.competitors?.find(x=>String(x.id)===String(competitor?.id)),competitor];
  for(const item of entries){
   if(!item)continue;
