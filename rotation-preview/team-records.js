@@ -94,6 +94,7 @@ function add(snapshot,selector,side){
  const record=verifiedRecord(competitor);
  host?.querySelector('.mancave-season-record')?.remove();
  if(!host||!img)return;
+   host.style.position='relative';
  if(selector.startsWith('.hero'))host.querySelector('.mancave-bonus-indicator')?.remove();
  if(!record){host.querySelector('.mancave-timeout-dots')?.remove();if(selector.startsWith('.hero'))bonusBadge(snapshot,host,competitor);return;}
  const badge=document.createElement('span');
