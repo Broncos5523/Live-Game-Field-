@@ -26,7 +26,17 @@ async function nbaSituation(g){
   return {homeTimeouts:data.homeTimeouts,awayTimeouts:data.awayTimeouts,homeFouls:data.homeFouls,awayFouls:data.awayFouls};
  }catch{return null;}
 }
-async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(key))return;busy.add(key);try{const [summary,situation]=await Promise.all([json(api(g.sport)+'/summary?event='+g.id),nbaSituation(g)]);const event=summaryEvent(summary,g);if(situation)summary.mancaveSituation=situation;if(event){
+async function refreshGame(g,stats=true){const key=g.sport+':'+g.id;if(busy.has(key))return;busy.add(key);try{const [summary,situation]=await Promise.all([json(api(g.sport)+'/summary?event='+g.id),nbaSituation(g)]);const event=summaryEvent(summary,g);if(situation)summary.mancaveSituation=situation;
+ // ESPN sometimes omits situation.lastPlay for college basketball even
+ // when the event has verified play-by-play. Recover only from this game.
+ if(g.sport==='CBB'&&event){
+  const competition=summary.header?.competitions?.[0];
+  if(competition&&!competition.situation?.lastPlay){
+   const plays=Array.isArray(summary.plays)?summary.plays:[];
+   const latest=[...plays].reverse().find(p=>p&&p.id&&p.text&&p.type&&!/^(?:period start|start of|game start)$/i.test(String(p.type.text||'')));
+   if(latest)competition.situation={...(competition.situation||{}),lastPlay:latest};
+  }
+ }if(event){
  // Summary is a same-provider recovery path, never an independent-provider claim.
  const observation=summary.meta?.lastUpdated||summary.header?.lastUpdated;
  const newer=Date.parse(observation)||0;
